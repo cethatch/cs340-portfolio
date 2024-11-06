@@ -173,7 +173,6 @@
     
   }
     tr:nth-child(even) {
-      background-color: lightgray;
     }
   th {
     border: 1px solid;
@@ -184,6 +183,7 @@
     border: 1px solid;
     padding: 10px;
   }
+  
     td:nth-child(1) {}
   colgroup {}
   data {}
@@ -195,7 +195,8 @@
   fieldset {}
     legend {}
   label {}
-  button {}
+  button {
+  }
   input {}
   select {}
     optgroup {}
@@ -230,6 +231,12 @@
   .logo {
     width: 100px; /* Adjust as needed */
     margin-right: 10px;
+  }
+
+  .deleteButton {
+    display: flex;
+  justify-content: center;
+  align-items: center;
   }
 
   .floatright {}
