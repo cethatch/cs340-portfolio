@@ -17,7 +17,7 @@ function ClassInstancesPage() {
                             <th>Time</th>
                             <th>Kitchen ID</th>
                             <th>Private Event?</th>
-                            <th>Delete Entry</th>
+
                         </tr>
                         <tr>
                             
@@ -27,17 +27,13 @@ function ClassInstancesPage() {
                             <td>5:30PM PST</td>
                             <td>2</td>
                             <td>No</td>
-                            <td>
-                                <div class="deleteButton">
-                                    <button>
-                                        Delete
-                                    </button>
-                                </div>
-                            </td>
                         </tr>
                         
                     </tbody>
                 </table>
+
+                <p><em>Note: Existing records of scheduled classes may not be deleted.</em></p>
+
             </article>
 
         </section>

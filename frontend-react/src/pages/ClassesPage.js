@@ -16,7 +16,6 @@ function ClassesPage() {
                                 <th>Duration (Minutes)</th>
                                 <th>Registration Cost (USD)</th>
                                 <th>Description</th>
-                                <th>Delete Entry</th>
                             </tr>
                             <tr>
                                 
@@ -25,17 +24,12 @@ function ClassesPage() {
                                 <td>90</td>
                                 <td>$65.00</td>
                                 <td>Learn how to prepare and roll sushi from scratch.</td>
-                                <td>
-                                    <div class="deleteButton">
-                                        <button>
-                                            Delete
-                                        </button>
-                                    </div>
-                                </td>
                             </tr>
                             
                         </tbody>
                     </table>
+
+                    <p><em>Note: Class entries may not be deleted.</em></p>
 
                 </article>
 

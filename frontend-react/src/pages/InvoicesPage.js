@@ -17,7 +17,7 @@ function InvoicesPage() {
                             <th>Invoice Total</th>
                             <th>Paid?</th>
                             <th>Comments</th>
-                            <th>Delete Entry</th>
+
                         </tr>
                         <tr>
                             
@@ -27,17 +27,12 @@ function InvoicesPage() {
                             <td>$145.00</td>
                             <td>TRUE</td>
                             <td>None</td>
-                            <td>
-                                <div class="deleteButton">
-                                    <button>
-                                        Delete
-                                    </button>
-                                </div>
-                            </td>
                         </tr>
                         
                     </tbody>
                 </table>
+
+                <p><em>Note: Invoice entries may not be deleted.</em></p>
 
             </article>
 
