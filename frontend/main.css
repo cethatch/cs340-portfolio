@@ -32,17 +32,22 @@
   /*  ----- Page layout blocks -----  */
   header, footer {
     color: black;
-
   }
 
 
   header {}
   
   #navigation-title {
-    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    text-align: center;
   }
 
-  footer {}
+  footer {
+    padding: 10px;
+  }
 
   main {}
 
@@ -148,15 +153,37 @@
   ins {}
   
   /*  ----- Table ----- */
-  table {}
+  table {
+    border: 2px solid;
+    text-indent: initial;
+    border-spacing: 2px;
+    width: 60%;
+    border-collapse: collapse;
+  }
   caption {}
   thead {}
   tbody {}
   tfoot {}
-  tr {}
-    tr:nth-child(even) {}
-  th {}
-  td {}
+  tr {
+    display: table-row;
+    vertical-align: inherit;
+    unicode-bidi: isolate;
+    border-color: inherit;
+    border: 1px solid;
+    
+  }
+    tr:nth-child(even) {
+      background-color: lightgray;
+    }
+  th {
+    border: 1px solid;
+    border-bottom: 3px solid;
+    padding: 10px;
+  }
+  td {
+    border: 1px solid;
+    padding: 10px;
+  }
     td:nth-child(1) {}
   colgroup {}
   data {}
@@ -198,6 +225,12 @@
   figure {}
   figcaption {}
   img {}
+
+
+  .logo {
+    width: 100px; /* Adjust as needed */
+    margin-right: 10px;
+  }
 
   .floatright {}
   .floatleft {}
