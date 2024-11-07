@@ -7,9 +7,9 @@
 SET FOREIGN_KEY_CHECKS=0;
 SET AUTOCOMMIT = 0;
 
--------------------------------------------------------------------------------------------
+
 -- Create Database Tables:
--------------------------------------------------------------------------------------------
+
 
 -- Create Students table for holding information about students:
 CREATE OR REPLACE TABLE Students (
@@ -113,9 +113,43 @@ CREATE OR REPLACE TABLE ClassInstructors (
     FOREIGN KEY (instructorID) REFERENCES Instructors(instructorID) ON DELETE SET NULL
 );
 
--------------------------------------------------------------------------------------------
+
+-- Trigger for Registrations and Invoices:
+--------------------------------------------------------------------------------------
+DELIMITER //
+CREATE TRIGGER trg_generate_invoice BEFORE INSERT ON Registrations
+FOR EACH ROW
+BEGIN
+    DECLARE classCost DECIMAL(6,2);
+
+    -- Check if we should create an Invoice:
+    IF NEW.generateInvoice THEN
+
+        -- Select the class cost from joining the ClassInstances table with
+        -- Classes table and using the new row in the registration table to select
+        -- the row in the resulting table.
+        SELECT registrationCost INTO classCost FROM ClassInstances
+        JOIN Classes ON ClassInstances.classID = Classes.classID
+        WHERE ClassInstances.classInstanceID = NEW.classInstanceID;
+
+        -- Insert new row to invoices table using the studentID from the new row in
+        -- the registrations insert, the current date, the cost found above, and False
+        -- for invoicePaid.
+        INSERT INTO Invoices (studentID, invoiceDate, invoiceTotal, invoicePaid)
+        VALUES (NEW.studentID, CURDATE(), classCost, 0);
+
+        -- Update the row in Registrations with the new value for the invoiceID that
+        -- was most recently created.
+        UPDATE Registrations SET invoiceID = LAST_INSERT_ID()
+        WHERE registrationID = NEW.registrationID;
+    END IF;
+END;
+// 
+DELIMITER ;
+
+
 -- Insert Example Data:
--------------------------------------------------------------------------------------------
+
 
 -- Populate Students table with example data:
 INSERT INTO Students (firstName, lastName, phoneNumber, email)
@@ -166,27 +200,28 @@ VALUES (1, 20241130, 140.00, 1),
 (2, 20241130, 100.00, 1);
 
 -- Populate Registrations table with example data:
-INSERT INTO Registrations (studentID, classInstanceID, invoiceID)
+-- None of these values will automatically generate an invoice since generateInvoice = 0
+INSERT INTO Registrations (studentID, classInstanceID, invoiceID, generateInvoice)
 VALUES 
 ((SELECT studentID FROM Students WHERE email = 'sarah.thompson@email.com'), 
     (SELECT classInstanceID FROM ClassInstances WHERE classDate = 20241115 AND classTime = '17:30:00' AND kitchenID = 
-        (SELECT kitchenID FROM Kitchens WHERE kitchenLocation = '456 Pine St, Seattle, WA 98101')), 1),
+        (SELECT kitchenID FROM Kitchens WHERE kitchenLocation = '456 Pine St, Seattle, WA 98101')), 1, 0),
 
 ((SELECT studentID FROM Students WHERE email = 'sarah.thompson@email.com'), 
     (SELECT classInstanceID FROM ClassInstances WHERE classDate = 20241117 AND classTime = '18:00:00' AND kitchenID = 
-        (SELECT kitchenID FROM Kitchens WHERE kitchenLocation = '456 Pine St, Seattle, WA 98101')), 1),
+        (SELECT kitchenID FROM Kitchens WHERE kitchenLocation = '456 Pine St, Seattle, WA 98101')), 1, 0),
 
 ((SELECT studentID FROM Students WHERE email = 'michael.brown@email.com'), 
     (SELECT classInstanceID FROM ClassInstances WHERE classDate = 20241115 AND classTime = '17:30:00' AND kitchenID = 
-        (SELECT kitchenID FROM Kitchens WHERE kitchenLocation = '456 Pine St, Seattle, WA 98101')), 2),
+        (SELECT kitchenID FROM Kitchens WHERE kitchenLocation = '456 Pine St, Seattle, WA 98101')), 2, 0),
 
 ((SELECT studentID FROM Students WHERE email = 'emily.martinez@email.com'), 
     (SELECT classInstanceID FROM ClassInstances WHERE classDate = 20241115 AND classTime = '17:30:00' AND kitchenID = 
-        (SELECT kitchenID FROM Kitchens WHERE kitchenLocation = '123 Market St, San Francisco, CA 94103')), 3),
+        (SELECT kitchenID FROM Kitchens WHERE kitchenLocation = '123 Market St, San Francisco, CA 94103')), 3, 0),
 
 ((SELECT studentID FROM Students WHERE email = 'james.anderson@email.com'), 
     (SELECT classInstanceID FROM ClassInstances WHERE classDate = 20241120 AND classTime = '10:00:00' AND kitchenID = 
-        (SELECT kitchenID FROM Kitchens WHERE kitchenLocation = '123 Market St, San Francisco, CA 94103')), 4);
+        (SELECT kitchenID FROM Kitchens WHERE kitchenLocation = '123 Market St, San Francisco, CA 94103')), 4, 0);
 
 -- Populate ClassInstructors table with example data:
 INSERT INTO ClassInstructors (instructorID, classInstanceID)
