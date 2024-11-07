@@ -42,34 +42,40 @@
 
     <main>
         <section>
-            <h2>Registrations</h2>
+            <h2>Instructor Assignments</h2>
             
             <article>
                 <table>
                     <tbody>
                         <tr>
-                            <th>Registration ID</th>
-                            <th>Student First Name</th>
-                            <th>Student Last Name</th>
+                            <th>Assignment ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>ClassInstance ID</th>
                             <th>Class Name</th>
-                            <th>Invoice ID</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Kitchen Location</th>
+                            <th>Private Event?</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
                         <tr>
-                            
                             <td>1</td>
-                            <td>Sarah</td>
-                            <td>Thompson</td>
+                            <td>Olivia</td>
+                            <td>Garcia</td>
+                            <td>1</td>
                             <td>Sushi Rolling Basics</td>
-                            <td>1</td>
+                            <td>2024-11-15</td>
+                            <td>5:30 PM</td>
+                            <td>456 Pine St., Seattle, WA 98101</td>
+                            <td>False</td>
                             <td>
                                 <div class="editButton">
                                     <button>
                                         Edit
                                     </button>
                                 </div>
-                            </td>
                             <td>
                                 <div class="deleteButton">
                                     <button>
@@ -85,45 +91,38 @@
             </article>
 
             <article id="addNewForm">
-                <h3>New Registration:</h3>
+                <h3>New assignment:</h3>
                 <p><span class='req'>* </span> - Required field.</p>
                     <div class="form-container">
                         <table>
                             <tbody>
                                 <tr>
-                                    <td><label for="name">Student Name: </label><span class="req">* </span></td>
-                                    <td><select id="name" name="name" required>
-                                    </select></td>
-                                </tr>
-
+                                    <td><label for="instructor">Instructor: </label></td>
+                                    <td><select id="instructor" name="instructor">
+                                        <option value="" required></option>
+                                </select></td>
                                 <tr>
-                                    <td><label for="date">Class date: </label><span class="req">* </span></td>
+                                    <td><label for="date">Class Date: </label><span class="req">* </span></td>
                                     <td><input type="date" id="date" name="date" required></input></td>
                                 </tr>
 
                                 <tr>
-                                    <td><label for="time">Class time: </label><span class="req">* </span></td>
+                                    <td><label for="time">Start time: </label><span class="req">* </span></td>
                                     <td><input type="time" id="time" name="time" required></input></td>
                                 </tr>
-
                                 <tr>
-                                    <td><label for="location">Kitchen: </label></td>
-                                    <td><select id="location" name="location">
+                                    <td><label for="location">Kitchen location: </label><span class="req">* </span></td>
+                                    <td><select id="location" name="location" required>
                                         <option value="1">123 Market St., San Francisco, CA 94103</option>
                                         <option value="2">456 Pine St., Seattle, WA 98101</option>
                                         <option value="3">222 Geary St., San Francisco, CA 94102</option>
                                 </select></td>
-
-                                <tr>
-                                    <td><label for="generateInvoice">Generate invoice?</label></td>
-                                    <td><input type="checkbox" id="generateInvoice" name="generateInvoice" ></input></td>
-                                </tr>
                             </tbody>
                         </table>
                         <button class="submitButton">Submit</button>
                     </div>
                     
-                </article> 
+                </article>
 
         </section>
     </main>

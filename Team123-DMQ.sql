@@ -64,14 +64,15 @@ WHERE classInstanceID = :classInstanceIDFromUpdateForm;
 
 -------------------------------------------------
 -- Display contents of Instructors table (Include specialties using a join)
-SELECT * FROM Instructors INNER JOIN Specialties ON Instructors.specialtyID = Specialties.specialtyID;
+SELECT instructorID, instFirstName, instLastName, phoneNumber, email, hireDate, Specialties.specailtyName, hourlyRate 
+FROM Instructors INNER JOIN Specialties ON Instructors.specialtyID = Specialties.specialtyID;
 
 -- Get Instructor Names for dropdown:
 SELECT instFirstName, instLastName FROM Instructors;
 
 -- Add a new instructor to Instructors table
 INSERT INTO Instructors (instFirstName, instLastName, phoneNumber, email, hireDate, specialtyID, hourlyRate)
-VALUES (:instFirstNameInput, :instLastNameInput, :phoneNumberInput, :emailInput, :hireDateInput, :specialtyIDInput, :hourlyRateInput);
+VALUES (:instFirstNameInput, :instLastNameInput, :phoneNumberInput, :emailInput, :hireDateInput, :specialtyIDInputFromDropdown, :hourlyRateInput);
 
 -- Update an instructor in Instructors table
 UPDATE Instructors SET instFirstName = :instFirstNameInput, instLastName = :instLastNameInput, phoneNumber = :phoneNumberInput, email = :emailInput, hireDate = :hireDateInput, specialtyID = :specialtyIDFromDropdown, hourlyRate = :hourlyRateInput

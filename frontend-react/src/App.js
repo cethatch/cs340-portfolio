@@ -7,7 +7,6 @@ import PageHeader from './components/PageHeader.js';
 import './App.css';
 
 // Import pages:
-
 import HomePage from './pages/HomePage.js'
 import ClassesPage from './pages/ClassesPage.js'
 import KitchensPage from './pages/KitchensPage.js'
@@ -20,8 +19,6 @@ import InvoicesPage from './pages/InvoicesPage.js'
 
 // Define the function that renders the content in Routes, using State.
 function App() {
-
-  const [expense, setExpenseToEdit] = useState([])
 
   return (
     <>

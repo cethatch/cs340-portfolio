@@ -29,6 +29,7 @@
                 <li><a href="kitchens.html">Kitchens</a></li>
                 <li><a href="schedule.html">Schedule</a></li>
                 <li><a href="instructors.html">Instructors</a></li>
+                <li><a href="assignments.html">Instructor Assignments</a></li>
                 <li><a href="specialties.html">Specialties</a></li>
                 <li><a href="students.html">Students</a></li>
                 <li><a href="registrations.html">Registrations</a></li>
@@ -53,9 +54,10 @@
                             <th>Phone Number</th>
                             <th>Email</th>
                             <th>Hire Date</th>
-                            <th>Specialty ID</th>
+                            <th>Specialty</th>
                             <th>Hourly Rate</th>
-                            <th>Delete Entry</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                         <tr>
                             <td>1</td>
@@ -64,8 +66,14 @@
                             <td>212-555-1234</td>
                             <td>olivia.garcia@email.com</td>
                             <td>2021-04-15</td>
-                            <td>4</td>
+                            <td>Asian Cuisine</td>
                             <td>$61.00</td>
+                            <td>
+                                <div class="editButton">
+                                    <button>
+                                        Edit
+                                    </button>
+                                </div>
                             <td>
                                 <div class="deleteButton">
                                     <button>
@@ -79,6 +87,53 @@
                 </table>
 
             </article>
+
+            <article id="addNewForm">
+                <h3>Add a new instructor:</h3>
+                <p><span class='req'>* </span> - Required field.</p>
+                    <div class="form-container">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td><label for="firstName">First name: </label><span class="req">* </span></td>
+                                    <td><input type="text" id="firstName" height="50" maxlength="50" required></input></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="lastName">Last name: </label><span class="req">* </span></td>
+                                    <td><input type="text" id="lastName" height="50" maxlength="50" required></input></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="phoneNumber">Phone number: </label><span class="req">* </span></td>
+                                    <td><input type="text" id="phoneNumber" height="50" maxlength="15" required></input></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="email">Email: </label></td>
+                                    <td><input type="text" id="email" height="50" maxlength="100"></input></td>
+                                </tr>
+
+                                <tr>
+                                    <td><label for="hireDate">Date hired: </label></td>
+                                    <td><input type="date" id="hireDate" name="hireDate"></input></td>
+                                </tr>
+
+                                <tr>
+                                    <td><label for="specialty">Specialty: </label></td>
+                                    <td><select id="specialty" name="specialty">
+                                        <option value="pastryArts">Pastry Arts</option>
+                                        <option value="asianCuisine">Asian Cuisine</option>
+                                    </select></td>
+                                </tr>
+
+                                <tr>
+                                    <td><label for="hourly">Hourly Rate: </label></td>
+                                    <td><input type="number" id="hourly" name="hourly" placeholder="$0.00"></input></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="submitButton">Submit</button>
+                    </div>
+                    
+                </article>
 
         </section>
     </main>
