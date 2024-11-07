@@ -83,8 +83,12 @@ DELETE FROM Instructors WHERE instructorID = :instructorIDSelectedFromBrowsePage
 
 -------------------------------------------------
 -- Display contents of ClassInstructors table
--- TODO: add joins here to show instructor fname + lname and classInstance information
-SELECT * FROM ClassInstructors;
+SELECT classInstructorID, Instructors.instFirstName, Instructors.instLastName, ClassInstances.classInstanceID, Classes.className, ClassInstances.classDate, ClassInstances.classTime,
+Kitchens.kitchenLocation, ClassInstances.privateEvent FROM ClassInstructors
+INNER JOIN Instructors ON ClassInstructors.instructorID = Instructors.instructorID
+INNER JOIN ClassInstances ON ClassInstructors.classInstanceID = ClassInstances.classInstanceID 
+INNER JOIN Kitchens ON ClassInstances.kitchenID = Kitchens.kitchenID
+INNER JOIN Classes ON ClassInstances.classID = Classes.classID;
 
 -- Add a new instructor assignment to ClassInstructors table
 -- TODO: This query may need some workshopping
