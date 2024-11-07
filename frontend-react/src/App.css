@@ -54,6 +54,10 @@
   section {}
 
   article {}
+
+  #addNewForm {
+    width: 50%;
+  }
     #topic1 {}
     #topic2 {}
   div {}
@@ -158,8 +162,9 @@
     border: 2px solid;
     text-indent: initial;
     border-spacing: 2px;
-    width: 60%;
+    width: 75%;
     border-collapse: collapse;
+    margin-bottom: 10px;
   }
   caption {}
   thead {}
@@ -183,12 +188,18 @@
   td {
     border: 1px solid;
     padding: 10px;
+    vertical-align: middle;
+    
   }
   
-    td:nth-child(1) {}
+    td:nth-child(1) {
+      width: 150px;
+    }
   colgroup {}
   data {}
   datalist {}
+
+  
   
   
   /*  ----- Form ----- */
@@ -206,6 +217,14 @@
   output {}
   meter {}
   progress {}
+
+  input[type="text"],
+  input[type="number"] {
+    width: 50%; /* Makes input fields take up full width of cell */
+    box-sizing: border-box; /* Ensures padding does not exceed cell width */
+    height: 30px;
+}
+
   
   
   /* ----- Media ----- */
@@ -238,6 +257,29 @@
     display: flex;
   justify-content: center;
   align-items: center;
+  }
+
+  .req {
+    font-weight: bold;
+    color: red;
+  }
+
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: left;
+}
+
+.submitButton {
+    padding: 10px 20px;
+    cursor: pointer;
+    align-self: center;
+}
+  .editButton {
+    padding: 20px;
+    font-size: 120%;
+    justify-content: center;
   }
 
   .floatright {}
