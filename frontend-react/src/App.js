@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // Import Components, styles, media
 import PageHeader from './components/PageHeader.js';
+import Navigation from './components/Navigation.js';
 import './App.css';
 
 // Import pages:
@@ -29,14 +30,15 @@ function App() {
             <section>
                 <Routes> 
                     <Route path='/' element={ <HomePage />} />
-                    <Route path="/classes" element={ <ClassesPage />} /> 
-                    <Route path="/kitchens" element={<KitchensPage />} />                 
-                    <Route path="/schedule" element={<ClassInstancesPage />} /> 
-                    <Route path="/instructors" element={<InstructorsPage/>} />
-                    <Route path="/specialties" element={<SpecialtiesPage/>} />
-                    <Route path="/students" element={<StudentsPage/>} />
-                    <Route path="/registrations" element={<RegistrationsPage/>} />
-                    <Route path="/invoices" element={<InvoicesPage/>} />
+                    <Route path="/classes/*" element={ <ClassesPage />} /> 
+                    <Route path="/kitchens/*" element={<KitchensPage />} />                 
+                    <Route path="/schedule/*" element={<ClassInstancesPage />} /> 
+                    <Route path="/instructors/*" element={<InstructorsPage/>} />
+                    <Route path="/specialties/*" element={<SpecialtiesPage/>} />
+                    <Route path="/students/*" element={<StudentsPage/>} />
+                    <Route path="/registrations/*" element={<RegistrationsPage/>} />
+                    <Route path="/invoices/*" element={<InvoicesPage/>} />
+
                 </Routes>
               </section>
           </main>

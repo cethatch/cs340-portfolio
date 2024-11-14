@@ -1,44 +1,31 @@
 import React from "react";
+import KitchensTable from "../components/kitchens/KitchensTable";
+import CreateKitchen from "../components/kitchens/CreateKitchen";
+import UpdateKitchen from "../components/kitchens/UpdateKitchen";
+import DeleteKitchen from "../components/kitchens/DeleteKitchen";
+import { Link, Routes, Route } from 'react-router-dom';
+
 
 function KitchensPage() {
     return (
         <>
         <main>
-        <section>
             <h2>Teaching Kitchens</h2>
-            
-            <article>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Kitchen ID</th>
-                            <th>Kitchen Location</th>
-                            <th>Persons Capacity</th>
-                            <th>Delete Entry</th>
-                        </tr>
-                        <tr>
-                            
-                            <td>1</td>
-                            <td>123 Market St, San Francisco, CA 94103</td>
-                            <td>20</td>
-                            <td>
-                                <div class="deleteButton">
-                                    <button>
-                                        Delete
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-
-            </article>
-
-        </section> 
+            <nav>
+                <p><Link to="/kitchens">Kitchens Table</Link></p>
+                <p><Link to="create">Add a Kitchen</Link></p>
+                {/* <p><Link to="update">Update a Class</Link></p> */}
+            </nav> 
+            <Routes>
+                <Route path="/" element={<KitchensTable />} />
+                <Route path="create" element={<CreateKitchen />} />
+                {/* <Route path="update/:id" element={<UpdateClass />} /> */}
+                <Route path="update" element={<UpdateKitchen />} />
+                <Route path="delete" element={<DeleteKitchen />} />
+            </Routes>
         </main>
         </>
     );
 }
 
-export default KitchensPage
+export default KitchensPage;

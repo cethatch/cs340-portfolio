@@ -1,45 +1,31 @@
 import React from "react";
+import ClassInstanceTable from "../components/classInstances/ClassInstanceTable";
+import CreateClassInstance from "../components/classInstances/CreateClassInstance";
+import UpdateClassInstance from "../components/classInstances/UpdateClassInstance";
+import DeleteClassInstance from "../components/classInstances/DeleteClassInstance";
+import { Link, Routes, Route } from 'react-router-dom';
+
 
 function ClassInstancesPage() {
     return (
         <>
         <main>
-        <section>
-            <h2>Schedule of Classes</h2>
-            
-            <article>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>ClassInstance ID</th>
-                            <th>Class ID</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Kitchen ID</th>
-                            <th>Private Event?</th>
-
-                        </tr>
-                        <tr>
-                            
-                            <td>1</td>
-                            <td>1</td>
-                            <td>2024-11-15</td>
-                            <td>5:30PM PST</td>
-                            <td>2</td>
-                            <td>No</td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-
-                <p><em>Note: Existing records of scheduled classes may not be deleted.</em></p>
-
-            </article>
-
-        </section>
+            <h2>Class Schedule</h2>
+            <nav>
+                <p><Link to="/schedule">Class Schedule Table</Link></p>
+                <p><Link to="create">Schedule a Class</Link></p>
+                {/* <p><Link to="update">Update a Class</Link></p> */}
+            </nav> 
+            <Routes>
+                <Route path="/" element={<ClassInstanceTable />} />
+                <Route path="create" element={<CreateClassInstance />} />
+                {/* <Route path="update/:id" element={<UpdateClass />} /> */}
+                <Route path="update" element={<UpdateClassInstance />} />
+                <Route path="delete" element={<DeleteClassInstance />} />
+            </Routes>
         </main>
         </>
     );
 }
 
-export default ClassInstancesPage
+export default ClassInstancesPage;
