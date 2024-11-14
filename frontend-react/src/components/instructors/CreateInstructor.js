@@ -2,8 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 
-// const CreateClass = () => {
-function CreateClassInstance() {
+function CreateInstructor() {
   const navigate = useNavigate();
 
 //   const [formData, setFormData] = useState({
@@ -58,12 +57,12 @@ function CreateClassInstance() {
 //   };
 
     const handleSubmit = () => {
-        navigate("/kitchens");
+        navigate("/instructors");
     }
 
   return (
     <>
-        <h3>Schedule a class:</h3>
+        <h3>Add a new instructor:</h3>
         <p><span className='req'>* </span> - Required field.</p>
         
         <form className="form-container"  id="addNewForm" onSubmit={handleSubmit}>
@@ -71,54 +70,83 @@ function CreateClassInstance() {
                 <tbody>
                     <tr>
                         <td>
-                            <label htmlFor="className">Class Name:<span className='req'> * </span></label>
+                            <label htmlFor="instFirstName">First name:<span className='req'> * </span></label>
                         </td>
                         <td>
-                            <select id="className" 
-                            name="className" 
+                            <input
+                            type="text"
+                            name="instFirstName"
                             required
-                            // defaultValue={formData.fname}
+                            // defaultValue={formData.instFirstName}
                             // onChange={handleInputChange}
-                            style={{width: 300, height: 30}} 
-                            >
-                            </select>
-                            
+                            />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <label htmlFor="date">Date: <span className='req'> * </span></label>
+                            <label htmlFor="instLastName">Last name:<span className='req'> * </span></label>
+                        </td>
+                        <td>
+                            <input
+                            type="text"
+                            name="instLastName"
+                            required
+                            // defaultValue={formData.instLastName}
+                            // onChange={handleInputChange}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label htmlFor="phoneNumber">Phone number:<span className='req'> * </span></label>
+                        </td>
+                        <td>
+                            <input
+                            type="text"
+                            name="phoneNumber"
+                            maxLength={15}
+                            required
+                            // defaultValue={formData.phoneNumber}
+                            // onChange={handleInputChange}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label htmlFor="email">Email: </label>
+                        </td>
+                        <td>
+                            <input
+                            type="text"
+                            name="email"
+                            maxLength={100}
+                            // defaultValue={formData.email}
+                            // onChange={handleInputChange}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label htmlFor="hireDate">Hire date:</label>
                         </td>
                         <td>
                             <input
                             type="date"
-                            name="date"
-                            // defaultValue={formData.lname}
+                            name="hireDate"
+                            // defaultValue={formData.hireDate}
                             // onChange={handleInputChange}
                             />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <label htmlFor="time">Time:<span className='req'> * </span></label>
+                            <label htmlFor="instSpecialty">Specialty: </label>
                         </td>
                         <td>
-                            <input
-                            type="time"
-                            name="time"
-                            // defaultValue={formData.lname}
-                            // onChange={handleInputChange}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label htmlFor="address">Kitchen Address:</label>
-                        </td>
-                        <td>
-                            <select id="address" 
-                            name="address" 
-                            // defaultValue={formData.address}
+                            <select id="instSpecialty" 
+                            name="instSpecialty" 
+                            required
+                            // defaultValue={formData.specialty}
                             // onChange={handleInputChange}
                             style={{width: 300, height: 30}} 
                             >
@@ -127,24 +155,24 @@ function CreateClassInstance() {
                     </tr>
                     <tr>
                         <td>
-                            <label htmlFor="privateEvent">Private Event?</label>
+                            <label htmlFor="hourlyRate">Hourly rate: </label>
                         </td>
                         <td>
                             <input
-                            type="checkbox"
-                            name="privateEvent"
-                            style={{cursor: "pointer"}}
-                            // defaultValue={formData.lname}
+                            type="number"
+                            name="hourlyRate"
+                            min={0}
+                            // defaultValue={formData.hourlyRate}
                             // onChange={handleInputChange}
                             />
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <button type="submit" className="submitButton">Add to Schedule</button>
+            <button type="submit" className="submitButton">Create Instructor</button>
         </form>
     </>
   );
 }
 
-export default CreateClassInstance;
+export default CreateInstructor;

@@ -1,53 +1,31 @@
 import React from "react";
+import InstructorsTable from "../components/instructors/InstructorsTable";
+import CreateInstructor from "../components/instructors/CreateInstructor";
+import UpdateInstructor from "../components/instructors/UpdateInstructor";
+import DeleteInstructor from "../components/instructors/DeleteInstructor";
+import { Link, Routes, Route } from 'react-router-dom';
 
-function InstructorsPage() {
+
+function ClassesPage() {
     return (
         <>
         <main>
-        <section>
             <h2>Instructors</h2>
-            
-            <article>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Instructor ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Phone Number</th>
-                            <th>Email</th>
-                            <th>Hire Date</th>
-                            <th>Specialty ID</th>
-                            <th>Hourly Rate</th>
-                            <th>Delete Entry</th>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Olivia</td>
-                            <td>Garcia</td>
-                            <td>212-555-1234</td>
-                            <td>olivia.garcia@email.com</td>
-                            <td>2021-04-15</td>
-                            <td>4</td>
-                            <td>$61.00</td>
-                            <td>
-                                <div class="deleteButton">
-                                    <button>
-                                        Delete
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-
-            </article>
-
-        </section>
+            <nav>
+                <p><Link to="/instructors">Instructors Table</Link></p>
+                <p><Link to="create">Add an Instructor</Link></p>
+                {/* <p><Link to="update">Update a Class</Link></p> */}
+            </nav> 
+            <Routes>
+                <Route path="/" element={<InstructorsTable />} />
+                <Route path="create" element={<CreateInstructor />} />
+                {/* <Route path="update/:id" element={<UpdateInstructor />} /> */}
+                <Route path="update/" element={<UpdateInstructor />} />
+                <Route path="delete/" element={<DeleteInstructor />} />
+            </Routes>
         </main>
         </>
     );
 }
 
-export default InstructorsPage
+export default ClassesPage;
