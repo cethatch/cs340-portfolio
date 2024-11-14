@@ -8,18 +8,17 @@ import { Link, Routes, Route } from 'react-router-dom';
 
 function InstructorAssignmentsPage() {
     return (
-        console.log("Rendered assignments page."),
         <>
 
         <main>
             <h2>Instructor Assignments</h2>
             <nav>
-                <p><Link to="*">Instructor Assignments Table</Link></p>
+                <p><Link to="/instructor_assignments">Instructor Assignments Table</Link></p>
                 <p><Link to="create">Add an assignment</Link></p>
                 {/* <p><Link to="update">Update a Class</Link></p> */}
             </nav> 
             <Routes>
-                <Route path="*" element={<InstructorAssignmentsTable />} />
+                <Route path="/" element={<InstructorAssignmentsTable />} />
                 <Route path="create" element={<CreateInstructorAssignment />} />
                 {/* <Route path="update/:id" element={<UpdateInstructor />} /> */}
                 <Route path="update/" element={<UpdateInstructorAssignment />} />

@@ -12,7 +12,7 @@ function SpecialtiesPage() {
         <main>
             <h2>Specialties</h2>
             <nav>
-                <p><Link to="/">Specialties Table</Link></p>
+                <p><Link to="/specialties">Specialties Table</Link></p>
                 <p><Link to="create">Add a Specialty</Link></p>
                 {/* <p><Link to="update">Update a Class</Link></p> */}
             </nav> 
