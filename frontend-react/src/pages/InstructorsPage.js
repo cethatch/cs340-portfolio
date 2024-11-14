@@ -6,7 +6,7 @@ import DeleteInstructor from "../components/instructors/DeleteInstructor";
 import { Link, Routes, Route } from 'react-router-dom';
 
 
-function ClassesPage() {
+function InstructorsPage() {
     return (
         <>
         <main>
@@ -28,4 +28,4 @@ function ClassesPage() {
     );
 }
 
-export default ClassesPage;
+export default InstructorsPage;

@@ -2,8 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 
-// const CreateClass = () => {
-function CreateClass() {
+function CreateSpecialty() {
   const navigate = useNavigate();
 
 //   const [formData, setFormData] = useState({
@@ -58,12 +57,12 @@ function CreateClass() {
 //   };
 
     const handleSubmit = () => {
-        navigate("/classes");
+        navigate("/specialties");
     }
 
   return (
     <>
-        <h3>Add a new class:</h3>
+        <h3>Add a new specialty:</h3>
         <p><span className='req'>* </span> - Required field.</p>
         
         <form className="form-container"  id="addNewForm" onSubmit={handleSubmit}>
@@ -71,65 +70,24 @@ function CreateClass() {
                 <tbody>
                     <tr>
                         <td>
-                            <label htmlFor="className">Class Name:<span className='req'> * </span></label>
+                            <label htmlFor="className">Specialty name:<span className='req'> * </span></label>
                         </td>
                         <td>
                             <input
                             type="text"
-                            name="className"
+                            name="specialtyName"
                             required
                             // defaultValue={formData.fname}
                             // onChange={handleInputChange}
                             />
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <label htmlFor="duration">Duration (Minutes)</label>
-                        </td>
-                        <td>
-                            <input
-                            type="number"
-                            name="duration"
-                            min={0}
-                            // defaultValue={formData.lname}
-                            // onChange={handleInputChange}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label htmlFor="cost">Registration Cost (USD)</label>
-                        </td>
-                        <td>
-                            <input
-                            type="number"
-                            name="cost"
-                            placeholder="$0.00"
-                            min={0}
-                            // value={formData.homeworld}
-                            // onChange={handleInputChange}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label htmlFor="description">Description</label>
-                        </td>
-                        <td>
-                            <input type="text" 
-                            name="description" 
-                            // value={formData.age} 
-                            // onChange={handleInputChange} 
-                            />
-                        </td>
-                    </tr>
                 </tbody>
             </table>
-            <button type="submit" className="submitButton">Create Class</button>
+            <button type="submit" className="submitButton">Create Specialty</button>
         </form>
     </>
   );
 }
 
-export default CreateClass;
+export default CreateSpecialty;

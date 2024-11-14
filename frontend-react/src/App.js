@@ -13,6 +13,7 @@ import ClassesPage from './pages/ClassesPage.js'
 import KitchensPage from './pages/KitchensPage.js'
 import ClassInstancesPage from './pages/ClassInstancesPage.js'
 import InstructorsPage from './pages/InstructorsPage.js'
+import InstructorAssignmentsPage from './pages/InstructorAssignmentsPage.js'
 import SpecialtiesPage from './pages/SpecialtiesPage.js'
 import StudentsPage from './pages/StudentsPage.js'
 import RegistrationsPage from './pages/RegistrationsPage.js'
@@ -22,6 +23,7 @@ import InvoicesPage from './pages/InvoicesPage.js'
 function App() {
 
   return (
+    console.log("App started!"),
     <>
       <BrowserRouter>
 
@@ -34,6 +36,7 @@ function App() {
                     <Route path="/kitchens/*" element={<KitchensPage />} />                 
                     <Route path="/schedule/*" element={<ClassInstancesPage />} /> 
                     <Route path="/instructors/*" element={<InstructorsPage/>} />
+                    <Route path="/instructor_assignments/*" element={<InstructorAssignmentsPage />} />
                     <Route path="/specialties/*" element={<SpecialtiesPage/>} />
                     <Route path="/students/*" element={<StudentsPage/>} />
                     <Route path="/registrations/*" element={<RegistrationsPage/>} />

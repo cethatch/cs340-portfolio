@@ -12,7 +12,7 @@ function ClassesPage() {
         <main>
             <h2>Culinary Classes</h2>
             <nav>
-                <p><Link to="/classes">Classes Table</Link></p>
+                <p><Link to="/">Classes Table</Link></p>
                 <p><Link to="create">Add a Class</Link></p>
                 {/* <p><Link to="update">Update a Class</Link></p> */}
             </nav> 
