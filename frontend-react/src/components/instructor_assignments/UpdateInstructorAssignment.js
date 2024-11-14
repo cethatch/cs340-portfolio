@@ -61,109 +61,86 @@ const UpdateInstructorAssignment = () => {
 
     // Remove once backend is working and use the method above:
     const handleSubmit = () => {
-        navigate("/instructors");
+        navigate("/instructor_assignments");
     }
 
   return (
     <div>
-      <h3>Update Instructor:</h3>
+      <h3>Update instructor assignment:</h3>
       <p><span className='req'>* </span> - Required field.</p>
       
       <form onSubmit={handleSubmit} className="form-container" id="addNewForm">
         <table>
             <tbody>
-          <tr>
-              <td><label htmlFor="instFirstName">First Name:<span className='req'> * </span></label></td>
+            <tr>
+              <td><label htmlFor="classInstructorID">Assignment ID</label></td>
               <td>
-                  <input
-                    type="text"
-                    name="instFirstName"
-                    // onChange={handleInputChange}
-                    required
-                    // defaultValue={prevInstructor.instFirstName}
-                  />
+              
               </td>
           </tr>
           <tr>
-              <td><label htmlFor="instLastName">Last Name:<span className='req'> * </span></label></td>
-              <td>
-                  <input
-                    type="text"
-                    name="instLastName"
-                    // onChange={handleInputChange}
-                    required
-                    // defaultValue={prevInstructor.instLastName}
-                  />
-              </td>
-          </tr>
-        
-        <tr>
-          <td><label htmlFor="phoneNumber">Phone number: <span className='req'> * </span></label></td>
-          <td>
-              <input
-                type="number"
-                name="phoneNumber"
-                // onChange={handleInputChange}
-                // defaultValue={prevInstructor.phoneNumber}
-              />
-          </td>
-        </tr>
-        <tr>
-              <td><label htmlFor="email">Email:</label></td>
-              <td>
-                  <input
-                    type="text"
-                    name="email"
-                    // onChange={handleInputChange}
-                    // defaultValue={prevInstructor.email}
-                  />
-              </td>
-          </tr>
-          <tr>
-              <td><label htmlFor="hireDate">Hire date:</label></td>
-              <td>
-                  <input
-                    type="date"
-                    name="hireDate"
-                    // onChange={handleInputChange}
-                    // defaultValue={prevInstructor.hireDate}
-                  />
-              </td>
-          </tr>
-          <tr>
-            <td>
-                <label htmlFor="instSpecialty">Specialty: </label>
-            </td>
-            <td>
-                <select id="instSpecialty" 
-                name="instSpecialty" 
-                required
-                // defaultValue={prevInstructor.specialty}
-                // onChange={handleInputChange}
-                style={{width: 300, height: 30}} 
-                >
-                </select>
-            </td>
-          </tr>
-          <tr>
-              <td>
-                  <label htmlFor="hourlyRate">Hourly rate: </label>
-              </td>
-              <td>
-                  <input
-                  type="number"
-                  name="hourlyRate"
-                  min={0}
-                  // defaultValue={prevInstructor.hourlyRate}
-                  // onChange={handleInputChange}
-                  />
-              </td>
-          </tr>
+                        <td>
+                            <label htmlFor="instName">Instructor name:<span className='req'> * </span></label>
+                        </td>
+                        <td>
+                            <select id="instName" 
+                            name="instName" 
+                            required
+                            // defaultValue={formData.specialty}
+                            // onChange={handleInputChange}
+                            style={{width: 300, height: 30}} 
+                            >
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label htmlFor="classDate">Class date:<span className='req'> * </span></label>
+                        </td>
+                        <td>
+                            <input
+                            type="date"
+                            name="classDate"
+                            required
+                            // defaultValue={formData.instLastName}
+                            // onChange={handleInputChange}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label htmlFor="classTime">Class time:<span className='req'> * </span></label>
+                        </td>
+                        <td>
+                            <input
+                            type="time"
+                            name="classTime"
+                            required
+                            // defaultValue={formData.phoneNumber}
+                            // onChange={handleInputChange}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label htmlFor="kitchenAddress">Kitchen address: </label>
+                        </td>
+                        <td>
+                            <select id="kitchenAddress" 
+                            name="kitchenAddress" 
+                            required
+                            // defaultValue={formData.specialty}
+                            // onChange={handleInputChange}
+                            style={{width: 300, height: 30}} 
+                            >
+                            </select>
+                        </td>
+                    </tr>
         </tbody>
         </table>
         
         <button type="submit" className="submitButton">Update</button>
-        <button type="button" id="cancelButton" className="submitButton" onClick={() => navigate("/instructors")}>
+        <button type="button" id="cancelButton" className="submitButton" onClick={() => navigate("/instructor_assignments")}>
           Cancel
         </button>
       </form>

@@ -57,12 +57,12 @@ function CreateInstructorAssignment() {
 //   };
 
     const handleSubmit = () => {
-        navigate("/instructors");
+        navigate("/instructor_assignments");
     }
 
   return (
     <>
-        <h3>Add a new instructor:</h3>
+        <h3>Add a new instructor assignment:</h3>
         <p><span className='req'>* </span> - Required field.</p>
         
         <form className="form-container"  id="addNewForm" onSubmit={handleSubmit}>
@@ -70,81 +70,11 @@ function CreateInstructorAssignment() {
                 <tbody>
                     <tr>
                         <td>
-                            <label htmlFor="instFirstName">First name:<span className='req'> * </span></label>
+                            <label htmlFor="instName">Instructor name:<span className='req'> * </span></label>
                         </td>
                         <td>
-                            <input
-                            type="text"
-                            name="instFirstName"
-                            required
-                            // defaultValue={formData.instFirstName}
-                            // onChange={handleInputChange}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label htmlFor="instLastName">Last name:<span className='req'> * </span></label>
-                        </td>
-                        <td>
-                            <input
-                            type="text"
-                            name="instLastName"
-                            required
-                            // defaultValue={formData.instLastName}
-                            // onChange={handleInputChange}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label htmlFor="phoneNumber">Phone number:<span className='req'> * </span></label>
-                        </td>
-                        <td>
-                            <input
-                            type="text"
-                            name="phoneNumber"
-                            maxLength={15}
-                            required
-                            // defaultValue={formData.phoneNumber}
-                            // onChange={handleInputChange}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label htmlFor="email">Email: </label>
-                        </td>
-                        <td>
-                            <input
-                            type="text"
-                            name="email"
-                            maxLength={100}
-                            // defaultValue={formData.email}
-                            // onChange={handleInputChange}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label htmlFor="hireDate">Hire date:</label>
-                        </td>
-                        <td>
-                            <input
-                            type="date"
-                            name="hireDate"
-                            // defaultValue={formData.hireDate}
-                            // onChange={handleInputChange}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label htmlFor="instSpecialty">Specialty: </label>
-                        </td>
-                        <td>
-                            <select id="instSpecialty" 
-                            name="instSpecialty" 
+                            <select id="instName" 
+                            name="instName" 
                             required
                             // defaultValue={formData.specialty}
                             // onChange={handleInputChange}
@@ -155,21 +85,54 @@ function CreateInstructorAssignment() {
                     </tr>
                     <tr>
                         <td>
-                            <label htmlFor="hourlyRate">Hourly rate: </label>
+                            <label htmlFor="classDate">Class date:<span className='req'> * </span></label>
                         </td>
                         <td>
                             <input
-                            type="number"
-                            name="hourlyRate"
-                            min={0}
-                            // defaultValue={formData.hourlyRate}
+                            type="date"
+                            name="classDate"
+                            required
+                            // defaultValue={formData.instLastName}
                             // onChange={handleInputChange}
                             />
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <label htmlFor="classTime">Class time:<span className='req'> * </span></label>
+                        </td>
+                        <td>
+                            <input
+                            type="time"
+                            name="classTime"
+                            required
+                            // defaultValue={formData.phoneNumber}
+                            // onChange={handleInputChange}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label htmlFor="kitchenAddress">Kitchen address: </label>
+                        </td>
+                        <td>
+                            <select id="kitchenAddress" 
+                            name="kitchenAddress" 
+                            required
+                            // defaultValue={formData.specialty}
+                            // onChange={handleInputChange}
+                            style={{width: 300, height: 30}} 
+                            >
+                            </select>
+                        </td>
+                    </tr>
+                    
                 </tbody>
             </table>
-            <button type="submit" className="submitButton">Create Instructor</button>
+            <button type="submit" className="submitButton">Create Assignment</button>
+            <button type="button" id="cancelButton" className="submitButton" onClick={() => navigate("/instructor_assignments")}>
+          Cancel
+        </button>
         </form>
     </>
   );

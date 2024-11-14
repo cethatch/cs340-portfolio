@@ -33,7 +33,7 @@ const DeleteInstructorAssignment = () => {
 
   return (
     <div>
-      <h2>Delete Instructor Entry</h2>
+      <h3>Delete Instructor Assignment Entry</h3>
       <p style={{color:"red", fontWeight:"bold"}}>Are you sure you would like to delete the following entry?</p>
       {/* {classes.length === 0 ? (
         <div>
@@ -51,23 +51,40 @@ const DeleteInstructorAssignment = () => {
         <table>
           <tbody>
             <tr>
-              <td>Instructor ID</td>
+              <td>Assignment ID</td>
               <td></td>
             </tr>
             <tr>
-              <td>First Name</td>
+              <td>Instructor First Name</td>
               <td></td>
             </tr>
             <tr>
-              <td>Last Name</td>
+              <td>Instructor Last Name</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Class Name</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Date</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Time</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Kitchen Address</td>
               <td></td>
             </tr>
           </tbody>
         </table>
-        <button type="button" id="cancelButton" className="submitButton" onClick={() => navigate("/instructors")}>
+        
+        <button type="submit" className="submitButton">Delete Instructor</button>
+        <button type="button" id="cancelButton" className="submitButton" onClick={() => navigate("/instructor_assignments")}>
           Cancel
         </button>
-        <button type="submit" className="submitButton">Delete Instructor</button>
       {/* )} */}
       </form>
     </div>

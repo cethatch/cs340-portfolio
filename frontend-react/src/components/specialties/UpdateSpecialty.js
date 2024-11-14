@@ -72,6 +72,12 @@ const UpdateSpecialty = () => {
       <form onSubmit={handleSubmit} className="form-container" id="addNewForm">
         <table>
             <tbody>
+            <tr>
+              <td><label>Specialty ID:</label></td>
+              <td>
+                  
+              </td>
+          </tr>
           <tr>
               <td><label>Specialty name:<span className='req'> * </span></label></td>
               <td>
