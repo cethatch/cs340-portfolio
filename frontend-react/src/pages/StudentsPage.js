@@ -1,48 +1,31 @@
 import React from "react";
+import StudentsTable from "../components/students/StudentsTable";
+import CreateStudent from "../components/students/CreateStudent";
+import UpdateStudent from "../components/students/UpdateStudent";
+import DeleteStudent from "../components/students/DeleteStudent";
+import { Link, Routes, Route } from 'react-router-dom';
+
 
 function StudentsPage() {
     return (
         <>
         <main>
-        <section>
             <h2>Students</h2>
-            
-            <article>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Student ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Phone Number</th>
-                            <th>Email</th>
-                            <th>Delete Entry</th>
-                        </tr>
-                        <tr>
-                            
-                            <td>1</td>
-                            <td>Sarah</td>
-                            <td>Thompson</td>
-                            <td>+44 7911 123456</td>
-                            <td>sarah.thompson@email.com</td>
-                            <td>
-                                <div class="deleteButton">
-                                    <button>
-                                        Delete
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-
-            </article>
-
-        </section>
+            <nav>
+                <p><Link to="/students">Students Table</Link></p>
+                <p><Link to="create">Add a Student</Link></p>
+                {/* <p><Link to="update">Update a Class</Link></p> */}
+            </nav> 
+            <Routes>
+                <Route path="/" element={<StudentsTable />} />
+                <Route path="create" element={<CreateStudent />} />
+                {/* <Route path="update/:id" element={<UpdateClass />} /> */}
+                <Route path="update" element={<UpdateStudent />} />
+                <Route path="delete" element={<DeleteStudent />} />
+            </Routes>
         </main>
         </>
     );
 }
 
-export default StudentsPage
+export default StudentsPage;
