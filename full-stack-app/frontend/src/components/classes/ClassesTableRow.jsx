@@ -1,0 +1,31 @@
+import axios from "axios";
+import { BsTrash } from "react-icons/bs";
+import { BiEditAlt } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+
+/* eslint-disable react/prop-types */
+const TableRow = ({ class_entry }) => {
+  // Hook that allows us to navigate programmatically
+  const navigate = useNavigate();
+  // Redirect to edit class page
+  const handleEdit = () => {
+    // We can access the id (and query the person) with useParams() in the UpdatePerson component
+    navigate(`/classes/update/${class_entry.classID}`, { state: { class_entry } });
+  
+  };
+
+  return (
+    <tr key={class_entry.classID}>
+      <td>{class_entry.classID}</td>
+      <td>{class_entry.className}</td>
+      <td>{class_entry.duration}</td>
+      <td>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(class_entry.registrationCost)}</td>
+      <td>{class_entry.classDescription}</td>
+      <td>
+        <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }} />
+      </td>
+    </tr>
+  );
+};
+
+export default TableRow;
