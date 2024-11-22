@@ -1,6 +1,15 @@
+/*
+The code used on this page was adapted from the CS340 React Starter App, 
+and made to suit our portfolio project's topic and database.
+
+Authors: Zac Maes and Devin Daniels.
+https://github.com/osu-cs340-ecampus/react-starter-app 
+Accessed during the Fall 2024 term.
+*/
+
 // Import dependencies
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 // Import Components, styles, media
 import PageHeader from './components/PageHeader.jsx';
@@ -22,29 +31,28 @@ function App() {
 
   return (
     <>
+      <PageHeader />
+      <main>
+        <section>
+            <Routes> 
+                <Route path='/' element={ <HomePage />} />
+                <Route path="/classes/*" element={ <ClassesPage />} /> 
+                <Route path="/kitchens/*" element={<KitchensPage />} />                 
+                <Route path="/schedule/*" element={<ClassInstancesPage />} /> 
+                <Route path="/instructors/*" element={<InstructorsPage/>} />
+                <Route path="/instructor_assignments/*" element={<InstructorAssignmentsPage />} />
+                <Route path="/specialties/*" element={<SpecialtiesPage/>} />
+                <Route path="/students/*" element={<StudentsPage/>} />
+                <Route path="/registrations/*" element={<RegistrationsPage/>} />
+                <Route path="/invoices/*" element={<InvoicesPage/>} />
 
-          <PageHeader />
-          <main>
-            <section>
-                <Routes> 
-                    <Route path='/' element={ <HomePage />} />
-                    <Route path="/classes/*" element={ <ClassesPage />} /> 
-                    <Route path="/kitchens/*" element={<KitchensPage />} />                 
-                    <Route path="/schedule/*" element={<ClassInstancesPage />} /> 
-                    <Route path="/instructors/*" element={<InstructorsPage/>} />
-                    <Route path="/instructor_assignments/*" element={<InstructorAssignmentsPage />} />
-                    <Route path="/specialties/*" element={<SpecialtiesPage/>} />
-                    <Route path="/students/*" element={<StudentsPage/>} />
-                    <Route path="/registrations/*" element={<RegistrationsPage/>} />
-                    <Route path="/invoices/*" element={<InvoicesPage/>} />
+            </Routes>
+          </section>
+      </main>
 
-                </Routes>
-              </section>
-          </main>
-
-          <footer>
-            <p>&copy; 2024 Christine Thatcher & Ingrid Gundezrson Thomas</p>
-          </footer>
+      <footer>
+        <p>&copy; 2024 Christine Thatcher & Ingrid Gundezrson Thomas</p>
+      </footer>
 
     </>
   );

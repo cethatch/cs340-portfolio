@@ -1,50 +1,43 @@
-import { useState, useEffect } from "react";
-import { RiCreativeCommonsZeroFill } from "react-icons/ri";
-import { BiEditAlt } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
-import TableRow from "./KitchensTableRow";
-import { Link, Routes, Route, useNavigate } from 'react-router-dom';
+/*
+The code used on this page was adapted from the CS340 React Starter App, 
+and made to suit our portfolio project's topic and database.
 
-// import axios from "axios";
+Authors: Zac Maes and Devin Daniels.
+https://github.com/osu-cs340-ecampus/react-starter-app 
+Accessed during the Fall 2024 term.
+*/
+
+import { useNavigate, useLocation } from 'react-router-dom';
+import axios from "axios";
 
 const DeleteKitchen = () => {
-  // const [classes, setClasses] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const kitchen = location.state.kitchen;
 
-
-  // const fetchClasses = async () => {
-  //   try {
-  //     const URL = import.meta.env.VITE_API_URL + "classes";
-  //     const response = await axios.get(URL);
-  //     setClasses(response.data);
-  //   } catch (error) {
-  //     alert("Error fetching classes from the server.");
-  //     console.error("Error fetching classes:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   // fetchClasses();
-  // }, []);
-
-  const handleSubmit = () => {
-    navigate("/kitchens");
-  }
+  const handleSubmit = async (event) => {
+    // Stop default form behavior which is to reload the page
+    event.preventDefault();
+    // Send delete request to backend server
+    try {
+      const URL = import.meta.env.VITE_API_URL + "kitchens/" + kitchen.kitchenID;
+      const response = await axios.delete(URL)
+      if (response.status !== 200) {
+        alert("Error deleting kitchen");
+      } else {
+        alert(response.data.message);
+        // Redirect to kitchens page
+        navigate("/kitchens");
+        }
+      } catch (err) {
+        console.log("Error deleting kitchen:", err);
+      }
+    };
 
   return (
     <div>
       <h2>Delete Kitchen Entry</h2>
       <p style={{color:"red", fontWeight:"bold"}}>Are you sure you would like to delete the following entry?</p>
-      {/* {classes.length === 0 ? (
-        <div>
-          <RiCreativeCommonsZeroFill size={70} color="#ccc" />
-          <p>No classes found.</p>
-        </div>
-      ) : ( */}
-
-      {/* {classes.map((class) => (
-              <TableRow key={class.id} class={class} fetchClasses={fetchClasses} />
-            ))} */}
     
     <form className="form-container"  id="addNewForm" onSubmit={handleSubmit}>
 
@@ -52,23 +45,23 @@ const DeleteKitchen = () => {
           <tbody>
             <tr>
               <td>Kitchen ID</td>
-              <td></td>
+              <td>{kitchen.kitchenID}</td>
             </tr>
             <tr>
               <td>Kitchen Address</td>
-              <td></td>
+              <td>{kitchen.kitchenLocation}</td>
             </tr>
             <tr>
               <td>Room Capacity (persons)</td>
-              <td></td>
+              <td>{kitchen.capacity}</td>
             </tr>
           </tbody>
         </table>
+       
+        <button type="submit" className="submitButton">Delete Kitchen</button>
         <button type="button" id="cancelButton" className="submitButton" onClick={() => navigate("/kitchens")}>
           Cancel
         </button>
-        <button type="submit" className="submitButton">Delete Kitchen</button>
-      {/* )} */}
       </form>
     </div>
     

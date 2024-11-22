@@ -1,68 +1,68 @@
+/*
+The code used on this page was adapted from the CS340 React Starter App, 
+and made to suit our portfolio project's topic and database.
+
+Authors: Zac Maes and Devin Daniels.
+https://github.com/osu-cs340-ecampus/react-starter-app 
+Accessed during the Fall 2024 term.
+*/
+
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 const UpdateKitchen = () => {
-//   const { id } = useParams();
+  const { kitchenID } = useParams();
   const navigate = useNavigate();
-//   const location = useLocation();
-//   const prevPerson = location.state.person;
+  const location = useLocation();
+  const prevKitchen = location.state.kitchen;
 
-//   const [formData, setFormData] = useState({
-//     fname: prevPerson.fname || '',
-//     lname: prevPerson.lname || '',
-//     homeworld: prevPerson.homeworld || '',
-//     age: prevPerson.age || '',
-//   });
+  const [formData, setFormData] = useState({
+    kitchenLocation: prevKitchen.kitchenLocation || '',
+    capacity: prevKitchen.capacity || ''
+  });
 
-//   const handleInputChange = (event) => {
-//     const { name, value } = event.target;
-//     setFormData((prevFormData) => ({
-//       ...prevFormData,
-//       [name]: value,
-//     }));
-//   };
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
 
-//   function isUpdate(){
-//     // Check if formData is equal to prevPerson
-//     if (JSON.stringify(formData) === JSON.stringify({
-//       fname: prevPerson.fname || '',
-//       lname: prevPerson.lname || '',
-//       homeworld: prevPerson.homeworld || '',
-//       age: prevPerson.age || '',
-//     })) {
-//       alert("No changes made.");
-//       return false;
-//     }
-//     return true
-//   }
-
-//   const handleSubmit = async (event) => {
-//     // Stop default form behavior which is to reload the page
-//     event.preventDefault();
-//     // Check if formData is equal to prevPerson
-//     if (isUpdate()){
-//       try {
-//         const URL = import.meta.env.VITE_API_URL + "people/" + id;
-//         const response = await axios.put(URL, formData);
-//         if (response.status !== 200) {
-//           alert("Error updating person");
-//         } else {
-//           alert(response.data.message);
-//           // Redirect to people page
-//           navigate("/people");
-//         }
-//       } catch (err) {
-//         console.log("Error updating person:", err);
-//       }
-//     }
-//   };
-
-    // Remove once backend is working and use the method above:
-    const handleSubmit = () => {
-        navigate("/kitchens");
+  function isUpdate(){
+    // Check if formData is equal to prevPerson
+    if (JSON.stringify(formData) === JSON.stringify({
+      kitchenLocation: prevKitchen.kitchenLocation || '',
+      capacity: prevKitchen.capacity || ''
+    })) {
+      alert("No changes made.");
+      return false;
     }
+    return true
+  }
+
+  const handleSubmit = async (event) => {
+    // Stop default form behavior which is to reload the page
+    event.preventDefault();
+    // Check if formData is equal to prevKitchen
+    if (isUpdate()){
+      try {
+        const URL = import.meta.env.VITE_API_URL + "kitchens/" + kitchenID;
+        const response = await axios.put(URL, formData);
+        if (response.status !== 200) {
+          alert("Error updating kitchen");
+        } else {
+          alert(response.data.message);
+          // Redirect to kitchens page
+          navigate("/kitchens");
+        }
+      } catch (err) {
+        console.log("Error updating kitchen:", err);
+      }
+    }
+  };
 
   return (
     <div>
@@ -73,14 +73,19 @@ const UpdateKitchen = () => {
         <table>
             <tbody>
           <tr>
+            <td>Kitchen ID:</td>
+            <td>{prevKitchen.kitchenID}</td>
+          </tr>
+          <tr>
               <td><label>Kitchen Address:<span className='req'> * </span></label></td>
               <td>
                   <input
                     type="text"
-                    name="address"
-                    // onChange={handleInputChange}
+                    name="kitchenLocation"
+                    onChange={handleInputChange}
+                    maxLength={100}
                     required
-                    // defaultValue={prevKitchen.address}
+                    defaultValue={prevKitchen.kitchenLocation}
                   />
               </td>
           </tr>
@@ -92,8 +97,8 @@ const UpdateKitchen = () => {
                 type="number"
                 name="capacity"
                 min={0}
-                // onChange={handleInputChange}
-                // defaultValue={prevKitchen.capacity}
+                onChange={handleInputChange}
+                defaultValue={prevKitchen.capacity}
               />
           </td>
         </tr>
@@ -101,7 +106,7 @@ const UpdateKitchen = () => {
         </tbody>
         </table>
         
-        <button type="submit" className="submitButton">Update</button>
+        <button type="submit" className="submitButton">Update kitchen</button>
         <button type="button" id="cancelButton" className="submitButton" onClick={() => navigate("/kitchens")}>
           Cancel
         </button>

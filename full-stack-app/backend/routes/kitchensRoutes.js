@@ -10,15 +10,18 @@ Accessed during the Fall 2024 term.
 const express = require("express");
 const router = express.Router();
 const {
-  getClasses,
-  getClassByID,
-  createClass,
-  updateClass,
-} = require("../controllers/classesController");
+  getKitchens,
+  getKitchenByID,
+  createKitchen,
+  updateKitchen,
+  deleteKitchen,
+} = require("../controllers/kitchensController");
 
-router.get("/", getClasses);
-router.get("/:classID", getClassByID);
-router.post("/", createClass);
-router.put("/:classID", updateClass);
+router.get("/", getKitchens);
+router.get("/:kitchenID", getKitchenByID);
+router.post("/", createKitchen);
+router.put("/:kitchenID", updateKitchen);
+router.delete("/:kitchenID", deleteKitchen);
+
 
 module.exports = router;

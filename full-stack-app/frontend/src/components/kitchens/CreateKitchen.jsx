@@ -1,65 +1,63 @@
+/*
+The code used on this page was adapted from the CS340 React Starter App, 
+and made to suit our portfolio project's topic and database.
+
+Authors: Zac Maes and Devin Daniels.
+https://github.com/osu-cs340-ecampus/react-starter-app 
+Accessed during the Fall 2024 term.
+*/
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 
-// const CreateClass = () => {
 function CreateKitchen() {
   const navigate = useNavigate();
 
-//   const [formData, setFormData] = useState({
-//     className: "",
-//     duration: "",
-//     cost: "",
-//     description: "",
-//   });
+  const [formData, setFormData] = useState({
+    kitchenLocation: "",
+    capacity: ""
+  });
   
-//   const handleSubmit = async (e) => {
-//     // Prevent page reload
-//     e.preventDefault();
-//     // Create a new person object from the formData
-//     const newClass = {
-//         className: formData.className,
-//         duration: formData.duration,
-//         cost: formData.cost,
-//         description: formData.description,
-//     };
+  const handleSubmit = async (e) => {
+    // Prevent page reload
+    e.preventDefault();
+    // Create a new person object from the formData
+    const newKitchen = {
+        kitchenLocation: formData.kitchenLocation,
+        capacity: formData.capacity
+    };
 
-//     try {
-//       const URL = import.meta.env.VITE_API_URL + "classes";
-//       const response = await axios.post(URL, newClass);
-//       if (response.status === 201) {
-//         navigate("/classes");
-//       } else {
-//         alert("Error creating class.");
-//       }
-//     } catch (error) {
-//       alert("Error creating class.");
-//       console.error("Error creating class:", error);
-//     }
-//     // Reset the form fields
-//     resetFormFields();
-//   };
-
-//   const resetFormFields = () => {
-//     setFormData({
-//         className: "",
-//         duration: "",
-//         cost: "",
-//         description: "",
-//     });
-//   };
-
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       [name]: value,
-//     }));
-//   };
-
-    const handleSubmit = () => {
+    try {
+      const URL = import.meta.env.VITE_API_URL + "kitchens";
+      const response = await axios.post(URL, newKitchen);
+      if (response.status === 201) {
         navigate("/kitchens");
+      } else {
+        alert("Error creating kitchen.");
+      }
+    } catch (error) {
+      alert("Error creating kitchen.");
+      console.error("Error creating kitchen:", error);
     }
+    // Reset the form fields
+    resetFormFields();
+  };
+
+  const resetFormFields = () => {
+    setFormData({
+        kitchenLocation: "",
+        capacity: ""
+    });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   return (
     <>
@@ -71,15 +69,16 @@ function CreateKitchen() {
                 <tbody>
                     <tr>
                         <td>
-                            <label htmlFor="className">Kitchen Address:<span className='req'> * </span></label>
+                            <label htmlFor="kitchenLocation">Kitchen Address:<span className='req'> * </span></label>
                         </td>
                         <td>
                             <input
                             type="text"
                             name="kitchenLocation"
                             required
-                            // defaultValue={formData.fname}
-                            // onChange={handleInputChange}
+                            maxLength={100}
+                            defaultValue={formData.kitchenLocation}
+                            onChange={handleInputChange}
                             />
                         </td>
                     </tr>
@@ -92,14 +91,17 @@ function CreateKitchen() {
                             type="number"
                             name="capacity"
                             min={0}
-                            // defaultValue={formData.lname}
-                            // onChange={handleInputChange}
+                            defaultValue={formData.capacity}
+                            onChange={handleInputChange}
                             />
                         </td>
                     </tr>
                 </tbody>
             </table>
             <button type="submit" className="submitButton">Create Kitchen</button>
+            <button type="button" id="cancelButton" className="submitButton" onClick={() => navigate("/kitchens")}>
+          Cancel
+        </button>
         </form>
     </>
   );

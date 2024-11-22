@@ -1,3 +1,12 @@
+/*
+The code used on this page was adapted from the CS340 React Starter App, 
+and made to suit our portfolio project's topic and database.
+
+Authors: Zac Maes and Devin Daniels.
+https://github.com/osu-cs340-ecampus/react-starter-app 
+Accessed during the Fall 2024 term.
+*/
+
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
@@ -23,6 +32,9 @@ app.use((req, res, next) => {
 // API Routes for backend CRUD:
 const classesRouter = require("./routes/classesRoutes"); 
 app.use("/api/classes", classesRouter);
+
+const kitchensRouter = require("./routes/kitchensRoutes");
+app.use("/api/kitchens", kitchensRouter);
 
 
 // Serve Frontend for Non-API Routes
