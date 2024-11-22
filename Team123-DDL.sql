@@ -60,7 +60,7 @@ CREATE OR REPLACE TABLE Classes (
 CREATE OR REPLACE TABLE Kitchens (
     kitchenID int(11) AUTO_INCREMENT NOT NULL,
     kitchenLocation VARCHAR(100) NOT NULL,
-    capacity int(11) NOT NULL,
+    capacity int(11) NULL,
     PRIMARY KEY (kitchenID)
 );
 
