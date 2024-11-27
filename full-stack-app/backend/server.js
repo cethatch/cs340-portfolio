@@ -10,8 +10,6 @@ Accessed during the Fall 2024 term.
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const path = require("path");
-
 
 const app = express();
 const PORT = process.env.PORT || 8500;
@@ -36,12 +34,9 @@ app.use("/api/classes", classesRouter);
 const kitchensRouter = require("./routes/kitchensRoutes");
 app.use("/api/kitchens", kitchensRouter);
 
+const instructorsRouter = require("./routes/instructorsRoutes");
+app.use("/api/instructors", instructorsRouter);
 
-// Serve Frontend for Non-API Routes
-app.use(express.static(path.join(__dirname, "frontend", "dist")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
-});
 
 // Add your Connect DB Activitiy Code Below:
 // ...
