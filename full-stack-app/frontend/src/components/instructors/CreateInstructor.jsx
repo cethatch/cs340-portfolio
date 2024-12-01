@@ -7,67 +7,90 @@ https://github.com/osu-cs340-ecampus/react-starter-app
 Accessed during the Fall 2024 term.
 */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 
 function CreateInstructor() {
   const navigate = useNavigate();
 
-//   const [formData, setFormData] = useState({
-//     className: "",
-//     duration: "",
-//     cost: "",
-//     description: "",
-//   });
-  
-//   const handleSubmit = async (e) => {
-//     // Prevent page reload
-//     e.preventDefault();
-//     // Create a new person object from the formData
-//     const newClass = {
-//         className: formData.className,
-//         duration: formData.duration,
-//         cost: formData.cost,
-//         description: formData.description,
-//     };
+  const [formData, setFormData] = useState({
+    instFirstName: "",
+    instLastName: "",
+    phoneNumber: "",
+    email: "",
+    hireDate: "",
+    specialty: "",
+    hourlyRate: ""
+  });
 
-//     try {
-//       const URL = import.meta.env.VITE_API_URL + "classes";
-//       const response = await axios.post(URL, newClass);
-//       if (response.status === 201) {
-//         navigate("/classes");
-//       } else {
-//         alert("Error creating class.");
-//       }
-//     } catch (error) {
-//       alert("Error creating class.");
-//       console.error("Error creating class:", error);
-//     }
-//     // Reset the form fields
-//     resetFormFields();
-//   };
+  const [specialtyOptions, setSpecialtyOptions] = useState([]);
 
-//   const resetFormFields = () => {
-//     setFormData({
-//         className: "",
-//         duration: "",
-//         cost: "",
-//         description: "",
-//     });
-//   };
+  // Fetch specialty options from the backend
+  useEffect(() => {
+    const fetchSpecialties = async () => {
+      try {
+        const URL = import.meta.env.VITE_API_URL + "specialties";
+        const response = await axios.get(URL);
+        setSpecialtyOptions(response.data);
+      } catch (error) {
+        console.error("Error fetching specialty options:", error);
+        alert("Could not load specialty options");
+      }
+    };
 
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       [name]: value,
-//     }));
-//   };
+    fetchSpecialties();
+  }, []);
 
-    const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    // Prevent page reload
+    e.preventDefault();
+    // Create a new person object from the formData
+    const newInstructor = {
+        instFirstName: formData.instFirstName,
+        instLastName: formData.instLastName,
+        phoneNumber: formData.phoneNumber,
+        email: formData.email,
+        hireDate: formData.hireDate,
+        specialtyID: formData.specialty,
+        hourlyRate: formData.hourlyRate
+    };
+
+    try {
+      const URL = import.meta.env.VITE_API_URL + "instructors";
+      const response = await axios.post(URL, newInstructor);
+      if (response.status === 201) {
         navigate("/instructors");
+      } else {
+        alert("Error creating instructor.");
+      }
+    } catch (error) {
+      alert("Error creating instructor.");
+      console.error("Error creating instructor:", error);
     }
+    // Reset the form fields
+    resetFormFields();
+  };
+
+  const resetFormFields = () => {
+    setFormData({
+        instFirstName: "",
+        instLastName: "",
+        phoneNumber: "",
+        email: "",
+        hireDate: "",
+        specialty: "",
+        hourlyRate: ""
+    });
+  };
+  
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   return (
     <>
@@ -85,9 +108,10 @@ function CreateInstructor() {
                             <input
                             type="text"
                             name="instFirstName"
+                            maxLength={50}
                             required
-                            // defaultValue={formData.instFirstName}
-                            // onChange={handleInputChange}
+                            defaultValue={formData.instFirstName}
+                            onChange={handleInputChange}
                             />
                         </td>
                     </tr>
@@ -99,9 +123,10 @@ function CreateInstructor() {
                             <input
                             type="text"
                             name="instLastName"
+                            maxLength={50}
                             required
-                            // defaultValue={formData.instLastName}
-                            // onChange={handleInputChange}
+                            defaultValue={formData.instLastName}
+                            onChange={handleInputChange}
                             />
                         </td>
                     </tr>
@@ -115,8 +140,8 @@ function CreateInstructor() {
                             name="phoneNumber"
                             maxLength={15}
                             required
-                            // defaultValue={formData.phoneNumber}
-                            // onChange={handleInputChange}
+                            defaultValue={formData.phoneNumber}
+                            onChange={handleInputChange}
                             />
                         </td>
                     </tr>
@@ -129,36 +154,44 @@ function CreateInstructor() {
                             type="text"
                             name="email"
                             maxLength={100}
-                            // defaultValue={formData.email}
-                            // onChange={handleInputChange}
+                            defaultValue={formData.email}
+                            onChange={handleInputChange}
                             />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <label htmlFor="hireDate">Hire date:</label>
+                            <label htmlFor="hireDate">Hire date:<span className='req'> * </span></label>
                         </td>
                         <td>
                             <input
                             type="date"
                             name="hireDate"
-                            // defaultValue={formData.hireDate}
-                            // onChange={handleInputChange}
+                            required
+                            defaultValue={formData.hireDate}
+                            onChange={handleInputChange}
                             />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <label htmlFor="instSpecialty">Specialty: </label>
+                            <label htmlFor="specialty">Specialty: </label>
                         </td>
                         <td>
-                            <select id="instSpecialty" 
-                            name="instSpecialty" 
-                            required
-                            // defaultValue={formData.specialty}
-                            // onChange={handleInputChange}
+                            <select id="specialty" 
+                            name="specialty" 
+                            
+                            value={formData.specialty}
+                            onChange={handleInputChange}
+                            defaultValue={formData.specialty}
                             style={{width: 300, height: 30}} 
                             >
+                                <option value={""}> Select a specialty </option>
+                                {specialtyOptions.map((specialty) => (
+                                    <option key={specialty.specialtyID} value={specialty.specialtyID}>
+                                    {specialty.specialtyName}
+                                    </option>
+                                    ))}
                             </select>
                         </td>
                     </tr>
@@ -170,9 +203,11 @@ function CreateInstructor() {
                             <input
                             type="number"
                             name="hourlyRate"
+                            placeholder="$0.00"
+                            step='0.01'
                             min={0}
-                            // defaultValue={formData.hourlyRate}
-                            // onChange={handleInputChange}
+                            defaultValue={formData.hourlyRate}
+                            onChange={handleInputChange}
                             />
                         </td>
                     </tr>

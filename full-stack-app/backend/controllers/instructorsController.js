@@ -18,7 +18,7 @@ const lodash = require("lodash");
 const getInstructors = async (req, res) => {
   try {
     // Select all rows from the "Instructors" table
-    const query = "SELECT * FROM Instructors";
+    const query = "SELECT instructorID, instFirstName, instLastName, phoneNumber, email, hireDate, Specialties.specialtyID as specialtyID, Specialties.specialtyName as specialtyName, hourlyRate FROM Instructors LEFT JOIN Specialties ON Instructors.specialtyID = Specialties.specialtyID;";
     // Execute the query using the "db" object from the configuration file
     const [rows] = await db.query(query);
     // Send back the rows to the client
@@ -50,28 +50,33 @@ const getInstructorByID = async (req, res) => {
 // Returns status of creation of new instructor in Instructors
 const createInstructor = async (req, res) => {
   try {
-    const { instFirstName, instLastName, phone, email, hireDate, specialtyID, hourlyRate } = req.body;
+    const { instFirstName, instLastName, phoneNumber, email, hireDate, specialtyID, hourlyRate } = req.body;
+    console.log({instFirstName, instLastName, phoneNumber, email, hireDate, specialtyID, hourlyRate })
     const query =
-      "INSERT INTO Instructors (instFirstName, instLastName, phone, email, hireDate, specialtyID, hourlyRate) VALUES (?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO Instructors (instFirstName, instLastName, phoneNumber, email, hireDate, specialtyID, hourlyRate) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    
+      // Set specialtyID to null if empty
+      const normalizedSpecialtyID = specialtyID === "" || specialtyID === undefined ? null : specialtyID;
+      
+      if (normalizedSpecialtyID) {// Ensure the specialty exists:
+      const [specialtyExists] = await db.query(
+        "SELECT * FROM Specialties WHERE specialtyID = ?",
+        [specialtyID]
+      );
 
-    // Ensure the specialty exists:
-    const [specialtyExists] = await db.query(
-      "SELECT * FROM Specialties WHERE specialtyID = ?",
-      [specialtyID]
-    );
-
-    // If the specialty doesn't exist, return an error
-    if (specialtyExists.length === 0) {
-      return res.status(404).send("Specialty not found.");
-    }
+      // If the specialty doesn't exist, return an error
+      if (specialtyExists.length === 0) {
+        return res.status(404).send("Specialty not found.");
+      }
+      }
 
     const response = await db.query(query, [
       instFirstName,
       instLastName,
-      phone,
+      phoneNumber,
       email=== "" ? null : email,
       hireDate,
-      specialtyID,
+      normalizedSpecialtyID,
       hourlyRate=== "" ? null : parseFloat(hourlyRate)
     ]);
 
@@ -105,30 +110,20 @@ const updateInstructor= async (req, res) => {
     // If any attributes are not equal, perform update
     if (!lodash.isEqual(newInstructor, oldInstructor)) {
       const query =
-        "UPDATE Instructors SET instFirstName=?, instLastName=?, phone=?, email=?, hireDate=?, specialtyID=?, hourlyRate=? WHERE instructorID= ?";
-
-      // Ensure the specialty exists:
-      const [specialtyExists] = await db.query(
-        "SELECT * FROM Specialties WHERE specialtyID = ?",
-        [newInstructor.specialtyID]
-      );
-
-      // If the specialty doesn't exist, return an error
-      if (specialtyExists.length === 0) {
-        return res.status(404).send("Specialty not found.");
-      }
+        "UPDATE Instructors SET instFirstName=?, instLastName=?, phoneNumber=?, email=?, hireDate=?, specialtyID=?, hourlyRate=? WHERE instructorID=?";
       
       // specialtyID is NULLable FK in Instructors, so set to valid ID or NULL
-      const specialtyID_confirmed = newInstructor.specialtyID === "" ? null : newInstructor.specialtyID
+      const specialtyID_confirmed = newInstructor.specialtyID === "" ? null : newInstructor.specialtyID;
 
       const values = [
         newInstructor.instFirstName,
         newInstructor.instLastName,
-        newInstructor.phone,
+        newInstructor.phoneNumber,
         newInstructor.email,
         newInstructor.hireDate,
         specialtyID_confirmed,
-        newInstructor.hourlyRate
+        newInstructor.hourlyRate,
+        instructorID_recvd
       ];
       // Perform the update
       await db.query(query, values);
@@ -165,7 +160,7 @@ const deleteInstructor = async (req, res) => {
     }
 
     // Delete related records from the Instructors table
-    await db.query("DELETE FROM Instructors WHERE kitchenID = ?", [kitchenID]);
+    await db.query("DELETE FROM Instructors WHERE instructorID = ?", [instructorID_recvd]);
 
     // Return the appropriate status code
     res.json({ message: "Instructor deleted successfully." })

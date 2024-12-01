@@ -7,71 +7,90 @@ https://github.com/osu-cs340-ecampus/react-starter-app
 Accessed during the Fall 2024 term.
 */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 const UpdateInstructor = () => {
-//   const { id } = useParams();
+  const { instructorID } = useParams();
   const navigate = useNavigate();
-//   const location = useLocation();
-//   const prevPerson = location.state.person;
+  const location = useLocation();
+  const prevInstructor = location.state.instructor;
 
-//   const [formData, setFormData] = useState({
-//     fname: prevPerson.fname || '',
-//     lname: prevPerson.lname || '',
-//     homeworld: prevPerson.homeworld || '',
-//     age: prevPerson.age || '',
-//   });
+  const [formData, setFormData] = useState({
+    instFirstName: prevInstructor.instFirstName,
+    instLastName: prevInstructor.instLastName,
+    phoneNumber: prevInstructor.phoneNumber,
+    email: prevInstructor.email || '',
+    hireDate: prevInstructor.hireDate, 
+    specialtyID: prevInstructor.specialtyID || '',
+    hourlyRate: prevInstructor.hourlyRate || '',
+  });
 
-//   const handleInputChange = (event) => {
-//     const { name, value } = event.target;
-//     setFormData((prevFormData) => ({
-//       ...prevFormData,
-//       [name]: value,
-//     }));
-//   };
+  const [specialtyOptions, setSpecialtyOptions] = useState([]);
 
-//   function isUpdate(){
-//     // Check if formData is equal to prevPerson
-//     if (JSON.stringify(formData) === JSON.stringify({
-//       fname: prevPerson.fname || '',
-//       lname: prevPerson.lname || '',
-//       homeworld: prevPerson.homeworld || '',
-//       age: prevPerson.age || '',
-//     })) {
-//       alert("No changes made.");
-//       return false;
-//     }
-//     return true
-//   }
+  // Fetch specialty options from the backend
+  useEffect(() => {
+    const fetchSpecialties = async () => {
+      try {
+        const URL = import.meta.env.VITE_API_URL + "specialties";
+        const response = await axios.get(URL);
+        setSpecialtyOptions(response.data);
+      } catch (error) {
+        console.error("Error fetching specialty options:", error);
+        alert("Could not load specialty options");
+      }
+    };
 
-//   const handleSubmit = async (event) => {
-//     // Stop default form behavior which is to reload the page
-//     event.preventDefault();
-//     // Check if formData is equal to prevPerson
-//     if (isUpdate()){
-//       try {
-//         const URL = import.meta.env.VITE_API_URL + "people/" + id;
-//         const response = await axios.put(URL, formData);
-//         if (response.status !== 200) {
-//           alert("Error updating person");
-//         } else {
-//           alert(response.data.message);
-//           // Redirect to people page
-//           navigate("/people");
-//         }
-//       } catch (err) {
-//         console.log("Error updating person:", err);
-//       }
-//     }
-//   };
+    fetchSpecialties();
+  }, []);
 
-    // Remove once backend is working and use the method above:
-    const handleSubmit = () => {
-        navigate("/instructors");
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  function isUpdate(){
+    // Check if formData is equal to prevInstructor
+    if (JSON.stringify(formData) === JSON.stringify({
+      instFirstName: prevInstructor.instFirstName || '',
+      instLastName: prevInstructor.instLastName || '',
+      phoneNumber: prevInstructor.phoneNumber || '',
+      email: prevInstructor.email || '',
+      hireDate: prevInstructor.hireDate || '',
+      specialtyID: prevInstructor.specialtyID || '',
+      hourlyRate: prevInstructor.hourlyRate || '',
+    })) {
+      alert("No changes made.");
+      return false;
     }
+    return true
+  }
+
+  const handleSubmit = async (event) => {
+    // Stop default form behavior which is to reload the page
+    event.preventDefault();
+    // Check if formData is equal to prevPerson
+    if (isUpdate()){
+      try {
+        const URL = import.meta.env.VITE_API_URL + "instructors/" + instructorID;
+        const response = await axios.put(URL, formData);
+        if (response.status !== 200) {
+          alert("Error updating instructor");
+        } else {
+          alert(response.data.message);
+          // Redirect to instructor page
+          navigate("/instructors");
+        }
+      } catch (err) {
+        console.log("Error updating instructor:", err);
+      }
+    }
+  };
 
   return (
     <div>
@@ -81,15 +100,23 @@ const UpdateInstructor = () => {
       <form onSubmit={handleSubmit} className="form-container" id="addNewForm">
         <table>
             <tbody>
+            
+            <tr>
+              <td><label htmlFor="instructorID">Instructor ID:</label></td>
+              <td>
+                  {instructorID}
+              </td>
+          </tr>
           <tr>
               <td><label htmlFor="instFirstName">First Name:<span className='req'> * </span></label></td>
               <td>
                   <input
                     type="text"
                     name="instFirstName"
-                    // onChange={handleInputChange}
+                    maxLength={50}
+                    onChange={handleInputChange}
                     required
-                    // defaultValue={prevInstructor.instFirstName}
+                    defaultValue={prevInstructor.instFirstName}
                   />
               </td>
           </tr>
@@ -99,9 +126,10 @@ const UpdateInstructor = () => {
                   <input
                     type="text"
                     name="instLastName"
-                    // onChange={handleInputChange}
+                    maxLength={50}
+                    onChange={handleInputChange}
                     required
-                    // defaultValue={prevInstructor.instLastName}
+                    defaultValue={prevInstructor.instLastName}
                   />
               </td>
           </tr>
@@ -112,8 +140,10 @@ const UpdateInstructor = () => {
               <input
                 type="number"
                 name="phoneNumber"
-                // onChange={handleInputChange}
-                // defaultValue={prevInstructor.phoneNumber}
+                maxLength={15}
+                required
+                onChange={handleInputChange}
+                defaultValue={prevInstructor.phoneNumber}
               />
           </td>
         </tr>
@@ -123,34 +153,41 @@ const UpdateInstructor = () => {
                   <input
                     type="text"
                     name="email"
-                    // onChange={handleInputChange}
-                    // defaultValue={prevInstructor.email}
+                    maxLength={100}
+                    onChange={handleInputChange}
+                    defaultValue={prevInstructor.email}
                   />
               </td>
           </tr>
           <tr>
-              <td><label htmlFor="hireDate">Hire date:</label></td>
+              <td><label htmlFor="hireDate">Hire date: <span className='req'> * </span></label></td>
               <td>
                   <input
                     type="date"
                     name="hireDate"
-                    // onChange={handleInputChange}
-                    // defaultValue={prevInstructor.hireDate}
-                  />
+                    required
+                    onChange={handleInputChange}
+                    defaultValue={prevInstructor.hireDate ? new Date(prevInstructor.hireDate).toISOString().split('T')[0] : ""}
+                    />
               </td>
           </tr>
           <tr>
             <td>
-                <label htmlFor="instSpecialty">Specialty: </label>
+                <label htmlFor="specialtyID">Specialty: </label>
             </td>
             <td>
-                <select id="instSpecialty" 
-                name="instSpecialty" 
-                required
-                // defaultValue={prevInstructor.specialty}
-                // onChange={handleInputChange}
-                style={{width: 300, height: 30}} 
+            <select
+                  id="specialtyID"
+                  name="specialtyID"
+                  value={formData.specialtyID}
+                  onChange={handleInputChange}
+                  style={{ width: 300, height: 30 }}
                 >
+                  {specialtyOptions.map((specialty) => (
+                    <option key={specialty.specialtyID} value={specialty.specialtyID}>
+                      {specialty.specialtyName}
+                    </option>
+                  ))}
                 </select>
             </td>
           </tr>
@@ -162,9 +199,10 @@ const UpdateInstructor = () => {
                   <input
                   type="number"
                   name="hourlyRate"
+                  step='0.01'
                   min={0}
-                  // defaultValue={prevInstructor.hourlyRate}
-                  // onChange={handleInputChange}
+                  defaultValue={prevInstructor.hourlyRate}
+                  onChange={handleInputChange}
                   />
               </td>
           </tr>

@@ -14,7 +14,6 @@ import { useLocation } from "react-router-dom";
 
 const UpdateClass = () => {
   const { classID } = useParams();
-  console.log("classID from useParams:", classID);
   const navigate = useNavigate();
   const location = useLocation();
   const prevClass = location.state.class_entry;

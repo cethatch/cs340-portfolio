@@ -23,14 +23,12 @@ function InstructorsPage() {
             <nav>
                 <p><Link to="/instructors">Instructors Table</Link></p>
                 <p><Link to="create">Add an Instructor</Link></p>
-                {/* <p><Link to="update">Update a Class</Link></p> */}
             </nav> 
             <Routes>
                 <Route path="/" element={<InstructorsTable />} />
                 <Route path="create" element={<CreateInstructor />} />
-                {/* <Route path="update/:id" element={<UpdateInstructor />} /> */}
-                <Route path="update/" element={<UpdateInstructor />} />
-                <Route path="delete/" element={<DeleteInstructor />} />
+                <Route path="update/:instructorID" element={<UpdateInstructor />} />
+                <Route path="delete/:instructorID" element={<DeleteInstructor />} />
             </Routes>
         </main>
         </>

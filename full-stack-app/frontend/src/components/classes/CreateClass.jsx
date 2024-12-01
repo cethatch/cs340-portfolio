@@ -18,7 +18,7 @@ function CreateClass() {
     className: "",
     duration: "",
     cost: "0.00",
-    description: "",
+    classDescription: "",
   });
   
   const handleSubmit = async (e) => {

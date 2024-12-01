@@ -37,6 +37,9 @@ app.use("/api/kitchens", kitchensRouter);
 const instructorsRouter = require("./routes/instructorsRoutes");
 app.use("/api/instructors", instructorsRouter);
 
+const specialtiesRouter = require("./routes/specialtiesRoutes");
+app.use("/api/specialties", specialtiesRouter);
+
 
 // Add your Connect DB Activitiy Code Below:
 // ...
