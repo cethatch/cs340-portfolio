@@ -51,7 +51,7 @@ const SpecialtiesTable = () => {
           </thead>
           <tbody>
             {specialties.map((specialty) => (
-              <TableRow key={specialty.specialtyid} specialty={specialty} fetchSpecialties={fetchSpecialties} />
+              <TableRow key={specialty.specialtyID} specialty={specialty} fetchSpecialties={fetchSpecialties} />
             ))}
           </tbody>
         </table></div>

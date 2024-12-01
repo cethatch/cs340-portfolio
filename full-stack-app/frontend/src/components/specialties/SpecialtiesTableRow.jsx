@@ -24,7 +24,7 @@ const TableRow = ({ specialty }) => {
   };
 
   const deleteRow = async () => {
-    navigate(`/specialties/delete/${specialties.specialtyID}`, {state: {specialty}});
+    navigate(`/specialties/delete/${specialty.specialtyID}`, {state: {specialty}});
   };
 
   return (
