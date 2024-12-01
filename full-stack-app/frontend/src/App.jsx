@@ -51,7 +51,7 @@ function App() {
       </main>
 
       <footer>
-        <p>&copy; 2024 Christine Thatcher & Ingrid Gundezrson Thomas</p>
+        <p>&copy; 2024 Christine Thatcher & Ingrid Gunderson Thomas</p>
       </footer>
 
     </>
