@@ -7,43 +7,39 @@ https://github.com/osu-cs340-ecampus/react-starter-app
 Accessed during the Fall 2024 term.
 */
 
-// import axios from "axios";
 import { BiEditAlt } from "react-icons/bi";
+import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
-// const TableRow = ({ classes, fetchClasses }) => {
-const TableRow = () => {
+const TableRow = ({ student }) => {
   // Hook that allows us to navigate programmatically
   const navigate = useNavigate();
   // Redirect to edit class page
   const handleEdit = () => {
     // We can access the id (and query the person) with useParams() in the UpdatePerson component
     // navigate("/classes/update/" + classes.id, { state: { classes } });
-    navigate("/classes/update/");
+    navigate(`/students/update/${student.studentID}`, {state: {student}});
+  };
+
+  const deleteRow = async () => {
+    navigate(`/students/delete/${student.studentID}`, {state: {student}});
   };
 
   return (
-    // <tr key={classes.id}>
-    //   <td>{classes.id}</td>
-    //   <td>{classes.fname}</td>
-    //   <td>{classes.lname}</td>
-    //   <td>{classes.homeworld}</td>
-    //   <td>{classes.age}</td>
-    //   <td>
-    //     <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }} />
-    //   </td>
-    // </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td class="editCol">
-          <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }}/>
-        </td>
-      </tr>
+    <tr key={student.studentID}>
+      <td>{student.studentID}</td>
+      <td>{student.firstName}</td>
+      <td>{student.lastName}</td>
+      <td>{student.phoneNumber}</td>
+      <td>{student.email}</td>
+      <td>
+        <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }}/>
+      </td>
+      <td>
+        <MdDelete onClick={deleteRow} size={25} style={{ cursor: "pointer"}} />
+      </td>
+    </tr>
 
   );
 };

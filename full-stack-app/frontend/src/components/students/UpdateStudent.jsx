@@ -9,69 +9,69 @@ Accessed during the Fall 2024 term.
 
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 const UpdateStudent = () => {
-//   const { id } = useParams();
+  const { studentID } = useParams();
   const navigate = useNavigate();
-//   const location = useLocation();
-//   const prevPerson = location.state.person;
+  const location = useLocation();
+  const prevStudent = location.state.student;
 
-//   const [formData, setFormData] = useState({
-//     fname: prevPerson.fname || '',
-//     lname: prevPerson.lname || '',
-//     homeworld: prevPerson.homeworld || '',
-//     age: prevPerson.age || '',
-//   });
+  const [formData, setFormData] = useState({
+    firstName: prevStudent.firstName || '',
+    lastName: prevStudent.lastName || '',
+    phoneNumber: prevStudent.phoneNumber || '',
+    email: prevStudent.email || ''
+  });
 
-//   const handleInputChange = (event) => {
-//     const { name, value } = event.target;
-//     setFormData((prevFormData) => ({
-//       ...prevFormData,
-//       [name]: value,
-//     }));
-//   };
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
 
-//   function isUpdate(){
-//     // Check if formData is equal to prevPerson
-//     if (JSON.stringify(formData) === JSON.stringify({
-//       fname: prevPerson.fname || '',
-//       lname: prevPerson.lname || '',
-//       homeworld: prevPerson.homeworld || '',
-//       age: prevPerson.age || '',
-//     })) {
-//       alert("No changes made.");
-//       return false;
-//     }
-//     return true
-//   }
+  function isUpdate(){
+    // Check if formData is equal to prevStudent
+    if (JSON.stringify(formData) === JSON.stringify({
+      firstName: prevStudent.firstName || '',
+      lastName: prevStudent.lastName || '',
+      phoneNumber: prevStudent.phoneNumber || '',
+      email: prevStudent.email || ''
+    })) {
+      alert("No changes made.");
+      return false;
+    }
+    return true
+  }
 
-//   const handleSubmit = async (event) => {
-//     // Stop default form behavior which is to reload the page
-//     event.preventDefault();
-//     // Check if formData is equal to prevPerson
-//     if (isUpdate()){
-//       try {
-//         const URL = import.meta.env.VITE_API_URL + "people/" + id;
-//         const response = await axios.put(URL, formData);
-//         if (response.status !== 200) {
-//           alert("Error updating person");
-//         } else {
-//           alert(response.data.message);
-//           // Redirect to people page
-//           navigate("/people");
-//         }
-//       } catch (err) {
-//         console.log("Error updating person:", err);
-//       }
-//     }
-//   };
+  const handleSubmit = async (event) => {
+    // Stop default form behavior which is to reload the page
+    event.preventDefault();
+    // Check if formData is equal to prevStudent
+    if (isUpdate()){
+      try {
+        const URL = import.meta.env.VITE_API_URL + "students/" + studentID;
+        const response = await axios.put(URL, formData);
+        if (response.status !== 200) {
+          alert("Error updating student");
+        } else {
+          alert(response.data.message);
+          // Redirect to students page
+          navigate("/students");
+        }
+      } catch (err) {
+        console.log("Error updating student:", err);
+      }
+    }
+  };
 
     // Remove once backend is working and use the method above:
-    const handleSubmit = () => {
-        navigate("/students");
-    }
+    // const handleSubmit = () => {
+    //     navigate("/students");
+    // }
 
   return (
     <div>
@@ -83,9 +83,7 @@ const UpdateStudent = () => {
             <tbody>
             <tr>
               <td><label htmlFor="studentID">Student ID:</label></td>
-              <td>
-                  
-              </td>
+              <td>{prevStudent.studentID}</td>
           </tr>
           <tr>
               <td><label htmlFor="firstName">First name:<span className='req'> * </span></label></td>
@@ -93,10 +91,10 @@ const UpdateStudent = () => {
                   <input
                     type="text"
                     name="firstName"
-                    // onChange={handleInputChange}
+                    onChange={handleInputChange}
                     required
                     maxLength={50}
-                    // defaultValue={prevKitchen.address}
+                    defaultValue={prevStudent.firstName}
                   />
               </td>
           </tr>
@@ -107,9 +105,9 @@ const UpdateStudent = () => {
                     type="text"
                     name="lastName"
                     maxLength={50}
-                    // onChange={handleInputChange}
+                    onChange={handleInputChange}
                     required
-                    // defaultValue={prevKitchen.address}
+                    defaultValue={prevStudent.lastName}
                   />
               </td>
           </tr>
@@ -121,8 +119,8 @@ const UpdateStudent = () => {
                     type="text"
                     name="phoneNumber"
                     maxLength={15}
-                    // onChange={handleInputChange}
-                    // defaultValue={prevKitchen.address}
+                    onChange={handleInputChange}
+                    defaultValue={prevStudent.phoneNumber}
                   />
               </td>
           </tr>
@@ -134,8 +132,8 @@ const UpdateStudent = () => {
                     type="text"
                     name="email"
                     maxLength={100}
-                    // onChange={handleInputChange}
-                    // defaultValue={prevKitchen.address}
+                    onChange={handleInputChange}
+                    defaultValue={prevStudent.email}
                   />
               </td>
           </tr>
@@ -143,7 +141,7 @@ const UpdateStudent = () => {
         </tbody>
         </table>
         
-        <button type="submit" className="submitButton">Update</button>
+        <button type="submit" className="submitButton">Update Student</button>
         <button type="button" id="cancelButton" className="submitButton" onClick={() => navigate("/students")}>
           Cancel
         </button>

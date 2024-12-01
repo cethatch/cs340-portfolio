@@ -23,14 +23,12 @@ function StudentsPage() {
             <nav>
                 <p><Link to="/students">Students Table</Link></p>
                 <p><Link to="create">Add a Student</Link></p>
-                {/* <p><Link to="update">Update a Class</Link></p> */}
             </nav> 
             <Routes>
                 <Route path="/" element={<StudentsTable />} />
                 <Route path="create" element={<CreateStudent />} />
-                {/* <Route path="update/:id" element={<UpdateClass />} /> */}
-                <Route path="update" element={<UpdateStudent />} />
-                <Route path="delete" element={<DeleteStudent />} />
+                <Route path="update/:studentID" element={<UpdateStudent />} />
+                <Route path="delete/:studentID" element={<DeleteStudent />} />
             </Routes>
         </main>
         </>

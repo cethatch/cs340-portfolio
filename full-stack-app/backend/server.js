@@ -36,6 +36,11 @@ app.use("/api/classes", classesRouter);
 const kitchensRouter = require("./routes/kitchensRoutes");
 app.use("/api/kitchens", kitchensRouter);
 
+const specialtiesRouter = require("./routes/specialtiesRoutes");
+app.use("/api/specialties", specialtiesRouter);
+
+const studentsRouter = require("./routes/studentsRoutes");
+app.use("/api/students", studentsRouter);
 
 // Serve Frontend for Non-API Routes
 app.use(express.static(path.join(__dirname, "frontend", "dist")));

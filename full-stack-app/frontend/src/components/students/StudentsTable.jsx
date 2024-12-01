@@ -9,42 +9,37 @@ Accessed during the Fall 2024 term.
 
 import { useState, useEffect } from "react";
 import { RiCreativeCommonsZeroFill } from "react-icons/ri";
-import { BiEditAlt } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
 import TableRow from "./StudentsTableRow";
-import { Link, Routes, Route, useNavigate } from 'react-router-dom';
-
-// import axios from "axios";
+import axios from "axios";
 
 const StudentsTable = () => {
-  // const [classes, setClasses] = useState([]);
-  const navigate = useNavigate();
+  const [students, setStudents] = useState([]);
 
+  const fetchStudents = async () => {
+    try {
+      const URL = import.meta.env.VITE_API_URL + "students";
+      const response = await axios.get(URL);
+      setStudents(response.data);
+    } catch (error) {
+      alert("Error fetching students from the server.");
+      console.error("Error fetching students:", error);
+    }
+  };
 
-  // const fetchClasses = async () => {
-  //   try {
-  //     const URL = import.meta.env.VITE_API_URL + "classes";
-  //     const response = await axios.get(URL);
-  //     setClasses(response.data);
-  //   } catch (error) {
-  //     alert("Error fetching classes from the server.");
-  //     console.error("Error fetching classes:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   // fetchClasses();
-  // }, []);
+  useEffect(() => {
+    fetchStudents();
+  }, []);
 
   return (
-    <div>
+    <>
       <h2>Students Table</h2>
-      {/* {classes.length === 0 ? (
+      {students.length === 0 ? (
         <div>
           <RiCreativeCommonsZeroFill size={70} color="#ccc" />
-          <p>No classes found.</p>
+          <p>No students found.</p>
         </div>
-      ) : ( */}
+      ) : (
+        <div>
         <table>
           <thead>
             <tr>
@@ -58,33 +53,14 @@ const StudentsTable = () => {
             </tr>
           </thead>
           <tbody>
-            {/* {classes.map((class) => (
-              <TableRow key={class.id} class={class} fetchClasses={fetchClasses} />
-            ))} */}
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td class="editCol">
-                <BiEditAlt 
-                onClick={() => navigate("/students/update")} 
-                size={25} 
-                style={{ cursor: "pointer" }} />
-              </td>
-              <td class="editCol">
-                <MdDelete
-                onClick={() => navigate("/students/delete")} 
-                size={25} 
-                style={{ cursor: "pointer"}} />
-              </td>
-            </tr>
-            
+            {students.map((student) => (
+              <TableRow key={student.studentID} student={student} fetchStudents={fetchStudents} />
+            ))}
           </tbody>
-        </table>
-      {/* )} */}
-    </div>
+        </table></div>
+      )}
+    </>
+
   );
 };
 
