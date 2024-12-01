@@ -9,65 +9,56 @@ Accessed during the Fall 2024 term.
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 
 function CreateSpecialty() {
   const navigate = useNavigate();
 
-//   const [formData, setFormData] = useState({
-//     className: "",
-//     duration: "",
-//     cost: "",
-//     description: "",
-//   });
+  const [formData, setFormData] = useState({
+    specialtyName: ""
+  });
   
-//   const handleSubmit = async (e) => {
-//     // Prevent page reload
-//     e.preventDefault();
-//     // Create a new person object from the formData
-//     const newClass = {
-//         className: formData.className,
-//         duration: formData.duration,
-//         cost: formData.cost,
-//         description: formData.description,
-//     };
+  const handleSubmit = async (e) => {
+    // Prevent page reload
+    e.preventDefault();
+    // Create a new specialty object from the formData
+    const newSpecialty = {
+        specialtyName: formData.specialtyName
+    };
 
-//     try {
-//       const URL = import.meta.env.VITE_API_URL + "classes";
-//       const response = await axios.post(URL, newClass);
-//       if (response.status === 201) {
-//         navigate("/classes");
-//       } else {
-//         alert("Error creating class.");
-//       }
-//     } catch (error) {
-//       alert("Error creating class.");
-//       console.error("Error creating class:", error);
-//     }
-//     // Reset the form fields
-//     resetFormFields();
-//   };
-
-//   const resetFormFields = () => {
-//     setFormData({
-//         className: "",
-//         duration: "",
-//         cost: "",
-//         description: "",
-//     });
-//   };
-
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       [name]: value,
-//     }));
-//   };
-
-    const handleSubmit = () => {
+    try {
+      const URL = import.meta.env.VITE_API_URL + "specialties";
+      const response = await axios.post(URL, newSpecialty);
+      if (response.status === 201) {
         navigate("/specialties");
+      } else {
+        alert("Error creating specialty.");
+      }
+    } catch (error) {
+      alert("Error creating specialty.");
+      console.error("Error creating specialty:", error);
     }
+//     // Reset the form fields
+    resetFormFields();
+  };
+
+  const resetFormFields = () => {
+    setFormData({
+        specialtyName: ""
+    });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+//    const handleSubmit = () => {
+//        navigate("/specialties");
+//    }
 
   return (
     <>
@@ -86,14 +77,17 @@ function CreateSpecialty() {
                             type="text"
                             name="specialtyName"
                             required
-                            // defaultValue={formData.fname}
-                            // onChange={handleInputChange}
+                            defaultValue={formData.specialtyName}
+                            onChange={handleInputChange}
                             />
                         </td>
                     </tr>
                 </tbody>
             </table>
             <button type="submit" className="submitButton">Create Specialty</button>
+            <button type="button" id="cancelButton" className="submitButton" onClick={() => navigate("/specialties")}>
+          Cancel
+        </button>
         </form>
     </>
   );

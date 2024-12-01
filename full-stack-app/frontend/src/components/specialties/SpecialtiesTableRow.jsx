@@ -9,41 +9,35 @@ Accessed during the Fall 2024 term.
 
 // import axios from "axios";
 import { BiEditAlt } from "react-icons/bi";
+import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
-// const TableRow = ({ classes, fetchClasses }) => {
-const TableRow = () => {
+const TableRow = ({ specialty }) => {
   // Hook that allows us to navigate programmatically
   const navigate = useNavigate();
   // Redirect to edit class page
   const handleEdit = () => {
     // We can access the id (and query the person) with useParams() in the UpdatePerson component
     // navigate("/classes/update/" + classes.id, { state: { classes } });
-    navigate("/classes/update/");
+    navigate(`/specialties/update/${specialty.specialtyID}`, { state: {specialty}});
+  };
+
+  const deleteRow = async () => {
+    navigate(`/specialties/delete/${specialties.specialtyID}`, {state: {specialty}});
   };
 
   return (
-    // <tr key={classes.id}>
-    //   <td>{classes.id}</td>
-    //   <td>{classes.fname}</td>
-    //   <td>{classes.lname}</td>
-    //   <td>{classes.homeworld}</td>
-    //   <td>{classes.age}</td>
-    //   <td>
-    //     <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }} />
-    //   </td>
-    // </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td class="editCol">
-          <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }}/>
-        </td>
-      </tr>
+    <tr key={specialty.specialtyID}>
+      <td>{specialty.specialtyID}</td>
+      <td>{specialty.specialtyName}</td>
+      <td>
+        <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }} />
+      </td>
+      <td>
+        <MdDelete onClick={deleteRow} size={25} style={{ cursor: "pointer"}} />
+      </td>
+    </tr>
 
   );
 };

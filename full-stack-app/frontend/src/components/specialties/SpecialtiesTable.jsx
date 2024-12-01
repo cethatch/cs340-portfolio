@@ -9,42 +9,37 @@ Accessed during the Fall 2024 term.
 
 import { useState, useEffect } from "react";
 import { RiCreativeCommonsZeroFill } from "react-icons/ri";
-import { BiEditAlt } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
 import TableRow from "./SpecialtiesTableRow";
-import { Link, Routes, Route, useNavigate } from 'react-router-dom';
-
-// import axios from "axios";
+import axios from "axios";
 
 const SpecialtiesTable = () => {
-  // const [classes, setClasses] = useState([]);
-  const navigate = useNavigate();
+  const [specialties, setSpecialties] = useState([]);
 
+  const fetchSpecialties = async () => {
+    try {
+        const URL = import.meta.env.VITE_API_URL + "specialties";
+        const response = await axios.get(URL);
+        setSpecialties(response.data);
+      } catch (error) {
+        alert("Error fetching specialties from the server.");
+        console.error("Error fetching specialties:", error);
+      }
+    };
 
-  // const fetchClasses = async () => {
-  //   try {
-  //     const URL = import.meta.env.VITE_API_URL + "classes";
-  //     const response = await axios.get(URL);
-  //     setClasses(response.data);
-  //   } catch (error) {
-  //     alert("Error fetching classes from the server.");
-  //     console.error("Error fetching classes:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   // fetchClasses();
-  // }, []);
+  useEffect(() => {
+    fetchSpecialties();
+  }, []);
 
   return (
-    <div>
+    <>
       <h2>Specialties Table</h2>
-      {/* {classes.length === 0 ? (
+      {specialties.length === 0 ? (
         <div>
           <RiCreativeCommonsZeroFill size={70} color="#ccc" />
-          <p>No classes found.</p>
+          <p>No specialties found.</p>
         </div>
-      ) : ( */}
+      ) : (
+        <div>
         <table>
           <thead>
             <tr>
@@ -55,30 +50,14 @@ const SpecialtiesTable = () => {
             </tr>
           </thead>
           <tbody>
-            {/* {classes.map((class) => (
-              <TableRow key={class.id} class={class} fetchClasses={fetchClasses} />
-            ))} */}
-            <tr>
-              <td></td>
-              <td></td>
-              <td class="editCol">
-                <BiEditAlt 
-                onClick={() => navigate("/specialties/update")} 
-                size={25} 
-                style={{ cursor: "pointer" }} />
-              </td>
-              <td class="editCol">
-                <MdDelete
-                onClick={() => navigate("/specialties/delete")} 
-                size={25} 
-                style={{ cursor: "pointer"}} />
-              </td>
-            </tr>
-            
+            {specialties.map((specialty) => (
+              <TableRow key={specialty.specialtyid} specialty={specialty} fetchSpecialties={fetchSpecialties} />
+            ))}
           </tbody>
-        </table>
-      {/* )} */}
-    </div>
+        </table></div>
+      )}
+    </>
+
   );
 };
 
