@@ -51,7 +51,6 @@ const getInstructorByID = async (req, res) => {
 const createInstructor = async (req, res) => {
   try {
     const { instFirstName, instLastName, phoneNumber, email, hireDate, specialtyID, hourlyRate } = req.body;
-    console.log({instFirstName, instLastName, phoneNumber, email, hireDate, specialtyID, hourlyRate })
     const query =
       "INSERT INTO Instructors (instFirstName, instLastName, phoneNumber, email, hireDate, specialtyID, hourlyRate) VALUES (?, ?, ?, ?, ?, ?, ?)";
     

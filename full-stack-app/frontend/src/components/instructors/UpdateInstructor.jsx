@@ -138,7 +138,7 @@ const UpdateInstructor = () => {
           <td><label htmlFor="phoneNumber">Phone number: <span className='req'> * </span></label></td>
           <td>
               <input
-                type="number"
+                type="text"
                 name="phoneNumber"
                 maxLength={15}
                 required

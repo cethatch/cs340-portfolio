@@ -18,7 +18,7 @@ const lodash = require("lodash");
 const getSpecialties = async (req, res) => {
   try {
     // Select all rows from the "Specialties" table
-    const query = "SELECT * FROM Specialties";
+    const query = "SELECT * FROM Specialties ORDER BY specialtyID asc";
     // Execute the query using the "db" object from the configuration file
     const [rows] = await db.query(query);
     // Send back the rows to the client

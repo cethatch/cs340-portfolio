@@ -17,7 +17,7 @@ function CreateClass() {
   const [formData, setFormData] = useState({
     className: "",
     duration: "",
-    cost: "0.00",
+    cost: "",
     classDescription: "",
   });
   
@@ -52,7 +52,7 @@ function CreateClass() {
     setFormData({
         className: "",
         duration: "",
-        cost: "0.00",
+        cost: "",
         description: "",
     });
   };
@@ -111,6 +111,7 @@ function CreateClass() {
                             type="number"
                             name="registrationCost"
                             placeholder="$0.00"
+                            
                             min={0}
                             value={formData.registrationCost}
                             onChange={handleInputChange}

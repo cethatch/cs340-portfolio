@@ -7,111 +7,205 @@ https://github.com/osu-cs340-ecampus/react-starter-app
 Accessed during the Fall 2024 term.
 */
 
-import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-// import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 
-const UpdateKitchen = () => {
-//   const { id } = useParams();
+const UpdateClassInstance = () => {
+  const { classInstanceID } = useParams();
   const navigate = useNavigate();
-//   const location = useLocation();
-//   const prevPerson = location.state.person;
+  const location = useLocation();
+  const prevClassInstance = location.state.classInstance;
 
-//   const [formData, setFormData] = useState({
-//     fname: prevPerson.fname || '',
-//     lname: prevPerson.lname || '',
-//     homeworld: prevPerson.homeworld || '',
-//     age: prevPerson.age || '',
-//   });
+  const [formData, setFormData] = useState({
+    classID: prevClassInstance.classID,
+    classDate: prevClassInstance.classDate,
+    classTime: prevClassInstance.classTime,
+    kitchenID: prevClassInstance.kitchenID || '',
+    privateEvent: prevClassInstance.privateEvent ? 1 : 0
+  });
 
-//   const handleInputChange = (event) => {
-//     const { name, value } = event.target;
-//     setFormData((prevFormData) => ({
-//       ...prevFormData,
-//       [name]: value,
-//     }));
-//   };
+  const [classOptions, setClassOptions] = useState([]);
 
-//   function isUpdate(){
-//     // Check if formData is equal to prevPerson
-//     if (JSON.stringify(formData) === JSON.stringify({
-//       fname: prevPerson.fname || '',
-//       lname: prevPerson.lname || '',
-//       homeworld: prevPerson.homeworld || '',
-//       age: prevPerson.age || '',
-//     })) {
-//       alert("No changes made.");
-//       return false;
-//     }
-//     return true
-//   }
+  // Fetch class options from the backend
+  useEffect(() => {
+    const fetchClasses = async () => {
+      try {
+        const URL = import.meta.env.VITE_API_URL + "classes";
+        const response = await axios.get(URL);
+        setClassOptions(response.data);
+      } catch (error) {
+        console.error("Error fetching class options:", error);
+        alert("Could not load class options");
+      }
+    };
 
-//   const handleSubmit = async (event) => {
-//     // Stop default form behavior which is to reload the page
-//     event.preventDefault();
-//     // Check if formData is equal to prevPerson
-//     if (isUpdate()){
-//       try {
-//         const URL = import.meta.env.VITE_API_URL + "people/" + id;
-//         const response = await axios.put(URL, formData);
-//         if (response.status !== 200) {
-//           alert("Error updating person");
-//         } else {
-//           alert(response.data.message);
-//           // Redirect to people page
-//           navigate("/people");
-//         }
-//       } catch (err) {
-//         console.log("Error updating person:", err);
-//       }
-//     }
-//   };
+    fetchClasses();
+  }, []);
 
-    // Remove once backend is working and use the method above:
-    const handleSubmit = () => {
-        navigate("/kitchens");
+  const [kitchenOptions, setKitchenOptions] = useState([]);
+
+  // Fetch kitchen options from the backend
+  useEffect(() => {
+    const fetchKitchens = async () => {
+      try {
+        const URL = import.meta.env.VITE_API_URL + "kitchens";
+        const response = await axios.get(URL);
+        setKitchenOptions(response.data);
+      } catch (error) {
+        console.error("Error fetching kitchen options:", error);
+        alert("Could not load kitchen options");
+      }
+    };
+
+    fetchKitchens();
+  }, []);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+
+  function isUpdate(){
+    // Check if formData is equal to prevPerson
+    if (JSON.stringify(formData) === JSON.stringify({
+      classID: prevClassInstance.classID || '',
+      classDate: prevClassInstance.classDate || '',
+      classTime: prevClassInstance.classTime || '',
+      kitchenLocation: prevClassInstance.kitchenLocation || '',
+      privateEvent: prevClassInstance.privateEvent ? 1 : 0
+    })) {
+      alert("No changes made.");
+      return false;
     }
+    return true
+  }
+
+  const handleSubmit = async (event) => {
+    // Stop default form behavior which is to reload the page
+    event.preventDefault();
+    // Check if formData is equal to prevPerson
+    if (isUpdate()){
+      try {
+        const URL = import.meta.env.VITE_API_URL + "schedule/" + classInstanceID;
+        const response = await axios.put(URL, formData);
+        if (response.status !== 200) {
+          alert("Error updating scheduled class.");
+        } else {
+          alert(response.data.message);
+          // Redirect to schedule page
+          navigate("/schedule");
+        }
+      } catch (err) {
+        console.log("Error updating scheduled class.:", err);
+      }
+    }
+  };
+
 
   return (
     <div>
-      <h3>Update kitchen:</h3>
+      <h3>Update scheduled class:</h3>
       <p><span className='req'>* </span> - Required field.</p>
       
       <form onSubmit={handleSubmit} className="form-container" id="addNewForm">
         <table>
-            <tbody>
-          <tr>
-              <td><label>Kitchen Address:<span className='req'> * </span></label></td>
-              <td>
+          <tbody>
+              <tr>
+                  <td>
+                      <label htmlFor="className">Class Name:<span className='req'> * </span></label>
+                  </td>
+                  <td>
+                      <select id="classID" 
+                      name="classID" 
+                      required
+                      value={prevClassInstance.classID}
+                      onChange={handleInputChange}
+                      style={{width: 300, height: 30}} 
+                      >
+                          <option value={""}>Select a class type</option>
+                          {classOptions.map((class_type) => (
+                              <option key={class_type.classID} value={class_type.classID}>
+                                  {class_type.className}
+                              </option>
+                          ))}
+                      </select>
+                      
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      <label htmlFor="classDate">Date: <span className='req'> * </span></label>
+                  </td>
+                  <td>
+                      <input
+                      type="date"
+                      name="classDate"
+                      required
+                      value={prevClassInstance.classDate ? new Date(prevClassInstance.classDate).toISOString().split('T')[0] : ""}
+                      onChange={handleInputChange}
+                      />
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      <label htmlFor="classTime">Time:<span className='req'> * </span></label>
+                  </td>
+                  <td>
+                      <input
+                      type="time"
+                      name="classTime"
+                      value={prevClassInstance.classTime}
+                      onChange={handleInputChange}
+                      />
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      <label htmlFor="kitchenLocation">Kitchen Address:</label>
+                  </td>
+                  <td>
+                      <select id="kitchenLocation" 
+                      name="kitchenLocation" 
+                      value={formData.kitchenID}
+                      onChange={handleInputChange}
+                      style={{width: 300, height: 30}}
+                      >
+                          <option value={""}>Select a kitchen address</option>
+                          {kitchenOptions.map((kitchen) => (
+                              <option key={kitchen.kitchenID} value={kitchen.kitchenID}>
+                                  {kitchen.kitchenLocation}
+                              </option>
+                          ))}
+                      </select>
+                  </td>
+              </tr>
+              <tr>
+                <td>
+                  <label htmlFor="privateEvent">Private Event?</label>
+                </td>
+                <td>
                   <input
-                    type="text"
-                    name="address"
-                    // onChange={handleInputChange}
-                    required
-                    // defaultValue={prevKitchen.address}
+                    type="checkbox"
+                    name="privateEvent"
+                    style={{ cursor: "pointer" }}
+                    checked={formData.privateEvent === 1} // Map `1` to checked and `0` to unchecked
+                    onChange={(e) => setFormData((prevFormData) => ({
+                      ...prevFormData,
+                      privateEvent: e.target.checked ? 1 : 0, // Convert to `1` or `0`
+                    }))}
                   />
-              </td>
-          </tr>
-        
-        <tr>
-          <td><label>Room Capacity (Persons)</label></td>
-          <td>
-              <input
-                type="number"
-                name="capacity"
-                min={0}
-                // onChange={handleInputChange}
-                // defaultValue={prevKitchen.capacity}
-              />
-          </td>
-        </tr>
-        
-        </tbody>
+                </td>
+              </tr>
+          </tbody>
         </table>
         
         <button type="submit" className="submitButton">Update</button>
-        <button type="button" id="cancelButton" className="submitButton" onClick={() => navigate("/kitchens")}>
+        <button type="button" id="cancelButton" className="submitButton" onClick={() => navigate("/schedule")}>
           Cancel
         </button>
       </form>
@@ -120,4 +214,4 @@ const UpdateKitchen = () => {
   );
 };
 
-export default UpdateKitchen;
+export default UpdateClassInstance;

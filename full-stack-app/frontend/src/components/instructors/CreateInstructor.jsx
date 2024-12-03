@@ -214,6 +214,9 @@ function CreateInstructor() {
                 </tbody>
             </table>
             <button type="submit" className="submitButton">Create Instructor</button>
+            <button type="button" id="cancelButton" className="submitButton" onClick={() => navigate("/instructors")}>
+          Cancel
+        </button>
         </form>
     </>
   );

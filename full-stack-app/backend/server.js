@@ -43,13 +43,8 @@ app.use("/api/specialties", specialtiesRouter);
 const studentsRouter = require("./routes/studentsRoutes");
 app.use("/api/students", studentsRouter);
 
-
-// Add your Connect DB Activitiy Code Below:
-// ...
-
-// ...
-// End Connect DB Activity Code.
-
+const classInstancesRouter = require("./routes/classInstancesRoutes");
+app.use("/api/schedule", classInstancesRouter);
 
 const os = require("os");
 const hostname = os.hostname();
