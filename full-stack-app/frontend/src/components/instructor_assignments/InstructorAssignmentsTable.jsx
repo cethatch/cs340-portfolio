@@ -14,38 +14,38 @@ import { MdDelete } from "react-icons/md";
 import TableRow from "./InstructorAssignmentsTableRow";
 import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 
-// import axios from "axios";
+import axios from "axios";
 
 const InstructorAssignmentsTable = () => {
-  // const [classes, setClasses] = useState([]);
+  const [assignments, setAssignments] = useState([]);
   const navigate = useNavigate();
 
 
-  // const fetchClasses = async () => {
-  //   try {
-  //     const URL = import.meta.env.VITE_API_URL + "classes";
-  //     const response = await axios.get(URL);
-  //     setClasses(response.data);
-  //   } catch (error) {
-  //     alert("Error fetching classes from the server.");
-  //     console.error("Error fetching classes:", error);
-  //   }
-  // };
+  const fetchClassInstructors = async () => {
+    try {
+      const URL = import.meta.env.VITE_API_URL + "instructor_assignments";
+      const response = await axios.get(URL);
+      setAssignments(response.data);
+    } catch (error) {
+      alert("Error fetching instructor assignments from the server.");
+      console.error("Error fetching instructor assignments:", error);
+    }
+  };
 
-  // useEffect(() => {
-  //   // fetchClasses();
-  // }, []);
+  useEffect(() => {
+    fetchClassInstructors();
+  }, []);
 
   return (
     <div>
 
       <h3>Instructor Assignments Table</h3>
-      {/* {classes.length === 0 ? (
+      {assignments.length === 0 ? (
         <div>
           <RiCreativeCommonsZeroFill size={70} color="#ccc" />
-          <p>No classes found.</p>
+          <p>No assignments found.</p>
         </div>
-      ) : ( */}
+      ) : (
         <table>
           <thead>
             <tr>
@@ -63,36 +63,12 @@ const InstructorAssignmentsTable = () => {
             </tr>
           </thead>
           <tbody>
-            {/* {classes.map((class) => (
-              <TableRow key={class.id} class={class} fetchClasses={fetchClasses} />
-            ))} */}
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td className="editCol">
-                <BiEditAlt 
-                onClick={() => navigate("/instructor_assignments/update")} 
-                size={25} 
-                style={{ cursor: "pointer" }} />
-              </td>
-              <td className="editCol">
-                <MdDelete
-                onClick={() => navigate("/instructor_assignments/delete")} 
-                size={25} 
-                style={{ cursor: "pointer"}} />
-              </td>
-            </tr>
-            
+            {assignments.map((assignment) => (
+              <TableRow key={assignment.classInstructorID} assignment={assignment} fetchClassInstructors={fetchClassInstructors} />
+            ))}
           </tbody>
         </table>
-      {/* )} */}
+     )}
     </div>
   );
 };

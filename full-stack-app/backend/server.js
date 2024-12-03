@@ -46,6 +46,9 @@ app.use("/api/students", studentsRouter);
 const classInstancesRouter = require("./routes/classInstancesRoutes");
 app.use("/api/schedule", classInstancesRouter);
 
+const classInstructorsRouter = require("./routes/classInstructorsRoutes");
+app.use("/api/instructor_assignments", classInstructorsRouter);
+
 const os = require("os");
 const hostname = os.hostname();
 

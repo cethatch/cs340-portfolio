@@ -12,36 +12,35 @@ import { BiEditAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
-// const TableRow = ({ classes, fetchClasses }) => {
-const TableRow = () => {
+const TableRow = ({ assignment }) => {
   // Hook that allows us to navigate programmatically
   const navigate = useNavigate();
   // Redirect to edit class page
   const handleEdit = () => {
     // We can access the id (and query the person) with useParams() in the UpdatePerson component
-    // navigate("/classes/update/" + classes.id, { state: { classes } });
-    navigate("/classes/update/");
+    navigate("/instructor_assignments/update/" + assignment.classInstructorID, { state: { assignment } });
+  };
+
+  const deleteRow = async () => {
+    navigate("/instructor_assignments/delete/" + assignment.classInstructorID, { state: { assignment } });
   };
 
   return (
-    // <tr key={classes.id}>
-    //   <td>{classes.id}</td>
-    //   <td>{classes.fname}</td>
-    //   <td>{classes.lname}</td>
-    //   <td>{classes.homeworld}</td>
-    //   <td>{classes.age}</td>
-    //   <td>
-    //     <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }} />
-    //   </td>
-    // </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td class="editCol">
+    <tr key={assignment.classInstructorID}>
+        <td> {assignment.classInstructorID} </td>
+        <td> {assignment.instFirstName} </td>
+        <td> {assignment.instLastName} </td>
+        <td> {assignment.classInstanceID} </td>
+        <td> {assignment.className} </td>
+        <td> {assignment.classDate} </td>
+        <td> {assignment.classTime} </td>
+        <td> {assignment.kitchenLocation} </td>
+        <td> {assignment.privateEvent} </td>
+        <td className="editCol">
           <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }}/>
+        </td>
+        <td>
+        <MdDelete onClick={deleteRow} size={25} style={{ cursor: "pointer"}} />
         </td>
       </tr>
 

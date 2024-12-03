@@ -24,14 +24,12 @@ function InstructorAssignmentsPage() {
             <nav>
                 <p><Link to="/instructor_assignments">Instructor Assignments Table</Link></p>
                 <p><Link to="create">Add an assignment</Link></p>
-                {/* <p><Link to="update">Update a Class</Link></p> */}
             </nav> 
             <Routes>
                 <Route path="/" element={<InstructorAssignmentsTable />} />
                 <Route path="create" element={<CreateInstructorAssignment />} />
-                {/* <Route path="update/:id" element={<UpdateInstructor />} /> */}
-                <Route path="update/" element={<UpdateInstructorAssignment />} />
-                <Route path="delete/" element={<DeleteInstructorAssignment />} />
+                <Route path="update/:classInstructorID" element={<UpdateInstructorAssignment />} />
+                <Route path="delete/:classInstructorID" element={<DeleteInstructorAssignment />} />
             </Routes>
         </main>
         </>
