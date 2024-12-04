@@ -9,12 +9,14 @@ Accessed during the Fall 2024 term.
 
 // import axios from "axios";
 import { BiEditAlt } from "react-icons/bi";
+import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
 const TableRow = ({ assignment }) => {
   // Hook that allows us to navigate programmatically
   const navigate = useNavigate();
+  const privateEvent_translated = assignment.privateEvent ? "Yes" : "No";
   // Redirect to edit class page
   const handleEdit = () => {
     // We can access the id (and query the person) with useParams() in the UpdatePerson component
@@ -32,10 +34,10 @@ const TableRow = ({ assignment }) => {
         <td> {assignment.instLastName} </td>
         <td> {assignment.classInstanceID} </td>
         <td> {assignment.className} </td>
-        <td> {assignment.classDate} </td>
-        <td> {assignment.classTime} </td>
+        <td> {new Date(assignment.classDate).toLocaleDateString()} </td>
+        <td>{new Date(`1970-01-01T${assignment.classTime}Z`).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'UTC' })}</td>
         <td> {assignment.kitchenLocation} </td>
-        <td> {assignment.privateEvent} </td>
+        <td> {privateEvent_translated} </td>
         <td className="editCol">
           <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }}/>
         </td>

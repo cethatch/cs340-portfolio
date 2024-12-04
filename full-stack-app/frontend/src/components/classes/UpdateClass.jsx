@@ -60,8 +60,6 @@ const UpdateClass = () => {
           alert("Error updating class");
         } else {
           // alert(response.data.message);
-          alert(`Updated class entry with classID=${classID}.
-          ${JSON.stringify(formData)}`);
           // Redirect to people page
           navigate("/classes");
         }
@@ -117,6 +115,7 @@ const UpdateClass = () => {
                 type="number"
                 name="registrationCost"
                 min={0}
+                step='0.01'
                 onChange={handleInputChange}
                 defaultValue={prevClass.registrationCost}
                 onFocus={event => {

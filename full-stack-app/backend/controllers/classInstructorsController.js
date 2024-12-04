@@ -19,9 +19,7 @@ const getClassInstructors = async (req, res) => {
   try {
     // Select all rows from the "Classes" table
     const query = `
-    SELECT classInstructorID, Instructors.instFirstName, Instructors.instLastName, 
-    ClassInstances.classInstanceID, Classes.className, ClassInstances.classDate, ClassInstances.classTime,
-    Kitchens.kitchenLocation, ClassInstances.privateEvent FROM ClassInstructors
+    SELECT * FROM ClassInstructors
     LEFT JOIN Instructors ON ClassInstructors.instructorID = Instructors.instructorID
     LEFT JOIN ClassInstances ON ClassInstructors.classInstanceID = ClassInstances.classInstanceID 
     LEFT JOIN Kitchens ON ClassInstances.kitchenID = Kitchens.kitchenID
@@ -70,20 +68,20 @@ const updateClassInstructor = async (req, res) => {
 
   try {
     const [data] = await db.query("SELECT * FROM ClassInstructors WHERE classInstructorID = ?", [
-      newClassInstructor.classInstructorID,
+      classInstructorID_recvd,
     ]);
 
     const oldClassInstructor = data[0];
     console.log(`oldClassInstructor: ${JSON.stringify(oldClassInstructor)}`);
 
+    // InstructorID is NULL-able FK in ClassInstructors, has to be valid INT FK ID or NULL
+    const instructorID_confirmed = newClassInstructor.instructorID === "" ? null : parseInt(newClassInstructor.instructorID);
+
     // If any attributes are not equal, perform update
     if (!lodash.isEqual(newClassInstructor, oldClassInstructor)) {
       const query =
-        "UPDATE ClassInstructor SET instructorID=?, classInstanceID=? WHERE classInstructorID= ?";
-
-      // InstructorID is NULL-able FK in ClassInstructors, has to be valid INT FK ID or NULL
-      const instructorID_confirmed = newClassInstructor.classInstructorID === "" ? null : parseInt(newClassInstructor.classInstructorID);
-
+        "UPDATE ClassInstructors SET instructorID=?, classInstanceID=? WHERE classInstructorID= ?";
+      
       const values = [
         instructorID_confirmed,
         newClassInstructor.classInstanceID,

@@ -19,14 +19,16 @@ const TableRow = ({ classInstance }) => {
     navigate(`/schedule/update/${classInstance.classInstanceID}`, { state: { classInstance } });
   };
 
+  const privateEvent_translated = classInstance.privateEvent ? "Yes" : "No";
+
   return (
     <tr key={classInstance.classInstanceID}>
       <td>{classInstance.classInstanceID}</td>
       <td>{classInstance.className}</td>
       <td>{new Date(classInstance.classDate).toLocaleDateString()}</td>
-      <td>{classInstance.classTime}</td>
+      <td>{new Date(`1970-01-01T${classInstance.classTime}Z`).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'UTC' })}</td>
       <td>{classInstance.kitchenLocation}</td>
-      <td>{classInstance.privateEvent}</td>
+      <td>{privateEvent_translated}</td>
       <td>
         <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }} />
       </td>

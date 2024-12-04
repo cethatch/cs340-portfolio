@@ -294,6 +294,20 @@
   font-weight: bold;
 }
 
+.filterContainer {
+  display: flex;
+  gap: 15px; 
+  align-items: center; 
+  margin-bottom: 20px; 
+}
+
+.filterContainer select,
+.filterContainer input {
+  padding: 5px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+}
+
   .floatright {}
   .floatleft {}
   .center-middle {}

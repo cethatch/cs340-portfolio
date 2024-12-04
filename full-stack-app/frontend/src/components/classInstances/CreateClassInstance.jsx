@@ -164,11 +164,11 @@ function CreateClassInstance() {
                     </tr>
                     <tr>
                         <td>
-                            <label htmlFor="kitchenLocation">Kitchen Address:</label>
+                            <label htmlFor="kitchenID">Kitchen Address:</label>
                         </td>
                         <td>
-                            <select id="kitchenLocation" 
-                            name="kitchenLocation" 
+                            <select id="kitchenID" 
+                            name="kitchenID" 
                             defaultValue={formData.kitchenID}
                             onChange={handleInputChange}
                             style={{width: 300, height: 30}}
