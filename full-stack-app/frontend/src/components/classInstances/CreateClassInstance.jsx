@@ -98,10 +98,10 @@ function CreateClassInstance() {
   };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, type, checked, value } = e.target;    
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: type==="checkbox" ? checked : value,
     }));
   };
 

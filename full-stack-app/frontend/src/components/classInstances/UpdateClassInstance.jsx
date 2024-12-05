@@ -61,11 +61,11 @@ const UpdateClassInstance = () => {
     fetchKitchens();
   }, []);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
+  const handleInputChange = (e) => {
+    const { name, type, checked, value } = e.target;    
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type==="checkbox" ? checked : value,
     }));
   };
 
@@ -123,7 +123,7 @@ const UpdateClassInstance = () => {
                       <select id="classID" 
                       name="classID" 
                       required
-                      value={prevClassInstance.classID}
+                      value={formData.classID || ""}
                       onChange={handleInputChange}
                       style={{width: 300, height: 30}} 
                       >
@@ -146,7 +146,7 @@ const UpdateClassInstance = () => {
                       type="date"
                       name="classDate"
                       required
-                      value={prevClassInstance.classDate ? new Date(prevClassInstance.classDate).toISOString().split('T')[0] : ""}
+                      defaultValue={formData.classDate ? new Date(formData.classDate).toISOString().split('T')[0] : ""}
                       onChange={handleInputChange}
                       />
                   </td>
@@ -159,7 +159,7 @@ const UpdateClassInstance = () => {
                       <input
                       type="time"
                       name="classTime"
-                      value={prevClassInstance.classTime}
+                      defaultValue={formData.classTime}
                       onChange={handleInputChange}
                       />
                   </td>
@@ -193,10 +193,10 @@ const UpdateClassInstance = () => {
                     type="checkbox"
                     name="privateEvent"
                     style={{ cursor: "pointer" }}
-                    checked={formData.privateEvent === 1} // Map `1` to checked and `0` to unchecked
+                    checked={formData.privateEvent === 1} 
                     onChange={(e) => setFormData((prevFormData) => ({
                       ...prevFormData,
-                      privateEvent: e.target.checked ? 1 : 0, // Convert to `1` or `0`
+                      privateEvent: e.target.checked ? 1 : 0,
                     }))}
                   />
                 </td>
