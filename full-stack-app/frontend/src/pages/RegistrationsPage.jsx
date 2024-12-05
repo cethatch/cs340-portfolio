@@ -23,14 +23,12 @@ function RegistrationsPage() {
             <nav>
                 <p><Link to="/registrations">Registrations Table</Link></p>
                 <p><Link to="create">Add a Registration</Link></p>
-                {/* <p><Link to="update">Update a Class</Link></p> */}
             </nav> 
             <Routes>
                 <Route path="/" element={<RegistrationsTable />} />
                 <Route path="create" element={<CreateRegistration />} />
-                {/* <Route path="update/:id" element={<UpdateClass />} /> */}
-                <Route path="update" element={<UpdateRegistration />} />
-                <Route path="delete" element={<DeleteRegistration />} />
+                <Route path="update/:registrationID" element={<UpdateRegistration />} />
+                <Route path="delete/:registrationID" element={<DeleteRegistration />} />
             </Routes>
         </main>
         </>

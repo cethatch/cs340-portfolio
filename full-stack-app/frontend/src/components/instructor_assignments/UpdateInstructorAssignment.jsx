@@ -8,13 +8,12 @@ Accessed during the Fall 2024 term.
 */
 
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { FaFilter } from "react-icons/fa";
 import { RiCreativeCommonsZeroFill } from "react-icons/ri";
 
 const UpdateInstructorAssignment = () => {
-  const { classInstructorID } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const prevAssignment = location.state.assignment;

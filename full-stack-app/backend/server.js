@@ -49,6 +49,12 @@ app.use("/api/schedule", classInstancesRouter);
 const classInstructorsRouter = require("./routes/classInstructorsRoutes");
 app.use("/api/instructor_assignments", classInstructorsRouter);
 
+const registrationsRouter = require("./routes/registrationsRoutes");
+app.use("/api/registrations", registrationsRouter);
+
+const invoicesRouter = require("./routes/invoicesRoutes");
+app.use("/api/invoices", invoicesRouter);
+
 const os = require("os");
 const hostname = os.hostname();
 
