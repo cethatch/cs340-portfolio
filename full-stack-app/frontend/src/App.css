@@ -220,13 +220,16 @@
   progress {}
 
   input[type="text"],
-  input[type="number"] {
+  input[type="number"],
+  input[type='date'],
+  input[type='time'] {
       width: 100%; 
       padding: 10px; 
-      font-size: 16px; 
+      font-size: 14px; 
       border: 1px solid #ccc; 
       border-radius: 4px; 
       box-sizing: border-box;
+      color: #555;
 }
 
 input[type='checkbox'] {
@@ -239,8 +242,6 @@ input[type='checkbox'] {
 input[type='checkbox']:checked {
   background: #abd;
 }
-
-  
   
   /* ----- Media ----- */
   figure {}
@@ -306,6 +307,7 @@ input[type='checkbox']:checked {
   gap: 15px; 
   align-items: center; 
   margin-bottom: 20px; 
+  font-size: 50px;
 }
 
 .filterContainer select,

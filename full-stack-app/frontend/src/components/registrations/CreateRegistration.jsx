@@ -80,8 +80,16 @@ function CreateRegistration() {
     generateInvoice: 0
   });
 
+  // const handleFilterChange = (e) => {
+  //   setFilters({ ...filters, [e.target.name]: e.target.value });
+  // };
+
   const handleFilterChange = (e) => {
-    setFilters({ ...filters, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value, // Allow empty values
+    }));
   };
 
   // Filter class instances based on selected filters
@@ -103,6 +111,7 @@ function CreateRegistration() {
       alert("Please select a scheduled class before submitting.");
       return;
     }
+
     // Create a new Registration object from the formData
     const newRegistration = {
         studentID: formData.studentID,
@@ -202,9 +211,12 @@ function CreateRegistration() {
   return (
     <>
         <h3>Add a new student registration:</h3>
+        <p>This form allows you to automatically generate an invoice for the registration cost of a class. To do so, please ensure the checkbox at the bottom of the page is
+          selected. </p>
+        <p><strong><em>NOTE:</em> Invoice entries may not be deleted.</strong></p>
         <p><span className='req'>* </span> - Required field.</p>
         
-        <form className="form-container"  id="addNewForm" onSubmit={handleSubmit}>
+        <form className="form-container"  id="addNewForm" onSubmit={handleSubmit} noValidate>
             <h4>Select a student: <span className='req'> * </span></h4>
               <select id="studentID" 
               name="studentID" 

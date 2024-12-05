@@ -18,7 +18,11 @@ const lodash = require("lodash");
 const getInvoices = async (req, res) => {
   try {
     // Select all rows from the "Invoices" table
-    const query = "SELECT * FROM Invoices";
+    const query = `
+    SELECT invoiceID, Students.studentID, Students.firstName, Students.lastName, 
+    invoiceDate, invoiceTotal, invoicePaid, comments FROM Invoices
+    INNER JOIN Students ON Invoices.studentID = Students.studentID;
+    `;
     // Execute the query using the "db" object from the configuration file
     const [rows] = await db.query(query);
     // Send back the rows to the client
@@ -29,8 +33,7 @@ const getInvoices = async (req, res) => {
   }
 };
 
-// Returns the latest entry
-
+// Returns the latest entry; used in registrations auto-generation option
 const getLatestInvoice = async(req, res) => {
   try {
     const query = "SELECT * from Invoices WHERE invoiceID = LAST_INSERT_ID()";
@@ -71,50 +74,50 @@ const createInvoice = async (req, res) => {
   }
 };
 
-
 const updateInvoice = async (req, res) => {
   // Get the person ID
-  const classID_recvd = req.params.classID;
-  console.log(`Received classID: ${classID_recvd}`);
+  const invoiceID_recvd = req.params.invoiceID;
+  console.log(`Received invoiceID: ${invoiceID_recvd}`);
   // Get the person object
-  const newClass = req.body;
-  console.log(`newClass: ${JSON.stringify(newClass)}`);
+  const newInvoice = req.body;
+  console.log(`newInvoice: ${JSON.stringify(newInvoice)}`);
 
   try {
-    const [data] = await db.query("SELECT * FROM Classes WHERE classID = ?", [
-      classID_recvd,
+    const [data] = await db.query("SELECT * FROM Invoices WHERE invoiceID = ?", [
+      invoiceID_recvd,
     ]);
 
-    const oldClass = data[0];
-    console.log(`oldClass: ${JSON.stringify(oldClass)}`);
+    const oldInvoice = data[0];
+    console.log(`oldInvoice: ${JSON.stringify(oldInvoice)}`);
 
     // If any attributes are not equal, perform update
-    if (!lodash.isEqual(newClass, oldClass)) {
+    if (!lodash.isEqual(newInvoice, oldInvoice)) {
       const query =
-        "UPDATE Classes SET className=?, duration=?, registrationCost=?, classDescription=? WHERE classID= ?";
+        "UPDATE Invoices SET studentID=?, invoiceDate=?, invoiceTotal=?, invoicePaid=?, comments=? WHERE invoiceID= ?";
 
-      // // Homeoworld is NULL-able FK in bsg_people, has to be valid INT FK ID or NULL
-      // const duration = newClass.duration === "" ? null : parseInt(duration);
+      // studentID is NULL-able FK in invoices, has to be valid INT FK ID or NULL
+      const studentID = newInvoice.studentID === "" ? null : parseInt(newInvoice.studentID);
 
       const values = [
-        newClass.className,
-        newClass.duration,
-        newClass.registrationCost,
-        newClass.classDescription,
-        classID_recvd,
+        newInvoice.studentID,
+        newInvoice.invoiceDate,
+        newInvoice.invoiceTotal,
+        newInvoice.invoicePaid,
+        newInvoice.comments,
+        invoiceID_recvd,
       ];
       // Perform the update
       await db.query(query, values);
       // Inform client of success and return 
-      return res.json({ message: "Class updated successfully." });
+      return res.json({ message: "Invoice updated successfully." });
     }
 
-    res.json({ message: "Class details are the same, no update" });
+    res.json({ message: "Invoice details are the same, no update" });
   } catch (error) {
-    console.log("Error updating class", error);
+    console.log("Error updating invoice", error);
     res
       .status(500)
-      .json({ error: `Error updating the class with id ${classID_recvd}` });
+      .json({ error: `Error updating the invoice with id ${invoiceID_recvd}` });
   }
 };
 

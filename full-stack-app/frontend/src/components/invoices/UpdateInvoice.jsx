@@ -7,71 +7,84 @@ https://github.com/osu-cs340-ecampus/react-starter-app
 Accessed during the Fall 2024 term.
 */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 const UpdateInvoice = () => {
-//   const { id } = useParams();
   const navigate = useNavigate();
-//   const location = useLocation();
-//   const prevPerson = location.state.person;
+  const location = useLocation();
+  const prevInvoice = location.state.invoice;
+  const [studentOptions, setStudentOptions] = useState([]);
 
-//   const [formData, setFormData] = useState({
-//     fname: prevPerson.fname || '',
-//     lname: prevPerson.lname || '',
-//     homeworld: prevPerson.homeworld || '',
-//     age: prevPerson.age || '',
-//   });
+  // Fetch students options from the backend
+  useEffect (() => {
+    const fetchStudents = async () => {
+        try {
+            const URL = import.meta.env.VITE_API_URL + "students";
+            const response = await axios.get(URL);
+            setStudentOptions(response.data);
+        } catch (error) {
+            console.log("Error fetching student options:", error);
+            alert("Could not load student options");
+        }
+    };
 
-//   const handleInputChange = (event) => {
-//     const { name, value } = event.target;
-//     setFormData((prevFormData) => ({
-//       ...prevFormData,
-//       [name]: value,
-//     }));
-//   };
+    fetchStudents();
+  }, []);
 
-//   function isUpdate(){
-//     // Check if formData is equal to prevPerson
-//     if (JSON.stringify(formData) === JSON.stringify({
-//       fname: prevPerson.fname || '',
-//       lname: prevPerson.lname || '',
-//       homeworld: prevPerson.homeworld || '',
-//       age: prevPerson.age || '',
-//     })) {
-//       alert("No changes made.");
-//       return false;
-//     }
-//     return true
-//   }
+  const [formData, setFormData] = useState({
+    studentID: prevInvoice.studentID || '',
+    invoiceDate: prevInvoice.invoiceDate || '',
+    invoiceTotal: prevInvoice.invoiceTotal || '',
+    invoicePaid: prevInvoice.invoicePaid || '',
+    comments: prevInvoice.comments || ''
+  });
 
-//   const handleSubmit = async (event) => {
-//     // Stop default form behavior which is to reload the page
-//     event.preventDefault();
-//     // Check if formData is equal to prevPerson
-//     if (isUpdate()){
-//       try {
-//         const URL = import.meta.env.VITE_API_URL + "people/" + id;
-//         const response = await axios.put(URL, formData);
-//         if (response.status !== 200) {
-//           alert("Error updating person");
-//         } else {
-//           alert(response.data.message);
-//           // Redirect to people page
-//           navigate("/people");
-//         }
-//       } catch (err) {
-//         console.log("Error updating person:", err);
-//       }
-//     }
-//   };
+  const handleInputChange = (e) => {
+    const { name, type, checked, value } = e.target;    
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type==="checkbox" ? checked : value,
+    }));
+  };
 
-    // Remove once backend is working and use the method above:
-    const handleSubmit = () => {
-        navigate("/invoices");
+  function isUpdate(){
+    // Check if formData is equal to prevPerson
+    if (JSON.stringify(formData) === JSON.stringify({
+        studentID: prevInvoice.studentID || '',
+        invoiceDate: prevInvoice.invoiceDate || '',
+        invoiceTotal: prevInvoice.invoiceTotal || '',
+        invoicePaid: prevInvoice.invoicePaid || '',
+        comments: prevInvoice.comments || ''
+    })) {
+      alert("No changes made.");
+      return false;
     }
+    return true
+  }
+
+  const handleSubmit = async (event) => {
+    // Stop default form behavior which is to reload the page
+    event.preventDefault();
+    // Check if formData is equal to prevInvoice
+    if (isUpdate()){
+      try {
+        const URL = import.meta.env.VITE_API_URL + "invoices/" + prevInvoice.invoiceID;
+        const response = await axios.put(URL, formData);
+        if (response.status !== 200) {
+          alert("Error updating invoice");
+        } else {
+          alert(response.data.message);
+          // Redirect to invoices page
+          navigate("/invoices");
+        }
+      } catch (err) {
+        console.log("Error updating invoices:", err);
+      }
+    }
+  };
 
   return (
     <div>
@@ -82,82 +95,87 @@ const UpdateInvoice = () => {
         <table>
             <tbody>
             <tr>
-              <td><label htmlFor="invoiceID">Invoice ID</label></td>
-              <td>
-              
-              </td>
-          </tr>
-          <tr>
-                        <td>
-                            <label htmlFor="studentName">Student name:<span className='req'> * </span></label>
-                        </td>
-                        <td>
-                            <select id="studentName"
-                            name="studentName" 
-                            required
-                            // defaultValue={formData.specialty}
-                            // onChange={handleInputChange}
-                            style={{width: 300, height: 30}} 
-                            >
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label htmlFor="invoiceDate">Invoice date:<span className='req'> * </span></label>
-                        </td>
-                        <td>
-                            <input
-                            type="date"
-                            name="invoiceDate"
-                            required
-                            // defaultValue={formData.instLastName}
-                            // onChange={handleInputChange}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label htmlFor="totalDue">Total Due:<span className='req'> * </span></label>
-                        </td>
-                        <td>
-                            <input
-                            type="number"
-                            name="totalDue"
-                            required
-                            // defaultValue={formData.phoneNumber}
-                            // onChange={handleInputChange}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label htmlFor="paymentComplete">Payment complete?</label>
-                        </td>
-                        <td>
-                            <input
-                            type="checkbox"
-                            name="paymentComplete"
-                            // defaultValue={formData.phoneNumber}
-                            // onChange={handleInputChange}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label htmlFor="comments">Comments: </label>
-                        </td>
-                        <td>
-                            <select id="comments" 
-                            name="comments" 
-                            required
-                            // defaultValue={formData.specialty}
-                            // onChange={handleInputChange}
-                            style={{width: 300, height: 30}} 
-                            >
-                            </select>
-                        </td>
-                    </tr>
+                <td><label htmlFor="invoiceID">Invoice ID</label></td>
+                <td> {prevInvoice.invoiceID} </td>
+            </tr>
+            <tr>
+                <td>
+                    <label htmlFor="studentName">Student name:<span className='req'> * </span></label>
+                </td>
+                <td>
+                    <select id="studentID" 
+                    name="studentID" 
+                    value={formData.studentID}
+                    onChange={handleInputChange}
+                    style={{width: 375, height: 40, padding: 10}} 
+                    >
+                    <option value={""}>Select a student</option>
+                    {studentOptions.map((student) => (
+                    <option key={student.studentID} value={student.studentID}>
+                    {student.firstName + " " + student.lastName}
+                    </option>
+                    ))}
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label htmlFor="invoiceDate">Invoice date:<span className='req'> * </span></label>
+                </td>
+                <td>
+                    <input
+                    type="date"
+                    name="invoiceDate"
+                    required
+                    defaultValue={new Date(formData.invoiceDate).toISOString().split("T")[0]}
+                    onChange={handleInputChange}
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label htmlFor="invoiceTotal">Total Due:<span className='req'> * </span></label>
+                </td>
+                <td>
+                    <input
+                    type="number"
+                    name="invoiceTotal"
+                    required
+                    defaultValue={formData.invoiceTotal}
+                    onChange={handleInputChange}
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label htmlFor="invoicePaid">Payment complete?</label>
+                </td>
+                <td>
+                    <input
+                    type="checkbox"
+                    name="invoicePaid"
+                    checked={formData.invoicePaid}
+                    onChange={handleInputChange}
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label htmlFor="comments">Comments: </label>
+                </td>
+                <td>
+                    <textarea id="comments" 
+                    name="comments"
+                    wrap="hard"
+                    defaultValue={formData.comments}
+                    onChange={handleInputChange}
+                    style={{width: 300, height: 100}} 
+                    ></textarea>
+                </td>
+            </tr>
 
         </tbody>
         </table>

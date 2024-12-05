@@ -7,67 +7,83 @@ https://github.com/osu-cs340-ecampus/react-starter-app
 Accessed during the Fall 2024 term.
 */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 
 function CreateInvoice() {
   const navigate = useNavigate();
+  const [studentOptions, setStudentOptions] = useState([]);
 
-//   const [formData, setFormData] = useState({
-//     className: "",
-//     duration: "",
-//     cost: "",
-//     description: "",
-//   });
+  const [formData, setFormData] = useState({
+    studentID: "",
+    invoiceDate: "",
+    invoiceTotal: "",
+    invoicePaid: "",
+    comments: ""
+  });
+
+  // Fetch students options from the backend
+  useEffect (() => {
+    const fetchStudents = async () => {
+        try {
+            const URL = import.meta.env.VITE_API_URL + "students";
+            const response = await axios.get(URL);
+            setStudentOptions(response.data);
+        } catch (error) {
+            console.log("Error fetching student options:", error);
+            alert("Could not load student options");
+        }
+    };
+
+    fetchStudents();
+  }, []);
   
-//   const handleSubmit = async (e) => {
-//     // Prevent page reload
-//     e.preventDefault();
-//     // Create a new person object from the formData
-//     const newClass = {
-//         className: formData.className,
-//         duration: formData.duration,
-//         cost: formData.cost,
-//         description: formData.description,
-//     };
+  const handleSubmit = async (e) => {
+    // Prevent page reload
+    e.preventDefault();
+    // Create a new invoice object from the formData
+    const newInvoice = {
+        studentID: formData.studentID,
+        invoiceDate: formData.invoiceDate,
+        invoiceTotal: formData.invoiceTotal,
+        invoicePaid: formData.invoicePaid ? 1 : 0,
+        comments: formData.comments
+    };
 
-//     try {
-//       const URL = import.meta.env.VITE_API_URL + "classes";
-//       const response = await axios.post(URL, newClass);
-//       if (response.status === 201) {
-//         navigate("/classes");
-//       } else {
-//         alert("Error creating class.");
-//       }
-//     } catch (error) {
-//       alert("Error creating class.");
-//       console.error("Error creating class:", error);
-//     }
-//     // Reset the form fields
-//     resetFormFields();
-//   };
-
-//   const resetFormFields = () => {
-//     setFormData({
-//         className: "",
-//         duration: "",
-//         cost: "",
-//         description: "",
-//     });
-//   };
-
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       [name]: value,
-//     }));
-//   };
-
-    const handleSubmit = () => {
+    try {
+      const URL = import.meta.env.VITE_API_URL + "invoices";
+      const response = await axios.post(URL, newInvoice);
+      if (response.status === 201) {
         navigate("/invoices");
+      } else {
+        alert("Error creating invoices.");
+      }
+    } catch (error) {
+      alert("Error creating invoice.");
+      console.error("Error creating invoice:", error);
     }
+    // Reset the form fields
+    resetFormFields();
+  };
+
+  const resetFormFields = () => {
+    setFormData({
+        studentID: "",
+        invoiceDate: "",
+        invoiceTotal: "",
+        invoicePaid: "",
+        comments: ""
+    });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, type, checked, value } = e.target;    
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type==="checkbox" ? checked : value,
+    }));
+  };
 
   return (
     <>
@@ -82,13 +98,18 @@ function CreateInvoice() {
                             <label htmlFor="studentName">Student name:<span className='req'> * </span></label>
                         </td>
                         <td>
-                            <select id="studentName" 
-                            name="studentName" 
-                            required
-                            // defaultValue={formData.specialty}
-                            // onChange={handleInputChange}
-                            style={{width: 300, height: 30}} 
-                            >
+                            <select id="studentID" 
+                                name="studentID" 
+                                value={formData.studentID}
+                                onChange={handleInputChange}
+                                style={{width: 375, height: 40, padding: 10}} 
+                                >
+                                    <option value={""}>Select a student</option>
+                                    {studentOptions.map((student) => (
+                                    <option key={student.studentID} value={student.studentID}>
+                                    {student.firstName + " " + student.lastName}
+                                    </option>
+                                    ))}
                             </select>
                         </td>
                     </tr>
@@ -101,35 +122,38 @@ function CreateInvoice() {
                             type="date"
                             name="invoiceDate"
                             required
-                            // defaultValue={formData.instLastName}
-                            // onChange={handleInputChange}
+                            value={formData.invoiceDate}
+                            onChange={handleInputChange}
                             />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <label htmlFor="totalDue">Total Due:<span className='req'> * </span></label>
+                            <label htmlFor="invoiceTotal">Total Due:<span className='req'> * </span></label>
                         </td>
                         <td>
                             <input
                             type="number"
-                            name="totalDue"
+                            name="invoiceTotal"
+                            step='0.01'
+                            placeholder="$0.00"
+                            min={0}
                             required
-                            // defaultValue={formData.phoneNumber}
-                            // onChange={handleInputChange}
+                            defaultValue={formData.invoiceTotal}
+                            onChange={handleInputChange}
                             />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <label htmlFor="paymentComplete">Payment complete?</label>
+                            <label htmlFor="invoicePaid">Payment complete?</label>
                         </td>
                         <td>
                             <input
                             type="checkbox"
-                            name="paymentComplete"
-                            // defaultValue={formData.phoneNumber}
-                            // onChange={handleInputChange}
+                            name="invoicePaid"
+                            checked={formData.invoicePaid}
+                            onChange={handleInputChange}
                             />
                         </td>
                     </tr>
@@ -138,14 +162,14 @@ function CreateInvoice() {
                             <label htmlFor="comments">Comments: </label>
                         </td>
                         <td>
-                            <select id="comments" 
-                            name="comments" 
-                            required
-                            // defaultValue={formData.specialty}
-                            // onChange={handleInputChange}
-                            style={{width: 300, height: 30}} 
-                            >
-                            </select>
+                            <textarea id="comments" 
+                            name="comments"
+                            wrap="hard"
+                            defaultValue={formData.comments}
+                            onChange={handleInputChange}
+                            style={{width: 300, height: 100}} 
+                            ></textarea>
+                            
                         </td>
                     </tr>
                     
