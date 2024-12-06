@@ -21,7 +21,7 @@ const getInvoices = async (req, res) => {
     const query = `
     SELECT invoiceID, Students.studentID, Students.firstName, Students.lastName, 
     invoiceDate, invoiceTotal, invoicePaid, comments FROM Invoices
-    INNER JOIN Students ON Invoices.studentID = Students.studentID;
+    LEFT JOIN Students ON Invoices.studentID = Students.studentID;
     `;
     // Execute the query using the "db" object from the configuration file
     const [rows] = await db.query(query);

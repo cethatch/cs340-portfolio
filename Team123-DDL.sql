@@ -10,7 +10,6 @@ SET AUTOCOMMIT = 0;
 
 -- Create Database Tables:
 
-
 -- Create Students table for holding information about students:
 CREATE OR REPLACE TABLE Students (
     studentID int(11) AUTO_INCREMENT NOT NULL,
@@ -114,42 +113,7 @@ CREATE OR REPLACE TABLE ClassInstructors (
 );
 
 
--- Trigger for Registrations and Invoices:
---------------------------------------------------------------------------------------
-DELIMITER //
-CREATE TRIGGER trg_generate_invoice BEFORE INSERT ON Registrations
-FOR EACH ROW
-BEGIN
-    DECLARE classCost DECIMAL(6,2);
-
-    -- Check if we should create an Invoice:
-    IF NEW.generateInvoice THEN
-
-        -- Select the class cost from joining the ClassInstances table with
-        -- Classes table and using the new row in the registration table to select
-        -- the row in the resulting table.
-        SELECT registrationCost INTO classCost FROM ClassInstances
-        JOIN Classes ON ClassInstances.classID = Classes.classID
-        WHERE ClassInstances.classInstanceID = NEW.classInstanceID;
-
-        -- Insert new row to invoices table using the studentID from the new row in
-        -- the registrations insert, the current date, the cost found above, and False
-        -- for invoicePaid.
-        INSERT INTO Invoices (studentID, invoiceDate, invoiceTotal, invoicePaid)
-        VALUES (NEW.studentID, CURDATE(), classCost, 0);
-
-        -- Update the row in Registrations with the new value for the invoiceID that
-        -- was most recently created.
-        UPDATE Registrations SET invoiceID = LAST_INSERT_ID()
-        WHERE registrationID = NEW.registrationID;
-    END IF;
-END;
-// 
-DELIMITER ;
-
-
 -- Insert Example Data:
-
 
 -- Populate Students table with example data:
 INSERT INTO Students (firstName, lastName, phoneNumber, email)

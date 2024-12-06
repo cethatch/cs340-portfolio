@@ -32,12 +32,12 @@ const TableRow = ( {registration} ) => {
         <td>{registration.firstName + " " + registration.lastName}</td>
         <td>{registration.className}</td>
         <td>{registration.classInstanceID}</td>
-        <td>{registration.invoiceID}</td>
+        <td>{registration.invoiceID ? registration.invoiceID : "Null"}</td>
 
-        <td class="editCol">
+        <td className="editCol">
           <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }}/>
         </td>
-        <td>
+        <td className="editCol">
         <MdDelete onClick={deleteRow} size={25} style={{ cursor: "pointer"}} />
       </td>
       </tr>

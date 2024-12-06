@@ -48,8 +48,7 @@ const InstructorAssignmentsTable = () => {
           <thead>
             <tr>
               <th>Assignment ID</th>
-              <th>First Name</th>
-              <th>Last Name</th>
+              <th>Instructor Name</th>
               <th>ClassInstance ID</th>
               <th>Class Name</th>
               <th>Date</th>

@@ -29,7 +29,7 @@ const TableRow = ({ class_entry }) => {
       <td>{class_entry.duration}</td>
       <td>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(class_entry.registrationCost)}</td>
       <td>{class_entry.classDescription}</td>
-      <td>
+      <td className="editCol">
         <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }} />
       </td>
     </tr>
