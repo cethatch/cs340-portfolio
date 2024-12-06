@@ -53,7 +53,6 @@ const getLatestInvoice = async(req, res) => {
 const createInvoice = async (req, res) => {
   try {
     const { studentID, invoiceDate, invoiceTotal, invoicePaid, comments } = req.body;
-    console.log({invoiceTotal});
     const query =
       "INSERT INTO Invoices (studentID, invoiceDate, invoiceTotal, invoicePaid, comments) VALUES (?, ?, ?, ?, ?)";
     
@@ -99,7 +98,7 @@ const updateInvoice = async (req, res) => {
       const studentID = newInvoice.studentID === "" ? null : parseInt(newInvoice.studentID);
 
       const values = [
-        newInvoice.studentID,
+        studentID,
         newInvoice.invoiceDate,
         newInvoice.invoiceTotal,
         newInvoice.invoicePaid,
