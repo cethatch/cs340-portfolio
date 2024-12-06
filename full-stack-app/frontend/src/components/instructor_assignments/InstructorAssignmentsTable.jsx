@@ -18,9 +18,7 @@ import axios from "axios";
 
 const InstructorAssignmentsTable = () => {
   const [assignments, setAssignments] = useState([]);
-  const navigate = useNavigate();
-
-
+  
   const fetchClassInstructors = async () => {
     try {
       const URL = import.meta.env.VITE_API_URL + "instructor_assignments";
