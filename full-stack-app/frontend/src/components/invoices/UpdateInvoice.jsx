@@ -100,7 +100,7 @@ const UpdateInvoice = () => {
             </tr>
             <tr>
                 <td>
-                    <label htmlFor="studentName">Student name:<span className='req'> * </span></label>
+                    <label htmlFor="studentName">Student name:</label>
                 </td>
                 <td>
                     <select id="studentID" 
