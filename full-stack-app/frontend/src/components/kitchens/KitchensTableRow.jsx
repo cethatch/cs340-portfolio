@@ -31,10 +31,10 @@ const TableRow = ({ kitchen }) => {
       <td>{kitchen.kitchenID}</td>
       <td>{kitchen.kitchenLocation}</td>
       <td>{kitchen.capacity}</td>
-      <td>
+      <td className="editCol">
         <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }} />
       </td>
-      <td>
+      <td className="editCol">
         <MdDelete onClick={deleteRow} size={25} style={{ cursor: "pointer"}} />
       </td>
     </tr>

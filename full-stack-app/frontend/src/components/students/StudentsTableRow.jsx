@@ -33,10 +33,10 @@ const TableRow = ({ student }) => {
       <td>{student.lastName}</td>
       <td>{student.phoneNumber}</td>
       <td>{student.email}</td>
-      <td>
+      <td className="editCol">
         <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }}/>
       </td>
-      <td>
+      <td className="editCol">
         <MdDelete onClick={deleteRow} size={25} style={{ cursor: "pointer"}} />
       </td>
     </tr>

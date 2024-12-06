@@ -36,10 +36,10 @@ const TableRow = ({ instructor }) => {
       <td>{new Date(instructor.hireDate).toLocaleDateString()}</td>
       <td>{instructor.specialtyName}</td>
       <td>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(instructor.hourlyRate)}</td>
-      <td>
+      <td className="editCol">
         <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }} />
       </td>
-      <td>
+      <td className="editCol">
         <MdDelete onClick={deleteRow} size={25} style={{ cursor: "pointer"}} />
       </td>
     </tr>

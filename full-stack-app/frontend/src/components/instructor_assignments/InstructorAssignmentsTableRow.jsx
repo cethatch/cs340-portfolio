@@ -30,18 +30,17 @@ const TableRow = ({ assignment }) => {
   return (
     <tr key={assignment.classInstructorID}>
         <td> {assignment.classInstructorID} </td>
-        <td> {assignment.instFirstName} </td>
-        <td> {assignment.instLastName} </td>
+        <td> {assignment.instructorID ? assignment.instFirstName + " " + assignment.instLastName : "Null"} </td>
         <td> {assignment.classInstanceID} </td>
         <td> {assignment.className} </td>
         <td> {new Date(assignment.classDate).toLocaleDateString()} </td>
         <td>{new Date(`1970-01-01T${assignment.classTime}Z`).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'UTC' })}</td>
-        <td> {assignment.kitchenLocation} </td>
+        <td> {assignment.kitchenLocation ? assignment.kitchenLocation : "Null"} </td>
         <td> {privateEvent_translated} </td>
         <td className="editCol">
           <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }}/>
         </td>
-        <td>
+        <td className="editCol">
         <MdDelete onClick={deleteRow} size={25} style={{ cursor: "pointer"}} />
         </td>
       </tr>

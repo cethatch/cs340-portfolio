@@ -25,13 +25,13 @@ const TableRow = ( {invoice} ) => {
   return (
     <tr key={invoice.invoiceID}>
       <td>{invoice.invoiceID}</td>
-      <td>{invoice.studentID}</td>
-      <td>{invoice.firstName + " " + invoice.lastName}</td>
+      <td>{invoice.studentID ? invoice.studentID : "Null"}</td>
+      <td>{invoice.studentID ? invoice.firstName + " " + invoice.lastName : "Null"}</td>
       <td>{new Date(invoice.invoiceDate).toLocaleDateString()}</td>
       <td>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(invoice.invoiceTotal)}</td>
       <td>{invoice.invoicePaid ? "Yes" : "No"}</td>
       <td>{invoice.comments}</td>
-      <td>
+      <td className="editCol">
         <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }} />
       </td>
     </tr>

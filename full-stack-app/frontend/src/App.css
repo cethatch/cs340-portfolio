@@ -178,7 +178,11 @@
     border: 1px solid;
     
   }
+  tr:hover {
+    background-color: rgb(239, 239, 239);
+  }
     tr:nth-child(even) {
+      
     }
   th {
     border: 1px solid;
@@ -194,7 +198,6 @@
   }
   
     td:nth-child(1) {
-      width: 150px;
     }
   colgroup {}
   data {}
@@ -325,6 +328,15 @@ input[type='checkbox']:checked {
   display: flex;
   gap: 15px;
   align-items: center;
+}
+
+.tableDescriptions {
+  text-align: center;
+  margin-top: 2%;
+}
+
+.editCol {
+  text-align: center;
 }
 
   .floatright {}

@@ -27,9 +27,9 @@ const TableRow = ({ classInstance }) => {
       <td>{classInstance.className}</td>
       <td>{new Date(classInstance.classDate).toLocaleDateString()}</td>
       <td>{new Date(`1970-01-01T${classInstance.classTime}Z`).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'UTC' })}</td>
-      <td>{classInstance.kitchenLocation}</td>
+      <td>{classInstance.kitchenLocation ? classInstance.kitchenLocation : "Null"}</td>
       <td>{privateEvent_translated}</td>
-      <td>
+      <td className="editCol">
         <BiEditAlt onClick={handleEdit} size={25} style={{ cursor: "pointer" }} />
       </td>
     </tr>
