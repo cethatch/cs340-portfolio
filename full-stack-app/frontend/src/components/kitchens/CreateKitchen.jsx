@@ -91,6 +91,7 @@ function CreateKitchen() {
                             type="number"
                             name="capacity"
                             min={0}
+                            max={2147483647}
                             defaultValue={formData.capacity}
                             onChange={handleInputChange}
                             />

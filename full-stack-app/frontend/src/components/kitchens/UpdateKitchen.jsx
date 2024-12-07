@@ -31,6 +31,10 @@ const UpdateKitchen = () => {
     }));
   };
 
+  const handleSelect = (event) => {
+    event.target.select();
+  };
+
   function isUpdate(){
     // Check if formData is equal to prevPerson
     if (JSON.stringify(formData) === JSON.stringify({
@@ -86,6 +90,7 @@ const UpdateKitchen = () => {
                     maxLength={100}
                     required
                     defaultValue={prevKitchen.kitchenLocation}
+                    onFocus={handleSelect}
                   />
               </td>
           </tr>
@@ -97,8 +102,10 @@ const UpdateKitchen = () => {
                 type="number"
                 name="capacity"
                 min={0}
+                max={2147483647}
                 onChange={handleInputChange}
                 defaultValue={prevKitchen.capacity}
+                onFocus={handleSelect}
               />
           </td>
         </tr>

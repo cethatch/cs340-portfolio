@@ -54,6 +54,10 @@ const UpdateInstructor = () => {
     }));
   };
 
+  const handleSelect = (event) => {
+    event.target.select();
+  };
+
   function isUpdate(){
     // Check if formData is equal to prevInstructor
     if (JSON.stringify(formData) === JSON.stringify({
@@ -117,6 +121,7 @@ const UpdateInstructor = () => {
                     onChange={handleInputChange}
                     required
                     defaultValue={prevInstructor.instFirstName}
+                    onFocus={handleSelect}
                   />
               </td>
           </tr>
@@ -128,6 +133,7 @@ const UpdateInstructor = () => {
                     name="instLastName"
                     maxLength={50}
                     onChange={handleInputChange}
+                    onFocus={handleSelect}
                     required
                     defaultValue={prevInstructor.instLastName}
                   />
@@ -143,6 +149,7 @@ const UpdateInstructor = () => {
                 maxLength={15}
                 required
                 onChange={handleInputChange}
+                onFocus={handleSelect}
                 defaultValue={prevInstructor.phoneNumber}
               />
           </td>
@@ -153,8 +160,10 @@ const UpdateInstructor = () => {
                   <input
                     type="text"
                     name="email"
+                    pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
                     maxLength={100}
                     onChange={handleInputChange}
+                    onFocus={handleSelect}
                     defaultValue={prevInstructor.email}
                   />
               </td>
@@ -183,6 +192,7 @@ const UpdateInstructor = () => {
                   onChange={handleInputChange}
                   style={{ width: 300, height: 30 }}
                 >
+                  <option value={""}>Select a specialty</option>
                   {specialtyOptions.map((specialty) => (
                     <option key={specialty.specialtyID} value={specialty.specialtyID}>
                       {specialty.specialtyName}
@@ -201,6 +211,8 @@ const UpdateInstructor = () => {
                   name="hourlyRate"
                   step='0.01'
                   min={0}
+                  max={999.99}
+                  onFocus={handleSelect}
                   defaultValue={prevInstructor.hourlyRate}
                   onChange={handleInputChange}
                   />

@@ -33,6 +33,10 @@ const UpdateStudent = () => {
     }));
   };
 
+  const handleSelect = (event) => {
+    event.target.select();
+  };
+
   function isUpdate(){
     // Check if formData is equal to prevStudent
     if (JSON.stringify(formData) === JSON.stringify({
@@ -92,6 +96,7 @@ const UpdateStudent = () => {
                     type="text"
                     name="firstName"
                     onChange={handleInputChange}
+                    onFocus={handleSelect}
                     required
                     maxLength={50}
                     defaultValue={prevStudent.firstName}
@@ -106,6 +111,7 @@ const UpdateStudent = () => {
                     name="lastName"
                     maxLength={50}
                     onChange={handleInputChange}
+                    onFocus={handleSelect}
                     required
                     defaultValue={prevStudent.lastName}
                   />
@@ -120,6 +126,7 @@ const UpdateStudent = () => {
                     name="phoneNumber"
                     maxLength={15}
                     onChange={handleInputChange}
+                    onFocus={handleSelect}
                     defaultValue={prevStudent.phoneNumber}
                   />
               </td>
@@ -131,8 +138,10 @@ const UpdateStudent = () => {
                   <input
                     type="text"
                     name="email"
+                    pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
                     maxLength={100}
                     onChange={handleInputChange}
+                    onFocus={handleSelect}
                     defaultValue={prevStudent.email}
                   />
               </td>

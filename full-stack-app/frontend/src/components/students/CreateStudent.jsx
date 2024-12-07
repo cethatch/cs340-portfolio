@@ -125,6 +125,7 @@ function CreateStudent() {
                             <input
                             type="text"
                             name="email"
+                            pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
                             maxLength={100}
                             defaultValue={formData.email}
                             onChange={handleInputChange}
