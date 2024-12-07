@@ -47,6 +47,10 @@ const UpdateClass = () => {
     return true
   }
 
+  const handleSelect = (event) => {
+      event.target.select();
+    };
+
   const handleSubmit = async (event) => {
     // Stop default form behavior which is to reload the page
     event.preventDefault();
@@ -100,6 +104,7 @@ const UpdateClass = () => {
                 type="number"
                 name="duration"
                 min={0}
+                max={2147483647}
                 onChange={handleInputChange}
                 defaultValue={prevClass.duration}
                 onFocus={event => {
@@ -115,27 +120,25 @@ const UpdateClass = () => {
                 type="number"
                 name="registrationCost"
                 min={0}
+                max={9999.99}
                 step='0.01'
                 onChange={handleInputChange}
                 defaultValue={prevClass.registrationCost}
-                onFocus={event => {
-                  event.target.select();
-                }}
+                onFocus={handleSelect}
               />
           </td>
         </tr>
         <tr>
           <td><label>Description:</label></td>
           <td>
-              <input
-                type="text"
+              <textarea id="classDescription" 
                 name="classDescription"
+                wrap="hard"
+                defaultValue={formData.classDescription}
                 onChange={handleInputChange}
-                defaultValue={prevClass.classDescription}
-                onFocus={event => {
-                  event.target.select();
-                }}
-              />
+                onFocus={handleSelect}
+                style={{width: 300, height: 100}} 
+                ></textarea>
           </td>
         </tr>
         </tbody>

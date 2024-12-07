@@ -8,8 +8,8 @@
 -- Display contents of Classes table
 SELECT * FROM Classes;
 
--- Display classNames for dropdown:
-SELECT className FROM Classes;
+-- Get class by classID
+SELECT * FROM Classes WHERE classID = :classIDReceived;
 
 -- Add a new class to Classes table
 INSERT INTO Classes (className, duration, registrationCost, classDescription)
@@ -17,7 +17,7 @@ VALUES (:classNameInput, :durationInput, :registrationCostInput, :classDescripti
 
 -- Update a class in Classes table
 UPDATE Classes SET className = :classNameInput, duration = :durationInput, registration = :registrationCostInput, classDescription = :classDescriptionInput
-WHERE classID = :classIDFromUpdateForm ;
+WHERE classID = :classIDFromUpdateForm;
 
 -------------------------------------------------
 -- Display contents of Kitchens table
@@ -25,6 +25,9 @@ SELECT * FROM Kitchens;
 
 -- Display Kitchen Locations for dropdowns:
 SELECT kitchenLocation FROM Kitchens;
+
+-- Get kitchen by kitchenID
+SELECT * FROM Kitchens WHERE kitchenID = :kitchenIDReceived;
 
 -- Add a new kitchen to Kitchens table
 INSERT INTO Kitchens (kitchenLocation, capacity)
@@ -38,15 +41,18 @@ WHERE kitchenID = :kitchenIDFromUpdateForm ;
 DELETE FROM Kitchens WHERE kitchenID = :kitchenIDSelectedFromBrowsePage;
 
 -------------------------------------------------
--- Display contents of ClassInstances table (Include class name from Classes and kitchen location from Kitchens)
-SELECT classInstanceID, Classes.className, classDate, classTime, Kitchens.kitchenLocation, privateEvent FROM ClassInstances 
-INNER JOIN Classes ON ClassInstances.classID = Classes.classID 
-INNER JOIN Kitchens ON ClassInstances.kitchenID = Kitchens.kitchenID;
+-- Display contents of ClassInstances table
+SELECT * FROM ClassInstances 
+LEFT JOIN Classes ON ClassInstances.classID = Classes.classID 
+LEFT JOIN Kitchens ON ClassInstances.kitchenID = Kitchens.kitchenID;
+
+-- Get classInstance by classInstanceID
+SELECT * FROM ClassInstances WHERE classInstanceID = :classInstanceReceived
 
 -- Add a new class schedule to ClassInstances table
 INSERT INTO ClassInstances (classID, classDate, classTime, kitchenID, privateEvent)
 VALUES (
-    (SELECT classID FROM Classes WHERE className = :classNameInput),
+    :classIDFromDropdown,
     :classDateInput,
     :classTimeInput,
     :kitchenIDFromDropdown,
@@ -65,10 +71,13 @@ WHERE classInstanceID = :classInstanceIDFromUpdateForm;
 -------------------------------------------------
 -- Display contents of Instructors table (Include specialties using a join)
 SELECT instructorID, instFirstName, instLastName, phoneNumber, email, hireDate, Specialties.specailtyName, hourlyRate 
-FROM Instructors INNER JOIN Specialties ON Instructors.specialtyID = Specialties.specialtyID;
+FROM Instructors LEFT JOIN Specialties ON Instructors.specialtyID = Specialties.specialtyID;
 
 -- Get Instructor Names for dropdown:
 SELECT instFirstName, instLastName FROM Instructors;
+
+-- Get instructor by instructorID
+SELECT * FROM Instructors WHERE instructorID = :instructorID_recvd;
 
 -- Add a new instructor to Instructors table
 INSERT INTO Instructors (instFirstName, instLastName, phoneNumber, email, hireDate, specialtyID, hourlyRate)
@@ -78,50 +87,47 @@ VALUES (:instFirstNameInput, :instLastNameInput, :phoneNumberInput, :emailInput,
 UPDATE Instructors SET instFirstName = :instFirstNameInput, instLastName = :instLastNameInput, phoneNumber = :phoneNumberInput, email = :emailInput, hireDate = :hireDateInput, specialtyID = :specialtyIDFromDropdown, hourlyRate = :hourlyRateInput
 WHERE instructorID = :instructorIDFromUpdateForm;
 
+-- Check if an instructor exists
+SELECT 1 FROM Instructors WHERE instructorID = :instructorIDReceived;
+
 -- Delete an instructor from Instructors table
 DELETE FROM Instructors WHERE instructorID = :instructorIDSelectedFromBrowsePage;
 
 -------------------------------------------------
 -- Display contents of ClassInstructors table
-SELECT classInstructorID, Instructors.instFirstName, Instructors.instLastName, ClassInstances.classInstanceID, Classes.className, ClassInstances.classDate, ClassInstances.classTime,
-Kitchens.kitchenLocation, ClassInstances.privateEvent FROM ClassInstructors
-INNER JOIN Instructors ON ClassInstructors.instructorID = Instructors.instructorID
-INNER JOIN ClassInstances ON ClassInstructors.classInstanceID = ClassInstances.classInstanceID 
-INNER JOIN Kitchens ON ClassInstances.kitchenID = Kitchens.kitchenID
-INNER JOIN Classes ON ClassInstances.classID = Classes.classID;
+SELECT * FROM ClassInstructors
+LEFT JOIN Instructors ON ClassInstructors.instructorID = Instructors.instructorID
+LEFT JOIN ClassInstances ON ClassInstructors.classInstanceID = ClassInstances.classInstanceID 
+LEFT JOIN Kitchens ON ClassInstances.kitchenID = Kitchens.kitchenID
+LEFT JOIN Classes ON ClassInstances.classID = Classes.classID;
+
+-- Get classInstructor by classInstructorID
+SELECT * FROM ClassInstructors WHERE classInstructorID = :classInstructorIDReceived;
 
 -- Add a new instructor assignment to ClassInstructors table
--- TODO: This query may need some workshopping
 INSERT INTO ClassInstructors (instructorID, classInstanceID)
-VALUES ( :instructorIDFromDrowdown, 
-    ((SELECT classInstanceID FROM ClassInstances WHERE classID = :classIDFromDropdown
-        AND classDate = :classDateInput 
-        AND classTime = :classTimeInput 
-        AND kitchenId = :kitchenIDFromDropdown
-    ))
-);
+VALUES (:instructorIDFromDropdown, :classInstanceFromCheckbox);
 
 -- Update an instructor assignment in ClassInstructors table
--- TODO: This query may need some workshopping
 UPDATE ClassInstructors SET instructorID = :instructorIDFromDropdown, 
-classInstanceID = 
-    ((SELECT classInstanceID FROM ClassInstances WHERE classID = :classIDFromDropdown
-        AND classDate = :classDateInput 
-        AND classTime = :classTimeInput 
-        AND kitchenId = :kitchenIDFromDropdown
-    ))
+classInstanceID = :classInstanceFromCheckbox
 WHERE classInstructorID = :classInstructorIDFromUpdateForm;
 
--- Delete an instructor assignment from ClassInstructors table
-DELETE FROM ClassInstructors WHERE classInstructorID = classInstructorIDSelectedFromBrowsePage;
+-- Check if an instructor assignment exists
+SELECT 1 FROM ClassInstructors WHERE ClassInstructorID = :classInstructorIDReceived;
 
+-- Delete an instructor assignment from ClassInstructors table
+DELETE FROM ClassInstructors WHERE classInstructorID = :classInstructorIDReceived;
 
 -------------------------------------------------
 -- Display contents of Specialties table
-SELECT * FROM Specialties;
+SELECT * FROM Specialties ORDER BY specialtyID asc;
 
 -- Get specialties for drop down menus
 SELECT specialtyName FROM Specialties;
+
+-- Get specialty by specialtyID
+SELECT * FROM Specialties WHERE specialtyID = :specialtyIDReceived;
 
 -- Add a new specialty to Specialties table
 INSERT INTO Specialties (specialtyName)
@@ -130,6 +136,9 @@ VALUES (:specialtyNameInput);
 -- Update a specialty in Specialties table
 UPDATE Specialties SET specailtyName = :specialtyNameInput
 WHERE specialtyID = :specialtyIDFromUpdateForm;
+
+-- Check if specialty exists
+SELECT 1 FROM Specialties WHERE specialtyID = :specialtyIDReceived;
 
 -- Delete a specialty from Specialties table
 DELETE FROM Specialties WHERE specialtyID = :specialtyIDSelectedFromBrowsePage;
@@ -141,6 +150,9 @@ SELECT * FROM Students;
 -- Get students first and last names for drop down menus
 SELECT firstName, lastName from Students;
 
+-- Get student by studentID
+SELECT * FROM Students WHERE studentID = :studentIDReceived;
+
 -- Add a new student to Students table
 INSERT INTO Students (firstName, lastName, phoneNumber, email)
 VALUES (:firstNameInput, :lastNameInput, :phoneNumberInput, :emailInput);
@@ -149,51 +161,54 @@ VALUES (:firstNameInput, :lastNameInput, :phoneNumberInput, :emailInput);
 UPDATE Students SET firstName = :firstNameInput, lastName = :lastNameInput, phoneNumber = :phoneNumberInput, email = :emailInput
 WHERE studentID = :studentIDFromUpdateForm;
 
+-- Check if a student exists
+SELECT 1 FROM Students WHERE studentID = :studentIDReceived;
+
 -- Delete a student from Students table
 DELETE FROM Students WHERE studentID = :studentIDSelectedFromBrowsePage;
 
 -------------------------------------------------
 -- Display contents of Registrations table
-SELECT registrationID, Students.firstName, Students.lastName, Classes.className, Invoices.invoiceID FROM Registrations 
-INNER JOIN Students ON Registrations.studentID = Students.studentID
-INNER JOIN ClassInstances ON Registrations.classInstanceID = ClassInstances.classInstanceID
-INNER JOIN Invoices ON Registrations.invoiceID = Invoices.invoiceID
-INNER JOIN Classes ON ClassInstances.classID = Classes.classID;
+SELECT Registrations.registrationID,
+    Students.studentID, ClassInstances.classInstanceID, Invoices.invoiceID, 
+    ClassInstances.classDate, ClassInstances.classTime, Classes.className, 
+    Classes.classID, Kitchens.kitchenLocation, Students.studentID, 
+    Students.firstName, Students.lastName
+    FROM Registrations
+    LEFT JOIN Students ON Registrations.studentID = Students.studentID
+    JOIN ClassInstances ON Registrations.classInstanceID = ClassInstances.classInstanceID
+    LEFT JOIN Kitchens ON ClassInstances.kitchenID = Kitchens.kitchenID
+    LEFT JOIN Invoices ON Registrations.invoiceID = Invoices.invoiceID
+    JOIN Classes ON ClassInstances.classID = Classes.classID
+    ORDER BY Registrations.registrationID;
 
 -- Add a new registration to Registrations table
--- Since we are using a trigger to automatically generate an invoice if specified, we need to add a check to ask the user
--- if they want to generate one. This ensures we satisfy the project requirement that we must allow an INSERT into each table
--- independently.
 INSERT INTO Registrations (studentID, classInstanceID, generateInvoice) 
 VALUES (
     :studentIDFromDropdown, 
-    classInstanceID = 
-    (SELECT classInstanceID FROM ClassInstances WHERE classID = :classIDFromDropdown
-        AND classDate = :classDateInput 
-        AND classTime = :classTimeInput 
-        AND kitchenId = :kitchenIDFromDropdown
-    ),
+    :classInstanceIDFromUpdateForm
     :generateInvoiceBoolSelection
 );
 
 -- Update a registration in Registrations table
-UPDATE Registrations SET studentID = :studentIDFromDropdown, 
-classInstanceID = (
-SELECT classInstanceID FROM ClassInstances WHERE classID = :classIDFromDropdown
-    AND classDate = :classDateInput 
-    AND classTime = :classTimeInput 
-    AND kitchenId = :kitchenIDFromDropdown
-), generateInvoiceBoolSelection 
-ON registrationID = :registrationIDFromUpdateForm;
+UPDATE Registrations SET studentID=studentIDFromDropdown, classInstanceID=classInstanceIDFromUpdateForm WHERE registrationID=registrationIDSelectedFromBrowsePage;
+
+-- Check if a registration exists
+SELECT 1 FROM Registrations WHERE registrationID = :registrationIDReceived;
 
 -- Delete a registration from Registrations table
 DELETE FROM Registrations WHERE registrationID = :registrationIDSelectedFromBrowsePage;
-
 
 -------------------------------------------------
 -- Display contents of Invoices table (with student first and last name)
 SELECT invoiceID, Students.studentID, Students.firstName, Students.lastName, invoiceDate, invoiceTotal, invoicePaid, comments FROM Invoices
 INNER JOIN Students ON Invoices.studentID = Students.studentID;
+
+-- Get invoice by invoiceID
+SELECT * FROM Invoices WHERE invoiceID = :invoiceIDReceived;
+
+-- Get the latest invoice entry
+SELECT * from Invoices WHERE invoiceID = LAST_INSERT_ID();
 
 -- Add a new invoice to Invoices table
 INSERT INTO Invoices (studentID, invoiceDate, invoiceTotal, invoicePaid, comments)
@@ -208,4 +223,3 @@ VALUES (
 -- Update an invoice in Invoices table
 UPDATE Invoices SET studentID = :studentIDFromDropdown, invoiceDate = :invoiceDate, invoiceTotal = :invoiceTotalInput, invoicePaid = :invoicePaidInput, comments = :commentsInput
 WHERE invoiceID = :invoiceIDFromUpdateForm;
-

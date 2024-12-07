@@ -65,6 +65,10 @@ function CreateClass() {
     }));
   };
 
+  const handleSelect = (event) => {
+    event.target.select();
+  };
+
   return (
     <>
         <h3>Add a new class:</h3>
@@ -97,6 +101,7 @@ function CreateClass() {
                             type="number"
                             name="duration"
                             min={0}
+                            max={2147483647}
                             defaultValue={formData.duration}
                             onChange={handleInputChange}
                             />
@@ -113,6 +118,7 @@ function CreateClass() {
                             placeholder="$0.00"
                             step='0.01'
                             min={0}
+                            max={9999.99}
                             value={formData.registrationCost}
                             onChange={handleInputChange}
                             />
@@ -123,11 +129,14 @@ function CreateClass() {
                             <label htmlFor="classDescription">Description</label>
                         </td>
                         <td>
-                            <input type="text" 
-                            name="classDescription" 
-                            value={formData.classDescription} 
-                            onChange={handleInputChange} 
-                            />
+                          <textarea id="classDescription" 
+                          name="classDescription"
+                          wrap="hard"
+                          defaultValue={formData.classDescription}
+                          onChange={handleInputChange}
+                          onFocus={handleSelect}
+                          style={{width: 300, height: 100}} 
+                          ></textarea>
                         </td>
                     </tr>
                 </tbody>

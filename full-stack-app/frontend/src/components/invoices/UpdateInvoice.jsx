@@ -50,6 +50,10 @@ const UpdateInvoice = () => {
     }));
   };
 
+  const handleSelect = (event) => {
+    event.target.select();
+  };
+
   function isUpdate(){
     // Check if formData is equal to prevPerson
     if (JSON.stringify(formData) === JSON.stringify({
@@ -143,8 +147,10 @@ const UpdateInvoice = () => {
                     type="number"
                     name="invoiceTotal"
                     required
+                    max={9999.99}
                     defaultValue={formData.invoiceTotal}
                     onChange={handleInputChange}
+                    onFocus={handleSelect}
                     />
                 </td>
             </tr>
@@ -172,6 +178,7 @@ const UpdateInvoice = () => {
                     wrap="hard"
                     defaultValue={formData.comments}
                     onChange={handleInputChange}
+                    onFocus={handleSelect}
                     style={{width: 300, height: 100}} 
                     ></textarea>
                 </td>

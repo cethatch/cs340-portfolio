@@ -30,6 +30,10 @@ const UpdateSpecialty = () => {
     }));
   };
 
+  const handleSelect = (event) => {
+    event.target.select();
+  };
+
   function isUpdate(){
     // Check if formData is equal to prevPerson
     if (JSON.stringify(formData) === JSON.stringify({
@@ -81,6 +85,7 @@ const UpdateSpecialty = () => {
                     type="text"
                     name="specialtyName"
                     onChange={handleInputChange}
+                    onFocus={handleSelect}
                     maxLength={100}
                     required
                     defaultValue={prevSpecialty.specialtyName}

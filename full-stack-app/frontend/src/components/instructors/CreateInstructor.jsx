@@ -153,6 +153,7 @@ function CreateInstructor() {
                             <input
                             type="text"
                             name="email"
+                            pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
                             maxLength={100}
                             defaultValue={formData.email}
                             onChange={handleInputChange}
@@ -206,6 +207,7 @@ function CreateInstructor() {
                             placeholder="$0.00"
                             step='0.01'
                             min={0}
+                            max={999.99}
                             defaultValue={formData.hourlyRate}
                             onChange={handleInputChange}
                             />

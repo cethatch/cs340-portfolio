@@ -137,7 +137,7 @@ function CreateInvoice() {
                             name="invoiceTotal"
                             step='0.01'
                             placeholder="$0.00"
-                            min={0}
+                            max={9999.99}
                             required
                             defaultValue={formData.invoiceTotal}
                             onChange={handleInputChange}
