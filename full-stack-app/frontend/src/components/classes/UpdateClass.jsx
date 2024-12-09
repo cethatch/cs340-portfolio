@@ -47,6 +47,7 @@ const UpdateClass = () => {
     return true
   }
 
+  // Select the entire form field for easy editting
   const handleSelect = (event) => {
       event.target.select();
     };

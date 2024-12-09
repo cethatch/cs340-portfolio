@@ -7,7 +7,6 @@ https://github.com/osu-cs340-ecampus/react-starter-app
 Accessed during the Fall 2024 term.
 */
 
-import { BsTrash } from "react-icons/bs";
 import { BiEditAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
@@ -17,7 +16,7 @@ const TableRow = ({ class_entry }) => {
   const navigate = useNavigate();
   // Redirect to edit class page
   const handleEdit = () => {
-    // We can access the id (and query the person) with useParams() in the UpdatePerson component
+    // We can access the id using the state variable an use it to navigate to the update page
     navigate(`/classes/update/${class_entry.classID}`, { state: { class_entry } });
   
   };

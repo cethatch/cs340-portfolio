@@ -23,12 +23,10 @@ function SpecialtiesPage() {
             <nav>
                 <p><Link to="/specialties">Specialties Table</Link></p>
                 <p><Link to="create">Add a Specialty</Link></p>
-                {/* <p><Link to="update">Update a Class</Link></p> */}
             </nav> 
             <Routes>
                 <Route path="/" element={<SpecialtiesTable />} />
                 <Route path="create" element={<CreateSpecialty />} />
-                {/* <Route path="update/:id" element={<UpdateClass />} /> */}
                 <Route path="update/:specialtyID" element={<UpdateSpecialty />} />
                 <Route path="delete/:specialtyID" element={<DeleteSpecialty />} />
             </Routes>

@@ -15,13 +15,11 @@ import { useNavigate } from "react-router-dom";
 const TableRow = ({ kitchen }) => {
   // Hook that allows us to navigate programmatically
   const navigate = useNavigate();
-  // Redirect to edit class page
+  // Redirect to edit kitchen page
   const handleEdit = () => {
-    // We can access the id (and query the person) with useParams() in the UpdatePerson component
-    // navigate("/classes/update/" + classes.id, { state: { classes } });
     navigate(`/kitchens/update/${kitchen.kitchenID}`, { state: { kitchen } } );
   };
-
+  // Redirect to delete kichen page
   const deleteRow = async () => {
     navigate(`/kitchens/delete/${kitchen.kitchenID}`, {state: {kitchen}});
   };

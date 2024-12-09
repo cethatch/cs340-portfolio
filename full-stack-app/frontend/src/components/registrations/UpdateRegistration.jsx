@@ -5,6 +5,7 @@ and made to suit our portfolio project's topic and database.
 Authors: Zac Maes and Devin Daniels.
 https://github.com/osu-cs340-ecampus/react-starter-app 
 Accessed during the Fall 2024 term.
+Citation is relevant to all code except that which pertains to the filters 
 */
 
 import { useState, useEffect } from "react";
@@ -17,6 +18,8 @@ const UpdateRegistration = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const prevRegistration = location.state.registration;
+
+  // Define state variables for filters, dropdowns, and table
   const [classOptions, setClassOptions] = useState([]);
   const [classInstances, setClassInstances] = useState([]);
   const [studentOptions, setStudentOptions] = useState([]);
@@ -28,7 +31,7 @@ const UpdateRegistration = () => {
     classInstanceID: prevRegistration.classInstanceID || ''
   });
 
-  // Fetch Students name options
+  // Fetch Students name options for dropdown
   useEffect(() => {
     const fetchStudents = async () => {
         try {
@@ -76,31 +79,33 @@ const UpdateRegistration = () => {
     fetchClassInstances();
   }, []);
 
-    function isUpdate() {
-        if (
-            formData.studentID === prevRegistration.studentID &&
-            selectedClassInstance.classInstanceID === prevRegistration.classInstanceID
-        ) {
-            alert("No changes made.");
-            return false;
-        }
-        return true;
+  // check if the form data has been modified
+  function isUpdate() {
+      if (
+          formData.studentID === prevRegistration.studentID &&
+          selectedClassInstance.classInstanceID === prevRegistration.classInstanceID
+      ) {
+          alert("No changes made.");
+          return false;
+      }
+      return true;
     }
 
+    // Update filters when changed by user
     const handleFilterChange = (e) => {
         setFilters({ ...filters, [e.target.name]: e.target.value });
       };
     
-      // Filter class instances based on selected filters
-      const filteredClassInstances = classInstances.filter((instance) => {
-        const instanceDate = new Date(instance.classDate).toISOString().split("T")[0];
-        const instanceTime = instance.classTime.slice(0, 5);
-        return (
-          (!filters.className || instance.className === filters.className) &&
-          (!filters.classDate || instanceDate === filters.classDate) &&
-          (!filters.classTime || instanceTime === filters.classTime) 
-        );
-      });
+    // Filter class instances based on selected filters
+    const filteredClassInstances = classInstances.filter((instance) => {
+      const instanceDate = new Date(instance.classDate).toISOString().split("T")[0];
+      const instanceTime = instance.classTime.slice(0, 5);
+      return (
+        (!filters.className || instance.className === filters.className) &&
+        (!filters.classDate || instanceDate === filters.classDate) &&
+        (!filters.classTime || instanceTime === filters.classTime) 
+      );
+    });
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;

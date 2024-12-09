@@ -16,7 +16,8 @@ import axios from "axios";
 
 const RegistrationsTable = () => {
   const [registrations, setRegistrations] = useState([]);
-
+  
+  // Fetch registrations from backend
   const fetchRegistrations = async () => {
     try {
       const URL = import.meta.env.VITE_API_URL + "registrations";

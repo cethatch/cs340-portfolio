@@ -5,6 +5,7 @@ and made to suit our portfolio project's topic and database.
 Authors: Zac Maes and Devin Daniels.
 https://github.com/osu-cs340-ecampus/react-starter-app 
 Accessed during the Fall 2024 term.
+This citation is applicable to all code EXCEPT that which pertains to filtering.
 */
 
 import { useEffect, useState } from "react";
@@ -17,13 +18,14 @@ import { RiCreativeCommonsZeroFill } from "react-icons/ri";
 function CreateRegistration() {
   const navigate = useNavigate();
 
+  // Define state variables 
   const [classOptions, setClassOptions] = useState([]);
   const [classInstances, setClassInstances] = useState([]);
   const [studentOptions, setStudentOptions] = useState([]);
   const [filters, setFilters] = useState({ className: "", classDate: "", classTime: "", kitchenLocation: "" });
   const [selectedClassInstance, setSelectedClassInstance] = useState(null);
 
-  // Fetch class name options from the backend
+  // Fetch class name options for filter dropdown from the backend
   useEffect(() => {
     const fetchClasses = async () => {
       try {
@@ -55,7 +57,7 @@ function CreateRegistration() {
     fetchClassInstances();
   }, []);
 
-  // Fetch students options from the backend
+  // Fetch students options for dropdown from the backend
   useEffect (() => {
     const fetchStudents = async () => {
         try {
@@ -80,15 +82,12 @@ function CreateRegistration() {
     generateInvoice: 0
   });
 
-  // const handleFilterChange = (e) => {
-  //   setFilters({ ...filters, [e.target.name]: e.target.value });
-  // };
-
+  // Update filter variables with updates based on user input
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({
       ...prevFilters,
-      [name]: value, // Allow empty values
+      [name]: value
     }));
   };
 
@@ -111,7 +110,6 @@ function CreateRegistration() {
       alert("Please select a scheduled class before submitting.");
       return;
     }
-
     // Create a new Registration object from the formData
     const newRegistration = {
         studentID: formData.studentID,
@@ -119,7 +117,7 @@ function CreateRegistration() {
         generateInvoice: formData.generateInvoice,
         invoiceID: null
     };
-
+    // Ensure there is a student selected
     if (
       newRegistration.studentID == "" || 
       newRegistration.classInstanceID == ""
@@ -127,7 +125,7 @@ function CreateRegistration() {
       alert("Error: Please ensure you've selected both a student and a scheduled class.");
       return;
     }
-
+    
     try {
       // Generate Invoice if requested. If this fails, the whole request will be terminated.
       const amount = selectedClassInstance.registrationCost;

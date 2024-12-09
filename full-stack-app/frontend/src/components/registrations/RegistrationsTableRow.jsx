@@ -16,12 +16,11 @@ import { useNavigate } from "react-router-dom";
 const TableRow = ( {registration} ) => {
   // Hook that allows us to navigate programmatically
   const navigate = useNavigate();
-  // Redirect to edit class page
+  // Redirect to edit registration page
   const handleEdit = () => {
-    // We can access the id (and query the person) with useParams() in the UpdatePerson component
     navigate("/registrations/update/" + registration.registrationID, { state: { registration } });
   };
-
+  // Redirect to delete registration page
   const deleteRow = async () => {
     navigate(`/registrations/delete/${registration.registrationID}`, {state: {registration}});
   };

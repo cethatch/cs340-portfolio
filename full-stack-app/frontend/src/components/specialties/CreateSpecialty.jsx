@@ -38,7 +38,7 @@ function CreateSpecialty() {
       alert("Error creating specialty.");
       console.error("Error creating specialty:", error);
     }
-//     // Reset the form fields
+  // Reset the form fields
     resetFormFields();
   };
 
@@ -55,10 +55,6 @@ function CreateSpecialty() {
       [name]: value,
     }));
   };
-
-//    const handleSubmit = () => {
-//        navigate("/specialties");
-//    }
 
   return (
     <>

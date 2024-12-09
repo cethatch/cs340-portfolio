@@ -18,7 +18,7 @@ const UpdateInvoice = () => {
   const prevInvoice = location.state.invoice;
   const [studentOptions, setStudentOptions] = useState([]);
 
-  // Fetch students options from the backend
+  // Fetch students options for dropdown from the backend
   useEffect (() => {
     const fetchStudents = async () => {
         try {

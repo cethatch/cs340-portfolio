@@ -11,7 +11,6 @@ import React from "react";
 import ClassInstancesTable from "../components/classInstances/ClassInstancesTable";
 import CreateClassInstance from "../components/classInstances/CreateClassInstance";
 import UpdateClassInstance from "../components/classInstances/UpdateClassInstance";
-// import DeleteClassInstance from "../components/classInstances/DeleteClassInstance";
 import { Link, Routes, Route } from 'react-router-dom';
 
 

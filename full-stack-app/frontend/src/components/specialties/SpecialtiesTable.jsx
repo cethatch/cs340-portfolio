@@ -14,7 +14,7 @@ import axios from "axios";
 
 const SpecialtiesTable = () => {
   const [specialties, setSpecialties] = useState([]);
-
+  // Fetch specialties from backend for the table
   const fetchSpecialties = async () => {
     try {
         const URL = import.meta.env.VITE_API_URL + "specialties";

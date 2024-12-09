@@ -8,7 +8,6 @@ Accessed during the Fall 2024 term.
 */
 
 import React from "react";
-import { FaRegEdit } from "react-icons/fa";
 import ClassesTable from "../components/classes/ClassesTable";
 import CreateClass from "../components/classes/CreateClass";
 import UpdateClass from "../components/classes/UpdateClass";

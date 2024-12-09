@@ -27,7 +27,7 @@ function CreateKitchen() {
         kitchenLocation: formData.kitchenLocation,
         capacity: formData.capacity
     };
-
+    // Send request to backend
     try {
       const URL = import.meta.env.VITE_API_URL + "kitchens";
       const response = await axios.post(URL, newKitchen);

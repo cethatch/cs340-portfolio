@@ -27,10 +27,10 @@ const UpdateInstructor = () => {
     specialtyID: prevInstructor.specialtyID || '',
     hourlyRate: prevInstructor.hourlyRate || '',
   });
-
+  // Define state variables to store the specialty options in
   const [specialtyOptions, setSpecialtyOptions] = useState([]);
 
-  // Fetch specialty options from the backend
+  // Fetch specialty options for dropdown from the backend
   useEffect(() => {
     const fetchSpecialties = async () => {
       try {
@@ -53,7 +53,8 @@ const UpdateInstructor = () => {
       [name]: value,
     }));
   };
-
+  
+  // Select entire field when clicked on to make edits easier
   const handleSelect = (event) => {
     event.target.select();
   };

@@ -16,13 +16,11 @@ import { useNavigate } from "react-router-dom";
 const TableRow = ({ specialty }) => {
   // Hook that allows us to navigate programmatically
   const navigate = useNavigate();
-  // Redirect to edit class page
+  // Redirect to edit specialty page
   const handleEdit = () => {
-    // We can access the id (and query the person) with useParams() in the UpdatePerson component
-    // navigate("/classes/update/" + classes.id, { state: { classes } });
     navigate(`/specialties/update/${specialty.specialtyID}`, { state: {specialty}});
   };
-
+  // Redirect to delete specialty page
   const deleteRow = async () => {
     navigate(`/specialties/delete/${specialty.specialtyID}`, {state: {specialty}});
   };

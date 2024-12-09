@@ -5,6 +5,7 @@ and made to suit our portfolio project's topic and database.
 Authors: Zac Maes and Devin Daniels.
 https://github.com/osu-cs340-ecampus/react-starter-app 
 Accessed during the Fall 2024 term.
+Citation is applicable to all code except that pertaining to filters
 */
 
 import { useState, useEffect } from "react";
@@ -23,13 +24,14 @@ const UpdateInstructorAssignment = () => {
     classInstanceID: prevAssignment.classInstanceID || '',
   });
 
+  // Define state variables
   const [classOptions, setClassOptions] = useState([]);
   const [classInstances, setClassInstances] = useState([]);
   const [instructorOptions, setInstructorOptions] = useState([]);
   const [filters, setFilters] = useState({ className: "", classDate: "", classTime: "" });
   const [selectedClassInstance, setSelectedClassInstance] = useState(prevAssignment.classInstanceID);
 
-  // Fetch class name options from the backend
+  // Fetch class name options for filter field from the backend
   useEffect(() => {
     const fetchClasses = async () => {
       try {
@@ -61,7 +63,7 @@ const UpdateInstructorAssignment = () => {
     fetchClassInstances();
   }, []);
 
-  // Fetch instructor options from the backend
+  // Fetch instructor options for dropdown from the backend
   useEffect (() => {
     const fetchInstructors = async () => {
         try {
@@ -77,6 +79,7 @@ const UpdateInstructorAssignment = () => {
     fetchInstructors();
   }, []);
 
+  // Check if fields are different
   function isUpdate() {
     if (
         formData.instructorID === prevAssignment.instructorID &&
@@ -85,9 +88,10 @@ const UpdateInstructorAssignment = () => {
         alert("No changes made.");
         return false;
     }
-    return true;
-}
+    return true;  
+  }
 
+  // Updates filters after one of the fields has been changed
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
   };
@@ -112,12 +116,14 @@ const UpdateInstructorAssignment = () => {
   const handleSubmit = async (e) => {
     // Prevent page reload
     e.preventDefault();
-    // Create a new person object from the formData
-    
+    // Create a new classInstructor object from the formData
+    // No need to verify a classInstance is selected here bc 
+    // will use the previous one if none is picked
     const newClassInstructor = {
         instructorID: formData.instructorID,
         classInstanceID: selectedClassInstance
     };
+    // If the form is updated, send update request to backend
     if (isUpdate()){
         console.log(JSON.stringify(newClassInstructor));
         try {
@@ -158,7 +164,7 @@ const UpdateInstructorAssignment = () => {
       <p><span className='req'>* </span> - Required field.</p>
         
         <form className="form-container"  id="addNewForm" onSubmit={handleSubmit}>
-            <h4>Select an instructor: <span className='req'> * </span></h4>
+            <h4>Select an instructor: </h4>
               <select id="instructorID" 
               name="instructorID" 
               value={formData.instructorID || ""}

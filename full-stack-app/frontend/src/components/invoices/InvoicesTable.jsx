@@ -8,17 +8,14 @@ Accessed during the Fall 2024 term.
 */
 
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { RiCreativeCommonsZeroFill } from "react-icons/ri";
 import TableRow from "./InvoicesTableRow";
-
 import axios from "axios";
 
 const InvoicesTable = () => {
   const [invoices, setInvoices] = useState([]);
-  const navigate = useNavigate();
-
-
+  
+  // Fetch invoices for table from backend
   const fetchInvoices = async () => {
     try {
       const URL = import.meta.env.VITE_API_URL + "invoices";

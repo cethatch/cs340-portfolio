@@ -14,7 +14,7 @@ import axios from "axios";
 
 const KitchensTable = () => {
   const [kitchens, setKitchens] = useState([]);
-
+  // Fetch kitchens for table
   const fetchKitchens = async () => {
     try {
       const URL = import.meta.env.VITE_API_URL + "kitchens";

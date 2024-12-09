@@ -5,6 +5,7 @@ and made to suit our portfolio project's topic and database.
 Authors: Zac Maes and Devin Daniels.
 https://github.com/osu-cs340-ecampus/react-starter-app 
 Accessed during the Fall 2024 term.
+Citation is applicable to all code except that pertaining to filters.
 */
 
 import { useEffect, useState } from "react";
@@ -78,7 +79,8 @@ function CreateInstructorAssignment() {
     classTime: "",
     kitchenLocation: ""
   });
-
+  
+    // Updates filters after one of the fields has been changed
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
   };
@@ -104,12 +106,12 @@ function CreateInstructorAssignment() {
   const handleSubmit = async (e) => {
     // Prevent page reload
     e.preventDefault();
-    // Create a new person object from the formData
-    
+    // Ensure a classInstance is selected
     if (!selectedClassInstance) {
       alert("Please select a scheduled class before submitting.");
       return;
     }
+    // Create a new classInstructor object from the formData
     const newClassInstructor = {
         instructorID: formData.instructorID,
         classInstanceID: selectedClassInstance
@@ -154,7 +156,7 @@ function CreateInstructorAssignment() {
         <p><span className='req'>* </span> - Required field.</p>
         
         <form className="form-container"  id="addNewForm" onSubmit={handleSubmit}>
-            <h4>Select an instructor: <span className='req'> * </span></h4>
+            <h4>Select an instructor: </h4>
               <select id="instructorID" 
               name="instructorID" 
               value={formData.instructorID}

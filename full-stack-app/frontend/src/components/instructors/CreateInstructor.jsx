@@ -26,7 +26,7 @@ function CreateInstructor() {
 
   const [specialtyOptions, setSpecialtyOptions] = useState([]);
 
-  // Fetch specialty options from the backend
+  // Fetch specialty options for dropdown from the backend
   useEffect(() => {
     const fetchSpecialties = async () => {
       try {
@@ -45,7 +45,7 @@ function CreateInstructor() {
   const handleSubmit = async (e) => {
     // Prevent page reload
     e.preventDefault();
-    // Create a new person object from the formData
+    // Create a new instructor object from the formData
     const newInstructor = {
         instFirstName: formData.instFirstName,
         instLastName: formData.instLastName,

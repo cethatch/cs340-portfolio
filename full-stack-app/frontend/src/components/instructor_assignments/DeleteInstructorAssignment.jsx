@@ -7,12 +7,7 @@ https://github.com/osu-cs340-ecampus/react-starter-app
 Accessed during the Fall 2024 term.
 */
 
-import { useState, useEffect } from "react";
-import { RiCreativeCommonsZeroFill } from "react-icons/ri";
-import { BiEditAlt } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
-import TableRow from "./InstructorAssignmentsTableRow";
-import { Link, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from "axios";
 
 const DeleteInstructorAssignment = () => {

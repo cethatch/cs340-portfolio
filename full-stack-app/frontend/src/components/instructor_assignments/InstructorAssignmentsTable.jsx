@@ -9,16 +9,13 @@ Accessed during the Fall 2024 term.
 
 import { useState, useEffect } from "react";
 import { RiCreativeCommonsZeroFill } from "react-icons/ri";
-import { BiEditAlt } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
 import TableRow from "./InstructorAssignmentsTableRow";
-import { Link, Routes, Route, useNavigate } from 'react-router-dom';
-
 import axios from "axios";
 
 const InstructorAssignmentsTable = () => {
   const [assignments, setAssignments] = useState([]);
   
+  // fetch all rows from backend
   const fetchClassInstructors = async () => {
     try {
       const URL = import.meta.env.VITE_API_URL + "instructor_assignments";

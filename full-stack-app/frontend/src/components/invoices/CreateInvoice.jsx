@@ -23,7 +23,7 @@ function CreateInvoice() {
     comments: ""
   });
 
-  // Fetch students options from the backend
+  // Fetch students options for dropdown from the backend
   useEffect (() => {
     const fetchStudents = async () => {
         try {
@@ -50,7 +50,7 @@ function CreateInvoice() {
         invoicePaid: formData.invoicePaid ? 1 : 0,
         comments: formData.comments
     };
-
+    // Send create request to backend
     try {
       const URL = import.meta.env.VITE_API_URL + "invoices";
       const response = await axios.post(URL, newInvoice);

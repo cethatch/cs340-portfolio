@@ -7,7 +7,6 @@ https://github.com/osu-cs340-ecampus/react-starter-app
 Accessed during the Fall 2024 term.
 */
 
-// import axios from "axios";
 import { BiEditAlt } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -16,13 +15,15 @@ import { useNavigate } from "react-router-dom";
 const TableRow = ({ assignment }) => {
   // Hook that allows us to navigate programmatically
   const navigate = useNavigate();
+  // Convert bool value to plain english Yes/No
   const privateEvent_translated = assignment.privateEvent ? "Yes" : "No";
-  // Redirect to edit class page
+  
+  // Redirect to edit classInstructor page
   const handleEdit = () => {
     // We can access the id (and query the person) with useParams() in the UpdatePerson component
     navigate("/instructor_assignments/update/" + assignment.classInstructorID, { state: { assignment } });
   };
-
+  // Redirect to delete classInstructor page
   const deleteRow = async () => {
     navigate("/instructor_assignments/delete/" + assignment.classInstructorID, { state: { assignment } });
   };

@@ -24,7 +24,7 @@ function CreateClass() {
   const handleSubmit = async (e) => {
     // Prevent page reload
     e.preventDefault();
-    // Create a new person object from the formData
+    // Create a new class object from the formData
     const newClass = {
         className: formData.className,
         duration: formData.duration,
@@ -65,6 +65,7 @@ function CreateClass() {
     }));
   };
 
+  // Selects the entire form field for easy editing
   const handleSelect = (event) => {
     event.target.select();
   };

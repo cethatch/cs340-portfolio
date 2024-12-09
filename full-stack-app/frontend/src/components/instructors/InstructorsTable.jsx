@@ -15,6 +15,7 @@ import axios from "axios";
 const InstructorsTable = () => {
   const [instructors, setInstructors] = useState([]);
   
+  // Fetch instructors for table from the backend
   const fetchInstructors = async () => {
     try {
       const URL = import.meta.env.VITE_API_URL + "instructors";
