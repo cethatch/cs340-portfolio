@@ -1,0 +1,53 @@
+CS340 Introduction to Databases Portfolio Project
+Authors: Christine Thatcher and Ingrid Gunderson Thomas
+Date submitted: December 9, 2024
+
+Project Overview
+
+This project had two main goals: 
+
+The first was the design of a database using MariaDB. Our project's database was designed to support day-to-day operations at a casual cooking school. The tables and attributes we've implemented were in consideration of the administrative tasks required to run such a business. The final database has a total of 9 tables, two of which are intersection tables to resolve M:N relationships. Each table is designed to permit the INSERT operation independently from other tables. 
+
+The second goal was to develop a user interface to allow interaction with the database. Our user interface utilizes REACT for the frontend, and NodeJS for the backend. Our application includes a home page which provides the user with more information about each table and the operations it supports. Several pages utilize JOINs in their database queries to provide the user with more information, rather than relying on foreign key attributes that provide little information. Using the user interface, the user may READ and INSERT into each table individually. Dropdown menus and filtered tables are implemented where reasonable in order to eliminate the need for the user to provide foreign keys. 
+
+Where to find project requirements
+
+1. Each table has at least 3 rows of sample data: See each table on UI. 
+2. At least 4 entity tables and 1 intersection table: 
+    -Entity tables: Classes, Kitchens, Schedule/ClassInstances, Instructors, Specialties, Students, Invoices
+    -Intersection tables: ClassInstructos (Instructor Assignments), Registrations
+3. Web interface to interact with database: See UI.
+4. INSERT into each table individually: On each table's UI page, there is a button under the header that says "Add a _____" which allows for the insertion of a new row. For ClassInstances/Schedule, the wording is "Schedule a Class" for this option.
+5. Each table is used in at least one select query: Each page on the UI queries the database to fetch the rows.
+6. Include at least one DELETE and one UPDATE: All tables allow for update. The following tables allow for delete: Kitchens, Instructors, ClassInstructors (Instructor Assignments), Specialties, Students, and Registrations. Since all tables permit updates, the M:N update requirement is met by both ClassInstructors and Registrations. Both of these M:N intersection tables also permit delete.
+7. No form requires the user to input foreign keys. Instead, dropdowns and checkboxes accomplish the specification of FK values.
+8. At least one NULLable FK: There are several places where a FK may be NULL. They are: kitchenID in ClassInstances (Schedule), specialtyID in Instructors, studentID in Invoices, instructorID in ClassInstructors (Instructor Assignments). 
+9. Delete form M:N without data anomaly: Deleting a student from Students will cause that students entries in Registrations (M:N) to be deleleted. It will preserve entries in Invoices, but the studentID value will be set to NULL.
+
+How to boot up the project's UI
+
+Backend:
+Our database is hosted on the classwork.engr.oregonstate.edu server. Ensure the boot up for the backend is able to communicate with the database by running the backend server on the same classwork server. Create a file to store environment variables (.env) in the root directory of the backend. The following information is required:
+
+DB_HOST="classmysql.engr.oregonstate.edu"   # keep this
+DB_USER=""                                  # replace with your onid
+DB_DATABASE="cs340_ONID"                    # replace with your onid
+DB_PASSWORD=""                              # your db password - last 4 digits of osu id number
+PORT=                                       # enter an available PORT number
+
+In a terminal, navigate to the backend directory. Run "npm install" to install all package dependencies. To start up temporarily, run "npm run start". You will see a message saying the server is running on the PORT specified if everything worked. To use forever to boot up the app, run "npm run serve". You will not see a message, but should regain control of your terminal. You can check on the status of your process by defining an alias for forever using: "alias forever='./node_modules/forever/bin/forever' and then running "forever list" to list all processes running with forever. 
+
+To boot up the frontend, you will need to create a file to store environment variables (.env) in the frontend directory.
+
+VITE_PORT=33693
+REACT_SERVER_PORT=45895 
+VITE_API_URL='http://classwork.engr.oregonstate.edu:BACKENDPORT/api/'  # Change this url to match your backend express api url and port.
+
+In a terminal, navigate to the frontend directory. Run "npm install" to install all package dependencies. To start temporarily, run "npm run start". To use forever to boot up the application, first you must build it using "npm run build". If that is successfull, move on to boot it up. Run "npm run serve" to start the app with forever. Navigate to the URL using the REACT_SERVER_PORT to view the web page. 
+
+Project Citations
+
+Code in the frontend and backend folders was adapted from the CS340 React starter app code found here: https://github.com/osu-cs340-ecampus/react-starter-app 
+Authors are: Zac Maes and Devin Daniels. Code was accessed during the Fall 2024 term. See individual page/component file citations for specification on components which were NOT based on the starter app. 
+
+The frontend's App.css file was adapted from course material provided to OSU's CS290 class in the Spring 2024 term. The author was Pam VanLonden, and the code was accessed in the Spring 2024 term. The source of this can be found here: https://replit.com/@PamVanLonden/a-Global-Stylesheet#App.css  
