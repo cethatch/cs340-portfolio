@@ -17,6 +17,8 @@ const {
 } = require("../controllers/invoicesController");
 
 router.get("/", getInvoices);
+// define route for fetching the latest invoiceID.
+// Used when auto-generating an invoice from registrations CREATE page
 router.get("/latestInvoice", getLatestInvoice)
 router.post("/", createInvoice);
 router.put("/:invoiceID", updateInvoice);
