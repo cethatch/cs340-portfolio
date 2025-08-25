@@ -243,19 +243,19 @@ Each screenshot demonstrates CRUD functionality and special handling of foreign 
     ```
 
 2. Install dependencies and start the server:
-```
-npm install
-# temporary run
-npm run start
-# persistent (uses forever)
-npm run serve
-```
+    ```
+    npm install
+    # temporary run
+    npm run start
+    # persistent (uses forever)
+    npm run serve
+    ```
 
 3. (Optional) Check forever status:
-```
-alias forever='./node_modules/forever/bin/forever'
-forever list
-```
+    ```
+    alias forever='./node_modules/forever/bin/forever'
+    forever list
+    ```
 
 ### Frontend Setup
 1. In the `frontend` directory, create a `.env` file:
