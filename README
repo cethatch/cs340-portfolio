@@ -1,53 +1,287 @@
-CS340 Introduction to Databases Portfolio Project
-Authors: Christine Thatcher and Ingrid Gunderson Thomas
-Date submitted: December 9, 2024
+# GigaBite Culinary Classes Internal Database Project
 
-Project Overview
+**Authors:**  
+Group 123 — Christine Thatcher & Ingrid Gunderson Thomas  
+**Date Submitted:** December 9, 2024  
 
-This project had two main goals: 
+> ⚠️ **Note:** The deployed site is **no longer live**. Please see the **Screenshots** section for visuals of the user interface.
 
-The first was the design of a database using MariaDB. Our project's database was designed to support day-to-day operations at a casual cooking school. The tables and attributes we've implemented were in consideration of the administrative tasks required to run such a business. The final database has a total of 9 tables, two of which are intersection tables to resolve M:N relationships. Each table is designed to permit the INSERT operation independently from other tables. 
+---
 
-The second goal was to develop a user interface to allow interaction with the database. Our user interface utilizes REACT for the frontend, and NodeJS for the backend. Our application includes a home page which provides the user with more information about each table and the operations it supports. Several pages utilize JOINs in their database queries to provide the user with more information, rather than relying on foreign key attributes that provide little information. Using the user interface, the user may READ and INSERT into each table individually. Dropdown menus and filtered tables are implemented where reasonable in order to eliminate the need for the user to provide foreign keys. 
+## Table of Contents
+- [Executive Summary](#executive-summary)
+- [Project Overview](#project-overview)
+- [Database Outline](#database-outline)
+  - [Entity Tables](#entity-tables)
+  - [Join Tables](#join-tables)
+- [Entity-Relationship Diagram](#entity-relationship-diagram)
+- [Schema](#schema)
+- [UI Screenshots](#ui-screenshots)
+- [Project Requirements Checklist](#project-requirements-checklist)
+- [How to Boot Up the UI (Local / Classwork Server)](#how-to-boot-up-the-ui-local--classwork-server)
+  - [Backend Setup](#backend-setup)
+  - [Frontend Setup](#frontend-setup)
+- [Project Citations](#project-citations)
 
-Where to find project requirements
+---
 
-1. Each table has at least 3 rows of sample data: See each table on UI. 
-2. At least 4 entity tables and 1 intersection table: 
-    -Entity tables: Classes, Kitchens, Schedule/ClassInstances, Instructors, Specialties, Students, Invoices
-    -Intersection tables: ClassInstructos (Instructor Assignments), Registrations
-3. Web interface to interact with database: See UI.
-4. INSERT into each table individually: On each table's UI page, there is a button under the header that says "Add a _____" which allows for the insertion of a new row. For ClassInstances/Schedule, the wording is "Schedule a Class" for this option.
-5. Each table is used in at least one select query: Each page on the UI queries the database to fetch the rows.
-6. Include at least one DELETE and one UPDATE: All tables allow for update. The following tables allow for delete: Kitchens, Instructors, ClassInstructors (Instructor Assignments), Specialties, Students, and Registrations. Since all tables permit updates, the M:N update requirement is met by both ClassInstructors and Registrations. Both of these M:N intersection tables also permit delete.
-7. No form requires the user to input foreign keys. Instead, dropdowns and checkboxes accomplish the specification of FK values.
-8. At least one NULLable FK: There are several places where a FK may be NULL. They are: kitchenID in ClassInstances (Schedule), specialtyID in Instructors, studentID in Invoices, instructorID in ClassInstructors (Instructor Assignments). 
-9. Delete form M:N without data anomaly: Deleting a student from Students will cause that students entries in Registrations (M:N) to be deleleted. It will preserve entries in Invoices, but the studentID value will be set to NULL.
+## Executive Summary
 
-How to boot up the project's UI
+Our project started as a simple schema for a cooking school but evolved significantly through **normalization**, **peer feedback**, and **iterative redesign**.  
 
-Backend:
-Our database is hosted on the classwork.engr.oregonstate.edu server. Ensure the boot up for the backend is able to communicate with the database by running the backend server on the same classwork server. Create a file to store environment variables (.env) in the root directory of the backend. The following information is required:
+- Early design: 4 entity tables + 2 join tables.  
+- Major feedback led to **invoicing support** → attributes `invoiceAmount` and `invoicePaid` were added.  
+- Iterations refined schema:
+  - **ClassInstances table** created to avoid redundancy.  
+  - **Specialties table** introduced to separate instructor expertise.  
+  - **Invoices table** added (moved invoice attributes from Registrations).  
+- **Unique constraints on emails** (Students & Instructors) improved usability.  
+- **generateInvoice boolean** added to Registrations to streamline registration → invoice workflow.  
 
-DB_HOST="classmysql.engr.oregonstate.edu"   # keep this
-DB_USER=""                                  # replace with your onid
-DB_DATABASE="cs340_ONID"                    # replace with your onid
-DB_PASSWORD=""                              # your db password - last 4 digits of osu id number
-PORT=                                       # enter an available PORT number
+Through multiple iterations, the design grew more sophisticated and user-focused, supporting efficient operations for **GigaBite Culinary Classes**.  
 
-In a terminal, navigate to the backend directory. Run "npm install" to install all package dependencies. To start up temporarily, run "npm run start". You will see a message saying the server is running on the PORT specified if everything worked. To use forever to boot up the app, run "npm run serve". You will not see a message, but should regain control of your terminal. You can check on the status of your process by defining an alias for forever using: "alias forever='./node_modules/forever/bin/forever' and then running "forever list" to list all processes running with forever. 
+---
 
-To boot up the frontend, you will need to create a file to store environment variables (.env) in the frontend directory.
+## Project Overview
 
-VITE_PORT=33693
-REACT_SERVER_PORT=45895 
-VITE_API_URL='http://classwork.engr.oregonstate.edu:BACKENDPORT/api/'  # Change this url to match your backend express api url and port.
+**GigaBite Culinary Classes** is a casual cooking school with locations in **Seattle** and **San Francisco**, offering:  
+- ~5,000 students annually  
+- 250 classes per location per year  
+- ~10 instructors per location  
+- 23 employees in total  
 
-In a terminal, navigate to the frontend directory. Run "npm install" to install all package dependencies. To start temporarily, run "npm run start". To use forever to boot up the application, first you must build it using "npm run build". If that is successfull, move on to boot it up. Run "npm run serve" to start the app with forever. Navigate to the URL using the REACT_SERVER_PORT to view the web page. 
+The database-driven website supports:  
+- **Class scheduling**  
+- **Student registration & enrollment tracking**  
+- **Instructor management**  
+- **Billing information collection**  
 
-Project Citations
+While **payroll and billing** are handled externally, the database provides the data needed for smooth integration.  
 
-Code in the frontend and backend folders was adapted from the CS340 React starter app code found here: https://github.com/osu-cs340-ecampus/react-starter-app 
-Authors are: Zac Maes and Devin Daniels. Code was accessed during the Fall 2024 term. See individual page/component file citations for specification on components which were NOT based on the starter app. 
+This project had two main goals:
 
-The frontend's App.css file was adapted from course material provided to OSU's CS290 class in the Spring 2024 term. The author was Pam VanLonden, and the code was accessed in the Spring 2024 term. The source of this can be found here: https://replit.com/@PamVanLonden/a-Global-Stylesheet#App.css  
+1. **Database Design (MariaDB)**
+   - Designed to support the day-to-day operations of a casual cooking school.
+   - Final schema has **9 tables**, including **2 intersection tables** to resolve M:N relationships.
+   - Each table supports `INSERT` independently of other tables.
+
+2. **User Interface (React + Node.js)**
+   - **Frontend:** React (Vite)
+   - **Backend:** Node.js/Express
+   - Home page describes each table and the operations it supports.
+   - Several pages use `JOIN` queries to show human-readable data rather than raw foreign key IDs.
+   - Users can `READ` and `INSERT` into each table individually; dropdowns and filtered tables remove the need to type foreign keys.
+
+---
+
+## Database Outline
+
+### Entity Tables
+
+#### **Classes**
+- Tracks class offerings.  
+- **Attributes:** `classID`, `className`, `duration`, `registrationCost`, `classDescription`.  
+- **Relationships:** 1:M with `ClassInstances`.
+
+#### **ClassInstances (Schedule)**
+- Tracks each scheduled instance of a class.  
+- **Attributes:** `classInstanceID`, `classID`, `classDate`, `classTime`, `kitchenID`, `privateEvent`.  
+- **Relationships:**  
+  - 1:M with `Registrations`  
+  - M:N with `Instructors` (via ClassInstructors)  
+  - M:1 with `Kitchens`  
+
+#### **Students**
+- Stores student data.  
+- **Attributes:** `studentID`, `firstName`, `lastName`, `phoneNumber`, `email (UQ)`.  
+- **Relationships:**  
+  - M:N with `ClassInstances` (via Registrations)  
+  - 1:M with `Registrations`  
+
+#### **Instructors**
+- Stores instructor data.  
+- **Attributes:** `instructorID`, `instFirstName`, `instLastName`, `email (UQ)`, `phoneNumber`, `hireDate`, `specialtyID`, `hourlyRate`.  
+- **Relationships:**  
+  - M:N with `ClassInstances` (via ClassInstructors)  
+  - M:1 with `Specialties`  
+
+#### **Specialties**
+- Stores instructor specialties.  
+- **Attributes:** `specialtyID`, `specialtyName (UQ)`.  
+- **Relationships:** 1:M with `Instructors`.
+
+#### **Kitchens**
+- Tracks classroom kitchens.  
+- **Attributes:** `kitchenID`, `kitchenLocation`, `capacity`.  
+- **Relationships:** 1:M with `ClassInstances`.  
+
+#### **Invoices**
+- Tracks student invoices.  
+- **Attributes:** `invoiceID`, `studentID`, `invoiceDate`, `invoiceTotal`, `invoicePaid`, `comments`.  
+- **Relationships:**  
+  - M:1 with `Students`  
+  - 1:M with `Registrations`  
+
+---
+
+### Join Tables
+
+#### **ClassInstructors**
+- Resolves M:N between `ClassInstances` and `Instructors`.  
+- **Attributes:** `classInstructorID`, `instructorID`, `classInstanceID`.  
+
+#### **Registrations**
+- Resolves M:N between `Students` and `ClassInstances`.  
+- **Attributes:** `registrationID`, `studentID`, `classInstanceID`, `generateInvoice (BOOL)`, `invoiceID`.  
+- **Relationships:**  
+  - M:1 with `Students`  
+  - M:1 with `ClassInstances`  
+  - M:1 with `Invoices`  
+
+---
+
+## Entity-Relationship Diagram
+
+*(Insert ERD image here)*  
+`![Entity-Relationship Diagram](screenshots/erd.jpg)`
+
+---
+
+## Schema
+
+*(Insert schema diagram or SQL snippet here)*  
+`![Schema](screenshots/schema.png)`
+
+---
+
+## UI Screenshots
+
+Each screenshot demonstrates CRUD functionality and special handling of foreign keys.  
+
+- **Home Page**  
+  `![Home Page](screenshots/home.png)`  
+
+- **Classes** — Read, Create, Update  
+  `![Read Classes](screenshots/classes-READ.png)`  
+  `![Create Class](screenshots/classes-CREATE.png)`  
+  `![Update Class](screenshots/classes-UPDATE.png)`  
+
+- **ClassInstances (Schedule)** — Read, Create, Update  
+  `![Read Schedule](screenshots/classInstance-READ.png)`  
+  `![Create Schedule](screenshots/classInstance-CREATE.png)`  
+  `![Update Schedule](screenshots/classInstance-UPDATE.png)`  
+
+- **Students** — Read, Create, Update, Delete  
+  `![Read Students](screenshots/students-READ.png)`  
+  `![Create Student](screenshots/students-CREATE.png)`  
+  `![Update Student](screenshots/students-UPDATE.png)`  
+  `![Delete Student](screenshots/students-DELETE.png)`  
+
+- **Instructors & Specialties** — CRUD  
+  `![Read Instructors](screenshots/instructors-READ.png)`  
+  `![Create Instructor](screenshots/instructors-CREATE.png)`  
+  `![Update Instructor](screenshots/instructors-UPDATE.png)`  
+  `![Delete Instructor](screenshots/instructors-DELETE.png)`  
+  `![Read Specialties](screenshots/specialties-READ.png)`  
+  `![Create Specialty](screenshots/specialties-CREATE.png)`  
+  `![Update Specialty](screenshots/specialties-UPDATE.png)`  
+  `![Delete Specialty](screenshots/specialties-DELETE.png)`  
+
+- **Kitchens** — CRUD  
+  `![Read Kitchens](screenshots/kitchens-READ.png)`  
+  `![Create Kitchen](screenshots/kitchens-CREATE.png)`  
+  `![Update Kitchen](screenshots/kitchens-UPDATE.png)`  
+  `![Delete Kitchen](screenshots/kitchens-DELETE.png)`  
+
+- **Invoices** — CRUD  
+  `![Read Invoices](screenshots/invoices-READ.png)`  
+  `![Create Invoice](screenshots/invoices-CREATE.png)`  
+  `![Update Invoice](screenshots/invoices-UPDATE.png)`  
+
+- **ClassInstructors (M:N)** — CRUD  
+  `![Read ClassInstructors](screenshots/instructorAssignments-READ.png)`  
+  `![Create ClassInstructor](screenshots/instructorAssignments-CREATE.png)`  
+  `![Update ClassInstructor](screenshots/instructorAssignments-UPDATE.png)`  
+  `![Delete ClassInstructor](screenshots/instructorAssignments-DELETE.png)`  
+
+- **Registrations (M:N)** — CRUD  
+  `![Read Registrations](screenshots/registrations-READ.png)`  
+  `![Create Registration](screenshots/registrations-CREATE.png)`  
+  `![Update Registration](screenshots/registrations-UPDATE.png)`  
+  `![Delete Registration](screenshots/registrations-DELETE.png)`  
+
+---
+
+## Project Requirements Checklist
+
+- ✅ ≥ 3 rows of sample data per table  
+- ✅ ≥ 4 entity tables + ≥ 1 intersection table  
+- ✅ Web UI with full interaction  
+- ✅ INSERT supported in every table  
+- ✅ Each table queried at least once  
+- ✅ UPDATE in all tables  
+- ✅ DELETE in selected tables  
+- ✅ Foreign keys handled with dropdowns/checkboxes (not manual input)  
+- ✅ At least one NULLable FK (`kitchenID`, `specialtyID`, `studentID`, `instructorID`)  
+- ✅ Safe deletion from M:N without anomalies  
+
+---
+
+## How to Boot Up the UI (Local / Classwork Server)
+
+> Assumes the database is hosted on `classwork.engr.oregonstate.edu` and the backend runs there as well.
+
+### Backend Setup
+
+1. In the `backend` directory, create a `.env` file:
+   ```
+   DB_HOST="classmysql.engr.oregonstate.edu"
+   DB_USER=""                 # your ONID
+   DB_DATABASE="cs340_ONID"   # replace ONID
+   DB_PASSWORD=""             # last 4 digits of OSU ID
+   PORT=                      # choose an available port
+    ```
+
+2. Install dependencies and start the server:
+```
+npm install
+# temporary run
+npm run start
+# persistent (uses forever)
+npm run serve
+```
+
+3. (Optional) Check forever status:
+```
+alias forever='./node_modules/forever/bin/forever'
+forever list
+```
+
+### Frontend Setup
+1. In the `frontend` directory, create a `.env` file:
+    ```
+    VITE_PORT=33693
+    REACT_SERVER_PORT=45895
+    VITE_API_URL='http://classwork.engr.oregonstate.edu:BACKENDPORT/api/'  # replace BACKENDPORT with your backend port
+    ```
+2. Install dependencies and run:
+    ```
+    npm install
+    # temporary run
+    npm run start
+    # build + persistent (forever)
+    npm run build
+    npm run serve
+    ```
+3. Open the app in your browser using the value of `REACT_SERVER_PORT`.
+---
+
+## Project Citations
+
+- **Frontend & Backend Starter Code** — adapted from:  
+  https://github.com/osu-cs340-ecampus/react-starter-app  
+  Authors: Zac Maes & Devin Daniels (Fall 2024)  
+
+- **Styling (App.css)** — adapted from OSU CS290 course material:  
+  https://replit.com/@PamVanLonden/a-Global-Stylesheet#App.css  
+  Author: Pam VanLonden (Spring 2024)  
