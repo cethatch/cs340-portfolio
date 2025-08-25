@@ -142,15 +142,13 @@ This project had two main goals:
 
 ## Entity-Relationship Diagram
 
-*(Insert ERD image here)*  
-`![Entity-Relationship Diagram](screenshots/erd.jpg)`
+![Entity-Relationship Diagram](screenshots/erd.jpg)
 
 ---
 
 ## Schema
 
-*(Insert schema diagram or SQL snippet here)*  
-`![Schema](screenshots/schema.png)`
+![Schema](screenshots/schema.png)
 
 ---
 
@@ -159,56 +157,56 @@ This project had two main goals:
 Each screenshot demonstrates CRUD functionality and special handling of foreign keys.  
 
 - **Home Page**  
-  `![Home Page](screenshots/home.png)`  
+  ![Home Page](screenshots/home.png)
 
 - **Classes** — Read, Create, Update  
-  `![Read Classes](screenshots/classes-READ.png)`  
-  `![Create Class](screenshots/classes-CREATE.png)`  
-  `![Update Class](screenshots/classes-UPDATE.png)`  
+  ![Read Classes](screenshots/classes-READ.png)
+  ![Create Class](screenshots/classes-CREATE.png)
+  ![Update Class](screenshots/classes-UPDATE.png)
 
 - **ClassInstances (Schedule)** — Read, Create, Update  
-  `![Read Schedule](screenshots/classInstance-READ.png)`  
-  `![Create Schedule](screenshots/classInstance-CREATE.png)`  
-  `![Update Schedule](screenshots/classInstance-UPDATE.png)`  
+  ![Read Schedule](screenshots/classInstance-READ.png)
+  ![Create Schedule](screenshots/classInstance-CREATE.png)
+  ![Update Schedule](screenshots/classInstance-UPDATE.png)
 
 - **Students** — Read, Create, Update, Delete  
-  `![Read Students](screenshots/students-READ.png)`  
-  `![Create Student](screenshots/students-CREATE.png)`  
-  `![Update Student](screenshots/students-UPDATE.png)`  
-  `![Delete Student](screenshots/students-DELETE.png)`  
+  ![Read Students](screenshots/students-READ.png)
+  ![Create Student](screenshots/students-CREATE.png)
+  ![Update Student](screenshots/students-UPDATE.png)
+  ![Delete Student](screenshots/students-DELETE.png)
 
 - **Instructors & Specialties** — CRUD  
-  `![Read Instructors](screenshots/instructors-READ.png)`  
-  `![Create Instructor](screenshots/instructors-CREATE.png)`  
-  `![Update Instructor](screenshots/instructors-UPDATE.png)`  
-  `![Delete Instructor](screenshots/instructors-DELETE.png)`  
-  `![Read Specialties](screenshots/specialties-READ.png)`  
-  `![Create Specialty](screenshots/specialties-CREATE.png)`  
-  `![Update Specialty](screenshots/specialties-UPDATE.png)`  
-  `![Delete Specialty](screenshots/specialties-DELETE.png)`  
+  ![Read Instructors](screenshots/instructors-READ.png)
+  ![Create Instructor](screenshots/instructors-CREATE.png)
+  ![Update Instructor](screenshots/instructors-UPDATE.png)
+  ![Delete Instructor](screenshots/instructors-DELETE.png)
+  ![Read Specialties](screenshots/specialties-READ.png)
+  ![Create Specialty](screenshots/specialties-CREATE.png)
+  ![Update Specialty](screenshots/specialties-UPDATE.png)
+  ![Delete Specialty](screenshots/specialties-DELETE.png)  
 
 - **Kitchens** — CRUD  
-  `![Read Kitchens](screenshots/kitchens-READ.png)`  
-  `![Create Kitchen](screenshots/kitchens-CREATE.png)`  
-  `![Update Kitchen](screenshots/kitchens-UPDATE.png)`  
-  `![Delete Kitchen](screenshots/kitchens-DELETE.png)`  
+  ![Read Kitchens](screenshots/kitchens-READ.png)
+  ![Create Kitchen](screenshots/kitchens-CREATE.png)
+  ![Update Kitchen](screenshots/kitchens-UPDATE.png)
+  ![Delete Kitchen](screenshots/kitchens-DELETE.png)
 
 - **Invoices** — CRUD  
-  `![Read Invoices](screenshots/invoices-READ.png)`  
-  `![Create Invoice](screenshots/invoices-CREATE.png)`  
-  `![Update Invoice](screenshots/invoices-UPDATE.png)`  
+  ![Read Invoices](screenshots/invoices-READ.png)
+  ![Create Invoice](screenshots/invoices-CREATE.png)  
+  ![Update Invoice](screenshots/invoices-UPDATE.png)
 
 - **ClassInstructors (M:N)** — CRUD  
-  `![Read ClassInstructors](screenshots/instructorAssignments-READ.png)`  
-  `![Create ClassInstructor](screenshots/instructorAssignments-CREATE.png)`  
-  `![Update ClassInstructor](screenshots/instructorAssignments-UPDATE.png)`  
-  `![Delete ClassInstructor](screenshots/instructorAssignments-DELETE.png)`  
+  ![Read ClassInstructors](screenshots/instructorAssignments-READ.png)  
+  ![Create ClassInstructor](screenshots/instructorAssignments-CREATE.png) 
+  ![Update ClassInstructor](screenshots/instructorAssignments-UPDATE.png)  
+  ![Delete ClassInstructor](screenshots/instructorAssignments-DELETE.png)  
 
 - **Registrations (M:N)** — CRUD  
-  `![Read Registrations](screenshots/registrations-READ.png)`  
-  `![Create Registration](screenshots/registrations-CREATE.png)`  
-  `![Update Registration](screenshots/registrations-UPDATE.png)`  
-  `![Delete Registration](screenshots/registrations-DELETE.png)`  
+  ![Read Registrations](screenshots/registrations-READ.png)  
+  ![Create Registration](screenshots/registrations-CREATE.png)  
+  ![Update Registration](screenshots/registrations-UPDATE.png)  
+  ![Delete Registration](screenshots/registrations-DELETE.png)  
 
 ---
 
